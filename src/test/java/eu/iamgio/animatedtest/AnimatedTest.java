@@ -1,12 +1,13 @@
 package eu.iamgio.animatedtest;
 
-import eu.iamgio.animated.Animated;
-import eu.iamgio.animated.AnimatedOpacity;
+import eu.iamgio.animated.AnimatedMulti;
+import eu.iamgio.animated.property.DoublePropertyWrapper;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -23,16 +24,29 @@ public class AnimatedTest extends Application {
         Pane root = new Pane();
         Scene scene = new Scene(root, 650, 500);
 
-        Pane pane = new Pane(randomRectangle());
+        Rectangle rectangle = randomRectangle();
+        Pane pane = new Pane(rectangle);
         center(pane, scene);
 
+        // Bind rectangle size to pane size
+        pane.setPrefSize(rectangle.getWidth(), rectangle.getHeight());
+        rectangle.widthProperty().bind(pane.prefWidthProperty());
+        rectangle.heightProperty().bind(pane.heightProperty());
+
         // Setup the node and attach it to the root
-        Animated<Double> animated = new AnimatedOpacity(pane);
+        AnimatedMulti animated = new AnimatedMulti(pane,
+                new DoublePropertyWrapper(pane.prefWidthProperty()),
+                new DoublePropertyWrapper(pane.prefHeightProperty()),
+                new DoublePropertyWrapper(pane.opacityProperty())
+        );
         root.getChildren().add(animated);
 
         // Setup the timeline
         Timeline timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), e -> pane.setOpacity(.2)));
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), e -> {
+            pane.setPrefSize(500, 200);
+            pane.setOpacity(.2);
+        }));
         timeline.playFromStart();
 
         // Show

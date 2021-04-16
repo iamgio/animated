@@ -16,4 +16,14 @@ public class AnimatedMulti extends SingleChildParent {
             getChildren().add(new Animated<>(property));
         }
     }
+
+    public AnimatedMulti(Node child, Animated<?>... animated) {
+        super(child);
+        for(Animated<?> anim : animated) {
+            if(anim.getChild() != null) {
+                System.err.println("Animated arguments of AnimatedMulti should not have any children.");
+            }
+            getChildren().add(anim);
+        }
+    }
 }
