@@ -1,4 +1,4 @@
-package eu.iamgio.animatedswitchertest;
+package eu.iamgio.animatedtest;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;

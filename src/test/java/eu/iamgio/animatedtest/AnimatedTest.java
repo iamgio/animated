@@ -1,7 +1,7 @@
-package eu.iamgio.animatedswitchertest;
+package eu.iamgio.animatedtest;
 
 import eu.iamgio.animated.Animated;
-import eu.iamgio.animated.property.DoublePropertyWrapper;
+import eu.iamgio.animated.AnimatedOpacity;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -10,8 +10,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import static eu.iamgio.animatedswitchertest.TestUtil.center;
-import static eu.iamgio.animatedswitchertest.TestUtil.randomRectangle;
+import static eu.iamgio.animatedtest.TestUtil.center;
+import static eu.iamgio.animatedtest.TestUtil.randomRectangle;
+
+// This demo dynamically changes several rectangle's properties.
+// The Animated class lets the change play a transition.
 
 public class AnimatedTest extends Application {
 
@@ -24,17 +27,16 @@ public class AnimatedTest extends Application {
         center(pane, scene);
 
         // Setup the node and attach it to the root
-        Animated<Double> animated = new Animated<>(new DoublePropertyWrapper(pane.opacityProperty()), pane);
+        Animated<Double> animated = new AnimatedOpacity(pane);
         root.getChildren().add(animated);
 
+        // Setup the timeline
         Timeline timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), e -> {
-            pane.setOpacity(.2);
-        }));
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), e -> pane.setOpacity(.2)));
         timeline.playFromStart();
 
         // Show
-        primaryStage.setTitle("AnimatedProperty");
+        primaryStage.setTitle("Animated");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

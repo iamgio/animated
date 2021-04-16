@@ -1,4 +1,4 @@
-package eu.iamgio.animatedswitchertest;
+package eu.iamgio.animatedtest;
 
 import eu.iamgio.animated.AnimatedSwitcher;
 import eu.iamgio.animated.SwitchAnimation;
@@ -10,8 +10,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import static eu.iamgio.animatedswitchertest.TestUtil.center;
-import static eu.iamgio.animatedswitchertest.TestUtil.randomRectangle;
+import static eu.iamgio.animatedtest.TestUtil.center;
+import static eu.iamgio.animatedtest.TestUtil.randomRectangle;
 
 // This demo dynamically generates random rectangles and plays a transition upon attaching it to the screen.
 // A zoom-in is played on the 'new' rectangle, while the 'old' one disappears with a zoom-out animation.
