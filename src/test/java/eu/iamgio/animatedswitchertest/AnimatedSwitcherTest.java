@@ -1,9 +1,7 @@
 package eu.iamgio.animatedswitchertest;
 
-import animatefx.animation.ZoomIn;
-import animatefx.animation.ZoomOut;
 import eu.iamgio.animated.AnimatedSwitcher;
-import eu.iamgio.animated.Animation;
+import eu.iamgio.animated.SwitchAnimation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -28,7 +26,7 @@ public class AnimatedSwitcherTest extends Application {
         Scene scene = new Scene(root, 650, 500);
 
         // Setup switcher and attach it to the root
-        AnimatedSwitcher switcher = new AnimatedSwitcher(new Animation(new ZoomIn()).setSpeed(2.5), new Animation(new ZoomOut()));
+        AnimatedSwitcher switcher = new AnimatedSwitcher(SwitchAnimation.zoom().setSpeed(2, .8));
         root.getChildren().add(switcher);
 
         // Setup timeline
