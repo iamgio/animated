@@ -1,5 +1,6 @@
 package eu.iamgio.animated;
 
+import eu.iamgio.animated.property.AnimatedProperty;
 import eu.iamgio.animated.property.PropertyWrapper;
 import javafx.scene.Node;
 
@@ -10,13 +11,26 @@ import javafx.scene.Node;
  */
 public class AnimatedMulti extends SingleChildParent {
 
+    /**
+     * Instantiates a group of animated properties
+     * @param child initial child
+     * @param properties target properties
+     */
     public AnimatedMulti(Node child, PropertyWrapper<?>... properties) {
         super(child);
         for(PropertyWrapper<?> property : properties) {
-            getChildren().add(new Animated<>(property));
+            getChildren().add(new Animated<>(null,
+                    property,
+                    property instanceof AnimatedProperty ? ((AnimatedProperty<?>) property).getSettings() : new AnimationSettings())
+            );
         }
     }
 
+    /**
+     * Instantiates a group of animated properties
+     * @param child initial child
+     * @param animated animated nodes (with no children)
+     */
     public AnimatedMulti(Node child, Animated<?>... animated) {
         super(child);
         for(Animated<?> anim : animated) {

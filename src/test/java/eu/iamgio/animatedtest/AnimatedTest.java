@@ -1,6 +1,8 @@
 package eu.iamgio.animatedtest;
 
 import eu.iamgio.animated.AnimatedMulti;
+import eu.iamgio.animated.AnimationSettings;
+import eu.iamgio.animated.property.AnimatedProperty;
 import eu.iamgio.animated.property.DoublePropertyWrapper;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -35,7 +37,7 @@ public class AnimatedTest extends Application {
 
         // Setup the node and attach it to the root
         AnimatedMulti animated = new AnimatedMulti(pane,
-                new DoublePropertyWrapper(pane.prefWidthProperty()),
+                new AnimatedProperty<>(new DoublePropertyWrapper(pane.prefWidthProperty()), new AnimationSettings().withDuration(Duration.seconds(.8))),
                 new DoublePropertyWrapper(pane.prefHeightProperty()),
                 new DoublePropertyWrapper(pane.opacityProperty())
         );
