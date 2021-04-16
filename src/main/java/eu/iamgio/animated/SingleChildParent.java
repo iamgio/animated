@@ -30,11 +30,4 @@ class SingleChildParent extends Parent {
     public Node getChild() {
         return child.get();
     }
-
-    /**
-     * @param child child to set
-     */
-    public void setChild(Node child) {
-        this.child.set(child);
-    }
 }
