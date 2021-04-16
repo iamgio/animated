@@ -7,13 +7,11 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.util.Random;
+import static eu.iamgio.animatedswitchertest.TestUtil.center;
+import static eu.iamgio.animatedswitchertest.TestUtil.randomRectangle;
 
 // This demo dynamically generates random rectangles and plays a transition upon attaching it to the screen.
 // A zoom-in is played on the 'new' rectangle, while the 'old' one disappears with a zoom-out animation.
@@ -50,23 +48,6 @@ public class AnimatedSwitcherTest extends Application {
         // Calls the same function after a 1s delay
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), e -> startTimeline(scene, timeline, switcher)));
         timeline.playFromStart();
-    }
-
-    // Generates a random rectangle
-    private Rectangle randomRectangle() {
-        Random random = new Random();
-        // Width and height go from 100 to 300
-        double width = random.nextInt(200) + 100;
-        double height = random.nextInt(200) + 100;
-        // R, G and B values in 0.5-1 range
-        Color color = new Color((random.nextInt(5) + 5) / 10F, (random.nextInt(5) + 5) / 10F, (random.nextInt(5) + 5) / 10F, 1);
-        return new Rectangle(width, height, color);
-    }
-
-    // Centers a node (rectangles wrapped in Panes)
-    private void center(Region parent, Scene scene) {
-        parent.layoutXProperty().bind(scene.widthProperty().divide(2).subtract(parent.widthProperty().divide(2)));
-        parent.layoutYProperty().bind(scene.heightProperty().divide(2).subtract(parent.heightProperty().divide(2)));
     }
 
     public static void main(String[] args) {
