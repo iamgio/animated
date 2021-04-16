@@ -4,9 +4,7 @@ import eu.iamgio.animated.property.PropertyWrapper;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.util.Duration;
 
 /**
@@ -14,10 +12,9 @@ import javafx.util.Duration;
  * @param <T> type of the target property
  * @author Giorgio Garofalo
  */
-public class Animated<T> extends Parent {
+public class Animated<T> extends SingleChildParent {
 
     private final PropertyWrapper<T> property;
-    private final SimpleObjectProperty<Node> child = new SimpleObjectProperty<>();
 
     // Animation timeline
     private final Timeline timeline;
@@ -55,22 +52,13 @@ public class Animated<T> extends Parent {
 
     /**
      * Instantiates an {@link Animated} node
-     * @param property target property
      * @param child initial child
+     * @param property target property
      */
-    public Animated(PropertyWrapper<T> property, Node child) {
+    public Animated(Node child, PropertyWrapper<T> property) {
+        super(child);
         this.property = property;
         this.timeline = new Timeline();
-
-        // Registers child listener
-        this.child.addListener((observable, oldChild, newChild) -> {
-            if(newChild != null) {
-                getChildren().setAll(newChild);
-            } else {
-                getChildren().clear();
-            }
-        });
-        this.child.set(child);
 
         // Registers property listener
         registerHandler();
@@ -81,20 +69,6 @@ public class Animated<T> extends Parent {
      * @param property target property
      */
     public Animated(PropertyWrapper<T> property) {
-        this(property, null);
-    }
-
-    /**
-     * @return current child
-     */
-    public Node getChild() {
-        return child.get();
-    }
-
-    /**
-     * @param child child to set
-     */
-    public void setChild(Node child) {
-        this.child.set(child);
+        this(null, property);
     }
 }
