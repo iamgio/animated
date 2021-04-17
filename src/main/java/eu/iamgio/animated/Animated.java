@@ -7,6 +7,8 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.scene.Node;
 
+import java.util.function.Function;
+
 /**
  * A node that automatically animates a property of its child.
  * @param <T> type of the target property
@@ -15,10 +17,12 @@ import javafx.scene.Node;
 public class Animated<T> extends SingleChildParent {
 
     private final PropertyWrapper<T> property;
-    private final AnimationSettings settings;
 
     // Animation timeline
     private final Timeline timeline;
+
+    // Customizable animation properties
+    private AnimationSettings settings;
 
     // Whether the changes should be handled
     private boolean handleChanges = false;
@@ -77,7 +81,7 @@ public class Animated<T> extends SingleChildParent {
      * @param property target property
      */
     public Animated(Node child, PropertyWrapper<T> property) {
-        this(null, property, new AnimationSettings());
+        this(child, property, new AnimationSettings());
     }
 
     /**
@@ -85,6 +89,28 @@ public class Animated<T> extends SingleChildParent {
      * @param property target property
      */
     public Animated(PropertyWrapper<T> property) {
-        this(null, property);
+        this(null, property, new AnimationSettings());
+    }
+
+    /**
+     * Applies custom animation settings
+     * @param settings animation settings to set
+     * @param <A> either {@link Animated} or subclass
+     * @return this for concatenation
+     */
+    @SuppressWarnings("unchecked")
+    public <A extends Animated<T>> A withSettings(AnimationSettings settings) {
+        this.settings = settings;
+        return (A) this;
+    }
+
+    /**
+     * Applies custom animation settings
+     * @param settings settings to update. Example: <pre>custom(settings -> settings.withDuration(...))</pre>
+     * @param <A> either {@link Animated} or subclass
+     * @return this for concatenation
+     */
+    public <A extends Animated<T>> A custom(Function<AnimationSettings, AnimationSettings> settings) {
+        return withSettings(settings.apply(new AnimationSettings()));
     }
 }

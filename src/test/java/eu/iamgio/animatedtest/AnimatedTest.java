@@ -1,13 +1,9 @@
 package eu.iamgio.animatedtest;
 
-import eu.iamgio.animated.AnimatedMulti;
-import eu.iamgio.animated.AnimationSettings;
-import eu.iamgio.animated.property.AnimatedProperty;
-import eu.iamgio.animated.property.DoublePropertyWrapper;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import eu.iamgio.animated.AnimatedOpacity;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -36,20 +32,15 @@ public class AnimatedTest extends Application {
         rectangle.heightProperty().bind(pane.heightProperty());
 
         // Setup the node and attach it to the root
-        AnimatedMulti animated = new AnimatedMulti(pane,
-                new AnimatedProperty<>(new DoublePropertyWrapper(pane.prefWidthProperty()), new AnimationSettings().withDuration(Duration.seconds(.8))),
-                new DoublePropertyWrapper(pane.prefHeightProperty()),
-                new DoublePropertyWrapper(pane.opacityProperty())
-        );
+        AnimatedOpacity animated = new AnimatedOpacity(pane).custom(settings -> settings.withDuration(Duration.seconds(.2)));
         root.getChildren().add(animated);
 
-        // Setup the timeline
-        Timeline timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), e -> {
-            pane.setPrefSize(500, 200);
-            pane.setOpacity(.2);
-        }));
-        timeline.playFromStart();
+        // Setup the visibility check box
+        CheckBox checkBox = new CheckBox("Visible");
+        checkBox.selectedProperty().addListener(o -> pane.setOpacity(checkBox.isSelected() ? 1 : 0));
+        checkBox.setSelected(true);
+        checkBox.setStyle("-fx-padding: 15");
+        root.getChildren().add(checkBox);
 
         // Show
         primaryStage.setTitle("Animated");
