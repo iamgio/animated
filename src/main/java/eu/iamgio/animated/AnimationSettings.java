@@ -8,6 +8,7 @@ import javafx.util.Duration;
 public class AnimationSettings {
 
     private Duration duration = Duration.seconds(1);
+    private Curve curve = Curve.LINEAR;
 
     /**
      * @param duration duration of the animation to set
@@ -23,5 +24,21 @@ public class AnimationSettings {
      */
     public Duration getDuration() {
         return duration;
+    }
+
+    /**
+     * @param curve curve of the animation to set
+     * @return this for concatenation
+     */
+    public AnimationSettings withCurve(Curve curve) {
+        this.curve = curve;
+        return this;
+    }
+
+    /**
+     * @return curve of the animation
+     */
+    public Curve getCurve() {
+        return curve;
     }
 }

@@ -3,9 +3,7 @@ package eu.iamgio.animated;
 import eu.iamgio.animated.property.AnimatedProperty;
 import eu.iamgio.animated.property.PropertyWrapper;
 import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
@@ -44,9 +42,11 @@ public class Animated<T> extends SingleChildParent {
         // The parallel property is used to check if the changes are applied by the animation or by external sources
         parallelProperty.set(property.getProperty().getValue());
 
+        Interpolator interpolator = settings.getCurve().toInterpolator();
+
         timeline.getKeyFrames().setAll(
-                new KeyFrame(settings.getDuration(), new KeyValue(property.getProperty(), value)),
-                new KeyFrame(settings.getDuration(), new KeyValue(parallelProperty, value))
+                new KeyFrame(settings.getDuration(), new KeyValue(property.getProperty(), value, interpolator)),
+                new KeyFrame(settings.getDuration(), new KeyValue(parallelProperty, value, interpolator))
         );
         timeline.playFromStart();
     }
