@@ -1,9 +1,13 @@
 package eu.iamgio.animatedtest;
 
-import eu.iamgio.animated.AnimatedOpacity;
+import eu.iamgio.animated.AnimatedMulti;
+import eu.iamgio.animated.property.DoublePropertyWrapper;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -32,19 +36,50 @@ public class AnimatedTest extends Application {
         rectangle.heightProperty().bind(pane.heightProperty());
 
         // Setup the node and attach it to the root
-        AnimatedOpacity animated = new AnimatedOpacity(pane).custom(settings -> settings.withDuration(Duration.seconds(1)));
+        AnimatedMulti animated = new AnimatedMulti(pane,
+                new DoublePropertyWrapper(pane.opacityProperty()).custom(settings -> settings.withDuration(Duration.seconds(.4))),
+                new DoublePropertyWrapper(pane.prefWidthProperty()).custom(settings -> settings.withDuration(Duration.seconds(1))),
+                new DoublePropertyWrapper(pane.prefHeightProperty()).custom(settings -> settings.withDuration(Duration.seconds(.3)))
+        );
         root.getChildren().add(animated);
 
-        // Setup the visibility check box
-        CheckBox checkBox = new CheckBox("Visible");
-        checkBox.selectedProperty().addListener(o -> pane.setOpacity(checkBox.isSelected() ? 1 : 0));
-        checkBox.setSelected(true);
-        checkBox.setStyle("-fx-padding: 15;");
-        root.getChildren().add(checkBox);
+        // Setup the controls
+        root.getChildren().add(setupControls(pane));
 
         // Show
         primaryStage.setTitle("Animated");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private HBox setupControls(Pane pane) {
+        HBox hbox = new HBox(8);
+        hbox.setStyle("-fx-padding: 15;");
+        hbox.setAlignment(Pos.CENTER);
+
+        CheckBox checkBox = new CheckBox("Visible");
+        checkBox.selectedProperty().addListener(o -> pane.setOpacity(checkBox.isSelected() ? 1 : 0));
+        checkBox.setSelected(true);
+
+        Pane spacer1 = new Pane();
+        spacer1.setPrefWidth(5);
+
+        Button widthMinus = new Button("Width -");
+        widthMinus.setOnAction(e -> pane.setPrefWidth(pane.getPrefWidth() - 50));
+
+        Button widthPlus = new Button("Width +");
+        widthPlus.setOnAction(e -> pane.setPrefWidth(pane.getPrefWidth() + 50));
+
+        Pane spacer2 = new Pane();
+        spacer2.setPrefWidth(5);
+
+        Button heightMinus = new Button("Height -");
+        heightMinus.setOnAction(e -> pane.setPrefHeight(pane.getPrefHeight() - 50));
+
+        Button heighPlus = new Button("Height +");
+        heighPlus.setOnAction(e -> pane.setPrefHeight(pane.getPrefHeight() + 50));
+
+        hbox.getChildren().addAll(checkBox, spacer1, widthMinus, widthPlus, spacer2, heightMinus, heighPlus);
+        return hbox;
     }
 }
