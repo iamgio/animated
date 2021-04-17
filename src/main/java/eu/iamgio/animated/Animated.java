@@ -2,9 +2,12 @@ package eu.iamgio.animated;
 
 import eu.iamgio.animated.property.AnimatedProperty;
 import eu.iamgio.animated.property.PropertyWrapper;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
 
 import java.util.function.Function;
@@ -16,7 +19,11 @@ import java.util.function.Function;
  */
 public class Animated<T> extends SingleChildParent {
 
+    // The target property
     private final PropertyWrapper<T> property;
+
+    // The parallel property is used to check if the changes are applied by the animation or by external sources
+    private final ObjectProperty<T> parallelProperty;
 
     // Animation timeline
     private final Timeline timeline;
@@ -26,17 +33,21 @@ public class Animated<T> extends SingleChildParent {
 
     // Whether the changes should be handled
     private boolean handleChanges = false;
-    // Whether the animation is playing
-    private boolean isPlaying = false;
 
     /**
      * Plays the animation
-     * @param newValue new property value
+     * @param value new property value
      */
-    private void handleChanges(T newValue) {
-        isPlaying = true;
-        timeline.getKeyFrames().setAll(new KeyFrame(settings.getDuration(), new KeyValue(property.getProperty(), newValue)));
-        timeline.setOnFinished(e -> isPlaying = false);
+    private void handleChanges(T value) {
+        timeline.stop();
+
+        // The parallel property is used to check if the changes are applied by the animation or by external sources
+        parallelProperty.set(property.getProperty().getValue());
+
+        timeline.getKeyFrames().setAll(
+                new KeyFrame(settings.getDuration(), new KeyValue(property.getProperty(), value)),
+                new KeyFrame(settings.getDuration(), new KeyValue(parallelProperty, value))
+        );
         timeline.playFromStart();
     }
 
@@ -45,14 +56,28 @@ public class Animated<T> extends SingleChildParent {
      */
     private void registerHandler() {
         property.addListener(((observable, oldValue, newValue) -> {
-            if(!isPlaying) {
+            if(timeline.getStatus() != Animation.Status.RUNNING) {
                 handleChanges ^= true;
                 if(handleChanges) {
                     property.set(oldValue);
                     handleChanges(newValue);
                 }
+            } else if(!isAnimationFrame(oldValue, newValue)) {
+                handleChanges ^= true;
+                if(handleChanges) {
+                    property.set(newValue);
+                    handleChanges(oldValue);
+                }
             }
         }));
+    }
+
+    /**
+     * @return whether the current property change was fired by the animation or by an external source
+     */
+    private boolean isAnimationFrame(T oldPropertyValue, T newPropertyValue) {
+        Object parallelValue = parallelProperty.getValue();
+        return parallelValue != null && (parallelValue.equals(oldPropertyValue) || parallelValue.equals(newPropertyValue));
     }
 
     /**
@@ -64,6 +89,7 @@ public class Animated<T> extends SingleChildParent {
     public Animated(Node child, PropertyWrapper<T> property, AnimationSettings settings) {
         super(child);
         this.property = property;
+        this.parallelProperty = new SimpleObjectProperty<>();
         this.settings = settings;
         this.timeline = new Timeline();
 

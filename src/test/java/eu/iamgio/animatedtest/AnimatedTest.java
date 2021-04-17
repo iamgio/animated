@@ -32,14 +32,14 @@ public class AnimatedTest extends Application {
         rectangle.heightProperty().bind(pane.heightProperty());
 
         // Setup the node and attach it to the root
-        AnimatedOpacity animated = new AnimatedOpacity(pane).custom(settings -> settings.withDuration(Duration.seconds(.2)));
+        AnimatedOpacity animated = new AnimatedOpacity(pane).custom(settings -> settings.withDuration(Duration.seconds(1)));
         root.getChildren().add(animated);
 
         // Setup the visibility check box
         CheckBox checkBox = new CheckBox("Visible");
         checkBox.selectedProperty().addListener(o -> pane.setOpacity(checkBox.isSelected() ? 1 : 0));
         checkBox.setSelected(true);
-        checkBox.setStyle("-fx-padding: 15");
+        checkBox.setStyle("-fx-padding: 15;");
         root.getChildren().add(checkBox);
 
         // Show
