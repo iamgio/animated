@@ -38,7 +38,7 @@ public class AnimatedTest extends Application {
         // Setup the node and attach it to the root
         AnimatedMulti animated = new AnimatedMulti(pane,
                 new DoublePropertyWrapper(pane.opacityProperty()).custom(settings -> settings.withDuration(Duration.seconds(.4))),
-                new DoublePropertyWrapper(pane.prefWidthProperty()).custom(settings -> settings.withDuration(Duration.seconds(1))),
+                new DoublePropertyWrapper(pane.prefWidthProperty()).custom(settings -> settings.withDuration(Duration.seconds(.3))),
                 new DoublePropertyWrapper(pane.prefHeightProperty()).custom(settings -> settings.withDuration(Duration.seconds(.3)))
         );
         root.getChildren().add(animated);
@@ -65,19 +65,19 @@ public class AnimatedTest extends Application {
         spacer1.setPrefWidth(5);
 
         Button widthMinus = new Button("Width -");
-        widthMinus.setOnAction(e -> pane.setPrefWidth(pane.getPrefWidth() - 50));
+        widthMinus.setOnAction(e -> pane.setPrefWidth(pane.getPrefWidth() - 100));
 
         Button widthPlus = new Button("Width +");
-        widthPlus.setOnAction(e -> pane.setPrefWidth(pane.getPrefWidth() + 50));
+        widthPlus.setOnAction(e -> pane.setPrefWidth(pane.getPrefWidth() + 100));
 
         Pane spacer2 = new Pane();
         spacer2.setPrefWidth(5);
 
         Button heightMinus = new Button("Height -");
-        heightMinus.setOnAction(e -> pane.setPrefHeight(pane.getPrefHeight() - 50));
+        heightMinus.setOnAction(e -> pane.setPrefHeight(pane.getPrefHeight() - 100));
 
         Button heighPlus = new Button("Height +");
-        heighPlus.setOnAction(e -> pane.setPrefHeight(pane.getPrefHeight() + 50));
+        heighPlus.setOnAction(e -> pane.setPrefHeight(pane.getPrefHeight() + 100));
 
         hbox.getChildren().addAll(checkBox, spacer1, widthMinus, widthPlus, spacer2, heightMinus, heighPlus);
         return hbox;

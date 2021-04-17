@@ -56,6 +56,7 @@ public class Animated<T> extends SingleChildParent {
      */
     private void registerHandler() {
         property.addListener(((observable, oldValue, newValue) -> {
+            if(getScene() == null) return;
             if(timeline.getStatus() != Animation.Status.RUNNING) {
                 handleChanges ^= true;
                 if(handleChanges) {

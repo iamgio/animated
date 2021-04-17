@@ -37,6 +37,9 @@ public class AnimatedMulti extends SingleChildParent {
             if(anim.getChild() != null) {
                 System.err.println("Animated arguments of AnimatedMulti should not have any children.");
             }
+            if(anim.getScene() != null) {
+                System.err.println("Animated arguments of AnimatedMulti should not be already in scene.");
+            }
             getChildren().add(anim);
         }
     }
