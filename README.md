@@ -57,7 +57,7 @@ root.getChildren().add(animated);
 ## Animated switchers
 
 The library also provides an `AnimatedSwitcher` node that creates a transition whenever its child changes.  
-This functionality is based on animations from [AnimateFX](https://github.com/Typhon0/AnimateFX).
+This feature is based on animations from [AnimateFX](https://github.com/Typhon0/AnimateFX).
 
 ![Demo](https://i.imgur.com/8v2Wn0a.gif)
 
@@ -70,9 +70,12 @@ Right after the instantiation, calling `of(Node child)` will set the initial chi
 
 Example:
 ```java
-AnimatedSwitcher switcher = new AnimatedSwitcher(new Animation(new FadeInDown()).setSpeed(2), new Animation(new FadeOutDown()).setSpeed(1.5))
-    .of(firstChild);
+AnimatedSwitcher switcher = new AnimatedSwitcher(
+    new Animation(new FadeInDown()).setSpeed(2), 
+    new Animation(new FadeOutDown()).setSpeed(1.5)
+).of(firstChild);
 root.getChildren().add(switcher);
+
 // Later...
 switcher.setChild(secondChild); // Plays the transition
 ```
