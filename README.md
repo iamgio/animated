@@ -11,6 +11,9 @@ Forget about timelines, explicit animations and other stuff that pollutes your c
 ```java
 Animated<Double> animated = new Animated<>(child, new DoublePropertyWrapper(child.opacityProperty()));
 root.getChildren().add(animated);
+
+// Later...
+child.setOpacity(0.5); // Plays the transition
 ```  
 
 This approach instantiates an `Animated` node that contains one child and is bound to a property.  
@@ -32,6 +35,11 @@ AnimatedMulti animated = new AnimatedMulti(child,
     new DoublePropertyWrapper(child.prefHeightProperty())
 );
 root.getChildren().add(animated);
+
+// Later...
+child.setOpacity(0.5);   // Plays the transition
+child.setPrefWidth(100); // Plays the transition
+child.setPrefHeight(50); // Plays the transition
 ```  
 
 ### Custom animations
@@ -53,6 +61,8 @@ AnimatedMulti animated = new AnimatedMulti(child,
 );
 root.getChildren().add(animated);
 ```  
+
+**[Demo](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedTest.java)** (example above)
 
 ## Animated switchers
 
@@ -79,3 +89,5 @@ root.getChildren().add(switcher);
 // Later...
 switcher.setChild(secondChild); // Plays the transition
 ```
+
+**[Demo](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedSwitcherTest.java)** (example above)
