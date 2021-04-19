@@ -10,7 +10,7 @@ import java.util.function.Function;
  * @see Animated
  * @author Giorgio Garofalo
  */
-public class AnimatedMulti extends SingleChildParent {
+public class AnimatedMulti extends SingleChildParent implements CustomizableAnimation<AnimatedMulti> {
 
     private final PropertyWrapper<?>[] wrappers;
 
@@ -52,12 +52,18 @@ public class AnimatedMulti extends SingleChildParent {
     }
 
     /**
-     * Applies (and overrides) custom animation settings to all the properties
-     * @param settings animation settings to set
-     * @param <A> either {@link AnimatedMulti} or subclass
-     * @return this for concatenation
+     * @throws UnsupportedOperationException {@link AnimatedMulti} does not have global settings
+     */
+    @Override
+    public AnimationSettings getSettings() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
+    @Override
     public <A extends AnimatedMulti> A withSettings(AnimationSettings settings) {
         for(PropertyWrapper<?> wrapper : wrappers) {
             wrapper.withSettings(settings);
@@ -66,10 +72,7 @@ public class AnimatedMulti extends SingleChildParent {
     }
 
     /**
-     * Applies custom animation settings
-     * @param settings settings to update. Example: <pre>custom(settings -> settings.withDuration(...))</pre>
-     * @param <A> either {@link AnimatedMulti} or subclass
-     * @return this for concatenation
+     * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
     public <A extends AnimatedMulti> A custom(Function<AnimationSettings, AnimationSettings> settings) {

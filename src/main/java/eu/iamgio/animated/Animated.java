@@ -7,14 +7,12 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
 
-import java.util.function.Function;
-
 /**
  * A node that automatically animates a property of its child.
  * @param <T> type of the target property
  * @author Giorgio Garofalo
  */
-public class Animated<T> extends SingleChildParent {
+public class Animated<T> extends SingleChildParent implements CustomizableAnimation<Animated<T>> {
 
     // The target property
     private final PropertyWrapper<T> property;
@@ -120,24 +118,19 @@ public class Animated<T> extends SingleChildParent {
     }
 
     /**
-     * Applies custom animation settings
-     * @param settings animation settings to set
-     * @param <A> either {@link Animated} or subclass
-     * @return this for concatenation
+     * {@inheritDoc}
+     */
+    @Override
+    public AnimationSettings getSettings() {
+        return property.getSettings();
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
     public <A extends Animated<T>> A withSettings(AnimationSettings settings) {
         this.property.withSettings(settings);
         return (A) this;
-    }
-
-    /**
-     * Applies custom animation settings
-     * @param settings settings to update. Example: <pre>custom(settings -> settings.withDuration(...))</pre>
-     * @param <A> either {@link Animated} or subclass
-     * @return this for concatenation
-     */
-    public <A extends Animated<T>> A custom(Function<AnimationSettings, AnimationSettings> settings) {
-        return withSettings(settings.apply(new AnimationSettings()));
     }
 }
