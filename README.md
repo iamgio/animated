@@ -48,19 +48,20 @@ child.setPrefHeight(50); // Plays the transition
 
 The default animation is linear and lasts 1 second. It can be customized by calling either `withSettings(AnimationSettings settings)` or `custom(Function<AnimationSettings, AnimationSettings> settings)`, both methods available on property wrappers and animated nodes.
 
-Example:
+Examples:
 ```java
 AnimatedOpacity animated = new AnimatedOpacity(child)
     .custom(settings -> settings.withDuration(Duration.seconds(.5)).withCurve(Curve.EASE_IN_OUT));
-```
+```  
 
 ```java
 AnimatedMulti animated = new AnimatedMulti(child,
-    new DoublePropertyWrapper(child.prefWidthProperty())
-        .custom(settings -> settings.withCurve(Curve.EASE_IN_SINE)),
-    new DoublePropertyWrapper(child.prefHeightProperty())
+    new DoublePropertyWrapper(child.opacityProperty())
+        .custom(settings -> settings.withDuration(Duration.seconds(.8))),
+    new DoublePropertyWrapper(child.rotateProperty())
         .custom(settings -> settings.withDuration(Duration.seconds(.5)),
-);
+).custom(settings -> settings.withCurve(Curve.EASE_OUT)); // 'custom' applies only these settings to the properties.
+                                                          // 'withSettings' overrides all instead.
 root.getChildren().add(animated);
 ```  
 

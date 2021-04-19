@@ -7,7 +7,7 @@ import javafx.beans.value.ChangeListener;
 /**
  * @author Giorgio Garofalo
  */
-public class DoublePropertyWrapper implements PropertyWrapper<Double> {
+public class DoublePropertyWrapper extends PropertyWrapper<Double> {
 
     private final DoubleProperty property;
 

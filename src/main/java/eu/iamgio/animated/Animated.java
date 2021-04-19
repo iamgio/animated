@@ -1,6 +1,5 @@
 package eu.iamgio.animated;
 
-import eu.iamgio.animated.property.AnimatedProperty;
 import eu.iamgio.animated.property.PropertyWrapper;
 import javafx.animation.Animation;
 import javafx.animation.*;
@@ -26,9 +25,6 @@ public class Animated<T> extends SingleChildParent {
     // Animation timeline
     private final Timeline timeline;
 
-    // Customizable animation properties
-    private AnimationSettings settings;
-
     // Whether the changes should be handled
     private boolean handleChanges = false;
 
@@ -37,6 +33,8 @@ public class Animated<T> extends SingleChildParent {
      * @param value new property value
      */
     private void handleChanges(T value) {
+        AnimationSettings settings = property.getSettings();
+
         timeline.stop();
 
         // The parallel property is used to check if the changes are applied by the animation or by external sources
@@ -89,17 +87,12 @@ public class Animated<T> extends SingleChildParent {
      */
     public Animated(Node child, PropertyWrapper<T> property, AnimationSettings settings) {
         super(child);
-        this.property = property;
+        this.property = property.withSettings(settings);
         this.parallelProperty = new SimpleObjectProperty<>();
-        this.settings = settings;
         this.timeline = new Timeline();
 
         // Registers property listener
         registerHandler();
-    }
-
-    public Animated(Node child, AnimatedProperty<T> property) {
-        this(child, property.getPropertyWrapper(), property.getSettings());
     }
 
     /**
@@ -108,7 +101,7 @@ public class Animated<T> extends SingleChildParent {
      * @param property target property
      */
     public Animated(Node child, PropertyWrapper<T> property) {
-        this(child, property, new AnimationSettings());
+        this(child, property, property.getSettings());
     }
 
     /**
@@ -116,7 +109,14 @@ public class Animated<T> extends SingleChildParent {
      * @param property target property
      */
     public Animated(PropertyWrapper<T> property) {
-        this(null, property, new AnimationSettings());
+        this(null, property);
+    }
+
+    /**
+     * @return target property
+     */
+    PropertyWrapper<T> getProperty() {
+        return property;
     }
 
     /**
@@ -127,7 +127,7 @@ public class Animated<T> extends SingleChildParent {
      */
     @SuppressWarnings("unchecked")
     public <A extends Animated<T>> A withSettings(AnimationSettings settings) {
-        this.settings = settings;
+        this.property.withSettings(settings);
         return (A) this;
     }
 

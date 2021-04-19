@@ -7,23 +7,33 @@ import javafx.beans.value.ChangeListener;
 import java.util.function.Function;
 
 /**
- * Interface that allows wrapping object and primitive JavaFX properties without the explicit <pre>asObject()</pre> call.
- * @param <T>
+ * Abstract class that allows wrapping object and primitive JavaFX properties without the explicit <pre>asObject()</pre> call ands allows animation customization.
+ * @param <T> property type
  * @author Giorgio Garofalo
  */
-public interface PropertyWrapper<T> {
+public abstract class PropertyWrapper<T> {
 
-    Property<T> getProperty();
-    void set(T value);
-    void addListener(ChangeListener<? super T> listener);
+    public abstract Property<T> getProperty();
+    public abstract void set(T value);
+    public abstract void addListener(ChangeListener<? super T> listener);
+
+    private AnimationSettings settings = new AnimationSettings();
+
+    /**
+     * @return animation settings
+     */
+    public AnimationSettings getSettings() {
+        return settings;
+    }
 
     /**
      * Applies custom animation settings
      * @param settings animation settings to set
      * @return this for concatenation
      */
-    default AnimatedProperty<T> withSettings(AnimationSettings settings) {
-        return new AnimatedProperty<>(this, settings);
+    public PropertyWrapper<T> withSettings(AnimationSettings settings) {
+        this.settings = settings;
+        return this;
     }
 
     /**
@@ -31,7 +41,7 @@ public interface PropertyWrapper<T> {
      * @param settings settings to update. Example: <pre>custom(settings -> settings.withDuration(...))</pre>
      * @return this for concatenation
      */
-    default AnimatedProperty<T> custom(Function<AnimationSettings, AnimationSettings> settings) {
-        return withSettings(settings.apply(new AnimationSettings()));
+    public PropertyWrapper<T> custom(Function<AnimationSettings, AnimationSettings> settings) {
+        return withSettings(settings.apply(getSettings()));
     }
 }
