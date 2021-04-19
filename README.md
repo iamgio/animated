@@ -22,6 +22,8 @@ Now that we have set an animated bound, we'll see that `child.setOpacity(someVal
 There are some pre-made animated nodes that take the child as an argument as well (list will expand):
 - `AnimatedOpacity`
 - `AnimatedSize`
+- `AnimatedRotation`
+- `AnimatedScale`
 
 ### Multiple animations at once
 
