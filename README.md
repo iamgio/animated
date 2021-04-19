@@ -24,6 +24,7 @@ There are some pre-made animated nodes that take the child as an argument as wel
 - `AnimatedSize`
 - `AnimatedRotation`
 - `AnimatedScale`
+- `AnimatedColor` (shapes only)
 
 ### Multiple animations at once
 

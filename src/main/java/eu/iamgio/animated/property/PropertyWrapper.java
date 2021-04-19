@@ -12,8 +12,21 @@ import javafx.beans.value.ChangeListener;
  */
 public abstract class PropertyWrapper<T> implements CustomizableAnimation<PropertyWrapper<T>> {
 
+    /**
+     * @return the wrapped JavaFX property
+     */
     public abstract Property<T> getProperty();
+
+    /**
+     * Changes the value of the wrapped property
+     * @param value new value to set
+     */
     public abstract void set(T value);
+
+    /**
+     * Registers a listener
+     * @param listener listener to register
+     */
     public abstract void addListener(ChangeListener<? super T> listener);
 
     private AnimationSettings settings = new AnimationSettings();
