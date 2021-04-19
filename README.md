@@ -1,8 +1,8 @@
 # animated
 
-**animated** introduces **automatic animations**, a completely new concept in JavaFX strongly inspired by [Flutter's animations and motion widgets](https://flutter.dev/docs/development/ui/widgets/animation).
+**animated** introduces **implicit animations**, a completely new concept in JavaFX strongly inspired by [Flutter's animations and motion widgets](https://flutter.dev/docs/development/ui/widgets/animation).
 
-## Automatic animations
+## Implicit animations
 
 Forget about timelines, explicit animations and other stuff that pollutes your code. This animation system will provide versatility to your code and interface.
 
