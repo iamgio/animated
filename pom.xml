@@ -6,7 +6,7 @@
 
     <groupId>eu.iamgio.animated</groupId>
     <artifactId>animated</artifactId>
-    <version>0.1</version>
+    <version>0.0.1</version>
     <build>
         <plugins>
             <plugin>

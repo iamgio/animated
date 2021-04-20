@@ -2,6 +2,37 @@
 
 **animated** introduces **implicit animations**, a completely new concept in JavaFX strongly inspired by [Flutter's animations and motion widgets](https://flutter.dev/docs/development/ui/widgets/animation).
 
+## Getting started
+
+Maven:
+```xml
+<repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+...
+<dependency>
+    <groupId>com.github.iAmGio</groupId>
+    <artifactId>animated</artifactId>
+    <version>v0.0.1</version>
+</dependency>
+```
+
+Gradle:
+```gradle
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+dependencies {
+    implementation 'com.github.iAmGio:animated:v0.0.1'
+}
+```
+
 ## Implicit animations
 
 Forget about timelines, explicit animations and other stuff that pollutes your code. This animation system will provide versatility to your code and interface.
