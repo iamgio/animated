@@ -57,6 +57,7 @@ There are some pre-made animated nodes that take the child as an argument as wel
 - `AnimatedRotation`
 - `AnimatedScale`
 - `AnimatedColor` (shapes only)
+- `AnimatedBlur`
 
 ### Multiple animations at once
 
