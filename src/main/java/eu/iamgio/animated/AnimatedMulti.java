@@ -12,7 +12,20 @@ import java.util.function.Function;
  */
 public class AnimatedMulti extends SingleChildParent implements CustomizableAnimation<AnimatedMulti> {
 
-    private final PropertyWrapper<?>[] wrappers;
+    private final AnimationProperty<?>[] properties;
+
+    /**
+     * Instantiates a group of animated properties
+     * @param child initial child
+     * @param properties target properties
+     */
+    public AnimatedMulti(Node child, AnimationProperty<?>... properties) {
+        super(child);
+        this.properties = properties;
+        for(AnimationProperty<?> property : properties) {
+            property.register(child);
+        }
+    }
 
     /**
      * Instantiates a group of animated properties
@@ -21,12 +34,11 @@ public class AnimatedMulti extends SingleChildParent implements CustomizableAnim
      */
     public AnimatedMulti(Node child, PropertyWrapper<?>... properties) {
         super(child);
-        this.wrappers = properties;
-        for(PropertyWrapper<?> property : properties) {
-            getChildren().add(new Animated<>(null,
-                    property,
-                    property.getSettings()
-            ));
+        this.properties = new AnimationProperty[properties.length];
+        for(int i = 0; i < properties.length; i++) {
+            AnimationProperty<?> property = new AnimationProperty<>(properties[i]);
+            this.properties[i] = property;
+            property.register(child);
         }
     }
 
@@ -37,7 +49,7 @@ public class AnimatedMulti extends SingleChildParent implements CustomizableAnim
      */
     public AnimatedMulti(Node child, Animated<?>... animated) {
         super(child);
-        this.wrappers = new PropertyWrapper[animated.length];
+        this.properties = new AnimationProperty[animated.length];
         for(int i = 0; i < animated.length; i++) {
             Animated<?> anim = animated[i];
             if(anim.getChild() != null) {
@@ -46,7 +58,7 @@ public class AnimatedMulti extends SingleChildParent implements CustomizableAnim
             if(anim.getScene() != null) {
                 System.err.println("Animated arguments of AnimatedMulti should not be already in scene.");
             }
-            wrappers[i] = anim.getProperty();
+            this.properties[i] = anim.getProperty();
             getChildren().add(anim);
         }
     }
@@ -65,8 +77,8 @@ public class AnimatedMulti extends SingleChildParent implements CustomizableAnim
     @SuppressWarnings("unchecked")
     @Override
     public <A extends AnimatedMulti> A withSettings(AnimationSettings settings) {
-        for(PropertyWrapper<?> wrapper : wrappers) {
-            wrapper.withSettings(settings);
+        for(AnimationProperty<?> property : properties) {
+            property.withSettings(settings);
         }
         return (A) this;
     }
@@ -76,8 +88,8 @@ public class AnimatedMulti extends SingleChildParent implements CustomizableAnim
      */
     @SuppressWarnings("unchecked")
     public <A extends AnimatedMulti> A custom(Function<AnimationSettings, AnimationSettings> settings) {
-        for(PropertyWrapper<?> wrapper : wrappers) {
-            wrapper.custom(settings);
+        for(AnimationProperty<?> property : properties) {
+            property.custom(settings);
         }
         return (A) this;
     }
