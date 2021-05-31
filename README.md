@@ -16,7 +16,7 @@ Maven:
 <dependency>
     <groupId>com.github.iAmGio</groupId>
     <artifactId>animated</artifactId>
-    <version>v0.0.1</version>
+    <version>v0.0.2</version>
 </dependency>
 ```
 
@@ -29,7 +29,7 @@ allprojects {
     }
 }
 dependencies {
-    implementation 'com.github.iAmGio:animated:v0.0.1'
+    implementation 'com.github.iAmGio:animated:v0.0.2'
 }
 ```
 
@@ -37,7 +37,8 @@ dependencies {
 
 Forget about timelines, explicit animations and other stuff that pollutes your code. This animation system will provide versatility to your code and interface.
 
-![Demo](https://i.imgur.com/TKXA8de.gif)
+![Demo](https://i.imgur.com/TKXA8de.gif)  
+**[Code](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedTest.java)**
 
 ```java
 Animated<Double> animated = new Animated<>(child, new DoublePropertyWrapper(child.opacityProperty()));
@@ -51,13 +52,14 @@ This approach instantiates an `Animated` node that contains one child and is bou
 Now that we have set an animated bound, we'll see that `child.setOpacity(someValue)` creates a transition between the initial and final value.  
 
 There are some pre-made animated nodes that take the child as an argument as well (list will expand):
+- `AnimatedBlur`
+- `AnimatedDropShadow`
+- `AnimatedColor` (shapes only)
 - `AnimatedOpacity`
-- `AnimatedSize`
 - `AnimatedPosition`
 - `AnimatedRotation`
+- `AnimatedSize`
 - `AnimatedScale`
-- `AnimatedColor` (shapes only)
-- `AnimatedBlur`
 
 ### Multiple animations at once
 
@@ -97,16 +99,15 @@ AnimatedMulti animated = new AnimatedMulti(child,
 ).custom(settings -> settings.withCurve(Curve.EASE_OUT)); // 'custom' applies only these settings to the properties.
                                                           // 'withSettings' overrides all instead.
 root.getChildren().add(animated);
-```  
-
-**[Demo](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedTest.java)** (example above)
+```
 
 ## Animated switchers
 
 The library also provides an `AnimatedSwitcher` node that creates a transition whenever its child changes.  
 This feature is based on animations from [AnimateFX](https://github.com/Typhon0/AnimateFX).
 
-![Demo](https://i.imgur.com/8v2Wn0a.gif)
+![Demo](https://i.imgur.com/8v2Wn0a.gif)  
+**[Code](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedSwitcherTest.java)**
 
 The node can be instantiated these ways:
 - `new AnimatedSwitcher(Animation in, Animation out)` wraps two `AnimateFX` objects into customizable `animated` objects;
@@ -127,4 +128,7 @@ root.getChildren().add(switcher);
 switcher.setChild(secondChild); // Plays the transition
 ```
 
-**[Demo](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedSwitcherTest.java)** (example above)
+## Other examples
+
+![Shadow](https://i.imgur.com/jd8Bbr4.gif)  
+[Drop shadows + switcher](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedShadowTest.java)
