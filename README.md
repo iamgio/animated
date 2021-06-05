@@ -117,6 +117,9 @@ root.getChildren().add(animated);
 **animated** provides custom implementations of `VBox` and `HBox` that animate their content whenever their children are affected by a change.  
 This feature is based on animations from [AnimateFX](https://github.com/Typhon0/AnimateFX).
 
+![Demo](https://i.imgur.com/ZO5lQoa.gif)  
+**[Code](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedContainerTest.java)**
+
 **Constructors**:
 - `Animation in, Animation out` wraps two `AnimateFX` objects into customizable `animated` objects;
 - `AnimationFX in, AnimationFX out` takes two raw AnimateFX animations that cannot be customized;

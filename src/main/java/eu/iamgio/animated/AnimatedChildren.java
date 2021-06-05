@@ -26,6 +26,8 @@ public interface AnimatedChildren {
     static void register(ObservableList<Node> children, Animation animationIn, Animation animationOut) {
         children.addListener((ListChangeListener<? super Node>) change -> {
             while(change.next()) {
+
+                // Animate inserted nodes
                 change.getAddedSubList().forEach(child -> {
                     if(!skipNodesHash.contains(child.hashCode())) {
                         animationIn.playIn(child, null);
@@ -33,6 +35,8 @@ public interface AnimatedChildren {
                         skipNodesHash.remove(child.hashCode());
                     }
                 });
+
+                // Animate removed nodes
                 change.getRemoved().forEach(child -> {
                     if(skipNodesHash.contains(child.hashCode())) {
                         skipNodesHash.remove(child.hashCode());
