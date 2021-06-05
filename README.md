@@ -2,6 +2,12 @@
 
 **animated** introduces **implicit animations**, a completely new concept in JavaFX strongly inspired by [Flutter's animations and motion widgets](https://flutter.dev/docs/development/ui/widgets/animation).
 
+### Index
+1. [Getting started](#getting-started)
+2. [Implicit animations](#implicit-animations)
+3. [Animated containers](#animated-containers)
+4. [Animated switchers](#animated-switchers)
+
 ## Getting started
 
 Maven:
@@ -32,6 +38,8 @@ dependencies {
     implementation 'com.github.iAmGio:animated:v0.1.0'
 }
 ```
+
+---
 
 ## Implicit animations
 
@@ -100,6 +108,8 @@ AnimatedMulti animated = new AnimatedMulti(child,
 root.getChildren().add(animated);
 ```
 
+---
+
 ## Animated containers
 
 **animated** provides custom implementations of `VBox` and `HBox` that animate their content whenever their children are affected by a change.  
@@ -118,6 +128,7 @@ AnimatedVBox vBox = new AnimatedVBox(AnimationPair.fade());
 vBox.getChildren().add(someNode);    // someNode fades in
 vBox.getChildren().remove(someNode); // someNode fades out
 ```
+---
 
 ## Animated switchers
 
