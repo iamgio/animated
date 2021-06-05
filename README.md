@@ -38,6 +38,7 @@ dependencies {
     implementation 'com.github.iAmGio:animated:v0.1.0'
 }
 ```
+<br/>
 
 ---
 
@@ -107,6 +108,7 @@ AnimatedMulti animated = new AnimatedMulti(child,
                                                           // 'withSettings' overrides all instead.
 root.getChildren().add(animated);
 ```
+<br/>
 
 ---
 
@@ -128,6 +130,8 @@ AnimatedVBox vBox = new AnimatedVBox(AnimationPair.fade());
 vBox.getChildren().add(someNode);    // someNode fades in
 vBox.getChildren().remove(someNode); // someNode fades out
 ```
+<br/>
+
 ---
 
 ## Animated switchers
@@ -152,6 +156,9 @@ root.getChildren().add(switcher);
 // Later...
 switcher.setChild(secondChild); // Plays the transition
 ```
+<br/>
+
+---
 
 ## Other examples
 
