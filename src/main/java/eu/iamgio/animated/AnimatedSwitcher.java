@@ -1,7 +1,6 @@
 package eu.iamgio.animated;
 
 import animatefx.animation.AnimationFX;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -20,22 +19,10 @@ public class AnimatedSwitcher extends Parent {
 
     private void handleChanges(Node oldChild, Node newChild) {
         if(newChild != null) {
-            AnimationFX in = animation.getIn().getAnimationFX();
-            if(in != null) {
-                in.setNode(newChild);
-                animation.getIn().applyProperties();
-                in.play();
-            }
-            Platform.runLater(() -> getChildren().add(newChild));
+            animation.getIn().playIn(newChild, getChildren());
         }
         if(oldChild != null) {
-            AnimationFX out = animation.getOut().getAnimationFX();
-            if(out != null) {
-                out.setNode(oldChild);
-                animation.getOut().applyProperties();
-                out.setOnFinished(e -> getChildren().remove(oldChild));
-                out.play();
-            }
+            animation.getOut().playOut(oldChild, getChildren());
         }
     }
 
