@@ -1,9 +1,7 @@
 package eu.iamgio.animatedtest;
 
-import animatefx.animation.FadeInUp;
-import animatefx.animation.FadeOutUp;
 import eu.iamgio.animated.AnimatedVBox;
-import eu.iamgio.animated.Animation;
+import eu.iamgio.animated.AnimationPair;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
@@ -15,7 +13,7 @@ import static eu.iamgio.animatedtest.TestUtil.randomRectangle;
 
 // This demo animates the content of multi-children containers, such as VBoxes.
 
-public class AnimatedListTest extends Application {
+public class AnimatedContainerTest extends Application {
 
 
     @Override
@@ -24,7 +22,7 @@ public class AnimatedListTest extends Application {
         Pane root = new Pane();
         Scene scene = new Scene(root, 650, 500);
 
-        AnimatedVBox vBox = new AnimatedVBox(new Animation(new FadeInUp()).setSpeed(3), new Animation(new FadeOutUp()).setSpeed(2));
+        AnimatedVBox vBox = new AnimatedVBox(AnimationPair.fade());
 
         root.setOnMouseClicked(e -> {
             if(e.getButton() == MouseButton.SECONDARY && !vBox.getChildren().isEmpty()) {
@@ -40,7 +38,7 @@ public class AnimatedListTest extends Application {
         root.getChildren().add(vBox);
 
         // Show
-        primaryStage.setTitle("AnimatedList");
+        primaryStage.setTitle("AnimatedContainer");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

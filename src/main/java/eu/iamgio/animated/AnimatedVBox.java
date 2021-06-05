@@ -13,7 +13,7 @@ public class AnimatedVBox extends VBox implements AnimatedChildren {
         AnimatedChildren.register(getChildren(), animationIn, animationOut);
     }
 
-    public AnimatedVBox(SwitchAnimation animation) {
+    public AnimatedVBox(AnimationPair animation) {
         this(animation.getIn(), animation.getOut());
     }
 

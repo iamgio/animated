@@ -13,7 +13,7 @@ public class AnimatedHBox extends HBox implements AnimatedChildren {
         AnimatedChildren.register(getChildren(), animationIn, animationOut);
     }
 
-    public AnimatedHBox(SwitchAnimation animation) {
+    public AnimatedHBox(AnimationPair animation) {
         this(animation.getIn(), animation.getOut());
     }
 

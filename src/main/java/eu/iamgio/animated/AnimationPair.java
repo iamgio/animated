@@ -6,27 +6,27 @@ import animatefx.animation.*;
  * Class that takes two {@link Animation}s: one for in, one for out.
  * @author Giorgio Garofalo
  */
-public class SwitchAnimation {
+public class AnimationPair {
 
     private final Animation animationIn;
     private final Animation animationOut;
 
     /**
-     * Instantiates a {@link SwitchAnimation} and passes its two required animations.
+     * Instantiates a {@link AnimationPair} and passes its two required animations.
      * @param animationIn entrance animation
      * @param animationOut exit animation
      */
-    SwitchAnimation(Animation animationIn, Animation animationOut) {
+    AnimationPair(Animation animationIn, Animation animationOut) {
         this.animationIn = animationIn;
         this.animationOut = animationOut;
     }
 
     /**
-     * Instantiates a {@link SwitchAnimation} and passes its two required animations.
+     * Instantiates a {@link AnimationPair} and passes its two required animations.
      * @param animationIn entrance animation
      * @param animationOut exit animation
      */
-    SwitchAnimation(AnimationFX animationIn, AnimationFX animationOut) {
+    AnimationPair(AnimationFX animationIn, AnimationFX animationOut) {
         this(new Animation(animationIn), new Animation(animationOut));
     }
 
@@ -49,7 +49,7 @@ public class SwitchAnimation {
      * @param speedOut speed multiplier to set to the exit animation
      * @return this for concatenation
      */
-    public SwitchAnimation setSpeed(double speedIn, double speedOut) {
+    public AnimationPair setSpeed(double speedIn, double speedOut) {
         animationIn.setSpeed(speedIn);
         animationOut.setSpeed(speedOut);
         return this;
@@ -60,8 +60,8 @@ public class SwitchAnimation {
      * @see FadeIn
      * @see FadeIn
      */
-    public static SwitchAnimation fade() {
-        return new SwitchAnimation(new FadeIn(), new FadeOut());
+    public static AnimationPair fade() {
+        return new AnimationPair(new FadeIn(), new FadeOut());
     }
 
     /**
@@ -69,8 +69,8 @@ public class SwitchAnimation {
      * @see ZoomIn
      * @see ZoomOut
      */
-    public static SwitchAnimation zoom() {
-        return new SwitchAnimation(new ZoomIn(), new ZoomOut());
+    public static AnimationPair zoom() {
+        return new AnimationPair(new ZoomIn(), new ZoomOut());
     }
 
     /**
@@ -78,8 +78,8 @@ public class SwitchAnimation {
      * @see RotateIn
      * @see RotateOut
      */
-    public static SwitchAnimation rotate() {
-        return new SwitchAnimation(new RotateIn(), new RotateOut());
+    public static AnimationPair rotate() {
+        return new AnimationPair(new RotateIn(), new RotateOut());
     }
 
     /**
@@ -87,8 +87,8 @@ public class SwitchAnimation {
      * @see BounceIn
      * @see BounceOut
      */
-    public static SwitchAnimation bounce() {
-        return new SwitchAnimation(new BounceIn(), new BounceOut());
+    public static AnimationPair bounce() {
+        return new AnimationPair(new BounceIn(), new BounceOut());
     }
 
     /**
@@ -96,8 +96,8 @@ public class SwitchAnimation {
      * @see RollIn
      * @see RollOut
      */
-    public static SwitchAnimation roll() {
-        return new SwitchAnimation(new RollIn(), new RollOut());
+    public static AnimationPair roll() {
+        return new AnimationPair(new RollIn(), new RollOut());
     }
 
     /**
@@ -105,8 +105,8 @@ public class SwitchAnimation {
      * @see SlideInUp
      * @see SlideOutUp
      */
-    public static SwitchAnimation slideUp() {
-        return new SwitchAnimation(new SlideInUp(), new SlideOutUp());
+    public static AnimationPair slideUp() {
+        return new AnimationPair(new SlideInUp(), new SlideOutUp());
     }
 
     /**
@@ -114,8 +114,8 @@ public class SwitchAnimation {
      * @see SlideInDown
      * @see SlideOutDown
      */
-    public static SwitchAnimation slideDown() {
-        return new SwitchAnimation(new SlideInDown(), new SlideOutDown());
+    public static AnimationPair slideDown() {
+        return new AnimationPair(new SlideInDown(), new SlideOutDown());
     }
 
     /**
@@ -123,8 +123,8 @@ public class SwitchAnimation {
      * @see SlideInLeft
      * @see SlideOutLeft
      */
-    public static SwitchAnimation slideLeft() {
-        return new SwitchAnimation(new SlideInLeft(), new SlideOutRight());
+    public static AnimationPair slideLeft() {
+        return new AnimationPair(new SlideInLeft(), new SlideOutRight());
     }
 
     /**
@@ -132,7 +132,7 @@ public class SwitchAnimation {
      * @see SlideInRight
      * @see SlideOutRight
      */
-    public static SwitchAnimation slideRight() {
-        return new SwitchAnimation(new SlideInRight(), new SlideOutRight());
+    public static AnimationPair slideRight() {
+        return new AnimationPair(new SlideInRight(), new SlideOutRight());
     }
 }

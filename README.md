@@ -63,8 +63,7 @@ There are some pre-made animated nodes that take the child as an argument as wel
 
 ### Multiple animations at once
 
-In case you need to animate more than one property of a single node, `AnimatedMulti` comes to the rescue.  
-Unfortunately, at this time it only takes properties as arguments, so it won't be possible to use pre-made nodes (list above).
+In case you need to animate more than one property of a single node, `AnimatedMulti` comes to the rescue. At this time it only takes properties as arguments, so it won't be possible to use pre-made nodes (list above).
 
 ```java
 AnimatedMulti animated = new AnimatedMulti(child,
@@ -101,19 +100,34 @@ AnimatedMulti animated = new AnimatedMulti(child,
 root.getChildren().add(animated);
 ```
 
+## Animated containers
+
+**animated** provides custom implementations of `VBox` and `HBox` that animate their content whenever their children are affected by a change.  
+This feature is based on animations from [AnimateFX](https://github.com/Typhon0/AnimateFX).
+
+**Constructors**:
+- `Animation in, Animation out` wraps two `AnimateFX` objects into customizable `animated` objects;
+- `AnimationFX in, AnimationFX out` takes two raw AnimateFX animations that cannot be customized;
+- `AnimationPair animation` takes a pair of animations, mostly used with pre-made pairs (e.g. `AnimationPair.fade()`).
+
+Example:
+```java
+AnimatedVBox vBox = new AnimatedVBox(AnimationPair.fade());
+
+// Later...
+vBox.getChildren().add(someNode);    // someNode fades in
+vBox.getChildren().remove(someNode); // someNode fades out
+```
+
 ## Animated switchers
 
 The library also provides an `AnimatedSwitcher` node that creates a transition whenever its child changes.  
-This feature is based on animations from [AnimateFX](https://github.com/Typhon0/AnimateFX).
+As for animated containers, this feature relies on AnimateFX.
 
 ![Demo](https://i.imgur.com/8v2Wn0a.gif)  
 **[Code](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedSwitcherTest.java)**
 
-The node can be instantiated these ways:
-- `new AnimatedSwitcher(Animation in, Animation out)` wraps two `AnimateFX` objects into customizable `animated` objects;
-- `new AnimatedSwitcher(AnimationFX in, AnimationFX out)` takes two raw AnimateFX animations that cannot be customized;
-- `new AnimatedSwitcher(SwitchAnimation animation)` takes a pair of animations, mostly used with pre-made pairs (e.g. `SwitchAnimation.fade()`).
-
+See [animated containers](#animated-containers) for information about constructors.  
 Right after the instantiation, calling `of(Node child)` will set the initial child without any animation played.
 
 Example:

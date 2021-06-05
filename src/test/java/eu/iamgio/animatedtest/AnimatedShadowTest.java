@@ -2,8 +2,8 @@ package eu.iamgio.animatedtest;
 
 import eu.iamgio.animated.AnimatedDropShadow;
 import eu.iamgio.animated.AnimatedSwitcher;
+import eu.iamgio.animated.AnimationPair;
 import eu.iamgio.animated.Curve;
-import eu.iamgio.animated.SwitchAnimation;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
@@ -37,7 +37,7 @@ public class AnimatedShadowTest extends Application {
         center(button, scene);
 
         // Setup animated switcher for text
-        AnimatedSwitcher textSwitcher = new AnimatedSwitcher(SwitchAnimation.fade().setSpeed(1, 2));
+        AnimatedSwitcher textSwitcher = new AnimatedSwitcher(AnimationPair.fade().setSpeed(1, 2));
         SimpleStringProperty textProperty = new SimpleStringProperty();
 
         // Create effect

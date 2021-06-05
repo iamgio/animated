@@ -11,7 +11,7 @@ import javafx.scene.Parent;
  */
 public class AnimatedSwitcher extends Parent {
 
-    private final SwitchAnimation animation;
+    private final AnimationPair animation;
     private final SimpleObjectProperty<Node> child = new SimpleObjectProperty<>();
 
     // Whether the handler has been set
@@ -40,7 +40,7 @@ public class AnimatedSwitcher extends Parent {
      * @param animationOut exit animation
      */
     public AnimatedSwitcher(Animation animationIn, Animation animationOut) {
-        this.animation = new SwitchAnimation(animationIn, animationOut);
+        this.animation = new AnimationPair(animationIn, animationOut);
     }
 
     /**
@@ -56,7 +56,7 @@ public class AnimatedSwitcher extends Parent {
      * Instantiates an {@link AnimatedSwitcher}.
      * @param animation a pair of in and out animations
      */
-    public AnimatedSwitcher(SwitchAnimation animation) {
+    public AnimatedSwitcher(AnimationPair animation) {
         this(animation.getIn(), animation.getOut());
     }
 
