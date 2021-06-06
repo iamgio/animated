@@ -39,7 +39,7 @@ public class AnimatedContainerTest extends Application {
         addButton.setOnAction(e -> {
             RectangleButton button = new RectangleButton();
             button.setOnMouseClicked(ev -> vBox.getChildren().remove(button));
-            if(vBox.getChildren().size() > 0) vBox.getChildren().add(vBox.getChildren().size() - 1,button);else vBox.getChildren().add(button);
+            if(vBox.getChildren().size() > 0) vBox.getChildren().add(vBox.getChildren().size() - 1, button); else vBox.getChildren().add(button);
         });
 
         root.getChildren().addAll(vBox, addButton);
@@ -56,9 +56,9 @@ public class AnimatedContainerTest extends Application {
 
         public RectangleButton() {
             Rectangle rectangle = randomRectangle();
-            setPrefSize(100, 100);
+            /*setPrefSize(100, 100);
             rectangle.setWidth(100);
-            rectangle.setHeight(100);
+            rectangle.setHeight(100);*/
 
             Label text = new Label("Click to remove");
             text.setPrefSize(100, 100);

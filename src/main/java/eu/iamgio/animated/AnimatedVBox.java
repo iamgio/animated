@@ -1,6 +1,7 @@
 package eu.iamgio.animated;
 
 import animatefx.animation.AnimationFX;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.VBox;
 
 /**
@@ -11,6 +12,7 @@ public class AnimatedVBox extends VBox implements AnimatedContainer {
 
     private final Animation in;
     private final Animation out;
+    private final SimpleObjectProperty<Curve> relocationCurveProperty = new SimpleObjectProperty<>(Curve.EASE_IN_OUT);
 
     /**
      * Instantiates an {@link AnimatedVBox}. {@link Animation} wraps an {@link AnimationFX}, allowing customization.
@@ -62,5 +64,13 @@ public class AnimatedVBox extends VBox implements AnimatedContainer {
     @Override
     public Handler.Direction getDirection() {
         return Handler.Direction.VERTICAL;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SimpleObjectProperty<Curve> relocationCurveProperty() {
+        return relocationCurveProperty;
     }
 }
