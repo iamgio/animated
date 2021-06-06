@@ -16,7 +16,7 @@ public class AnimationPair {
      * @param animationIn entrance animation
      * @param animationOut exit animation
      */
-    AnimationPair(Animation animationIn, Animation animationOut) {
+    public AnimationPair(Animation animationIn, Animation animationOut) {
         this.animationIn = animationIn;
         this.animationOut = animationOut;
     }
@@ -26,7 +26,7 @@ public class AnimationPair {
      * @param animationIn entrance animation
      * @param animationOut exit animation
      */
-    AnimationPair(AnimationFX animationIn, AnimationFX animationOut) {
+    public AnimationPair(AnimationFX animationIn, AnimationFX animationOut) {
         this(new Animation(animationIn), new Animation(animationOut));
     }
 

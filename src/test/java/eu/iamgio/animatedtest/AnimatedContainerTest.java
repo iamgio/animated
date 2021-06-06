@@ -1,10 +1,10 @@
 package eu.iamgio.animatedtest;
 
 import animatefx.animation.FadeInUp;
-import animatefx.animation.FadeOutUp;
+import animatefx.animation.SlideOutLeft;
 import eu.iamgio.animated.AnimatedOpacity;
 import eu.iamgio.animated.AnimatedVBox;
-import eu.iamgio.animated.Animation;
+import eu.iamgio.animated.AnimationPair;
 import eu.iamgio.animated.Curve;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -31,18 +31,21 @@ public class AnimatedContainerTest extends Application {
         Scene scene = new Scene(root, 650, 500);
 
         // Setup container
-        AnimatedVBox vBox = new AnimatedVBox(new Animation(new FadeInUp()).setSpeed(3), new Animation(new FadeOutUp()).setSpeed(2));
+        AnimatedVBox vBox = new AnimatedVBox(new AnimationPair(new FadeInUp(), new SlideOutLeft()).setSpeed(3, 3));
 
-        // Setup + button
-        Button addButton = new Button("+ Add rectangle");
-        addButton.relocate(400, 100);
-        addButton.setOnAction(e -> {
-            RectangleButton button = new RectangleButton();
-            button.setOnMouseClicked(ev -> vBox.getChildren().remove(button));
-            if(vBox.getChildren().size() > 0) vBox.getChildren().add(vBox.getChildren().size() - 1, button); else vBox.getChildren().add(button);
-        });
+        // Setup + buttons
 
-        root.getChildren().addAll(vBox, addButton);
+        Button topButton = new Button("+ Add on top");
+        topButton.setPrefWidth(150);
+        topButton.relocate(400, 100);
+        topButton.setOnAction(e -> vBox.getChildren().add(0, new RectangleButton(vBox)));
+
+        Button bottomButton = new Button("+ Add on bottom");
+        bottomButton.setPrefWidth(150);
+        bottomButton.relocate(400, 150);
+        bottomButton.setOnAction(e -> vBox.getChildren().add(new RectangleButton(vBox)));
+
+        root.getChildren().addAll(vBox, topButton, bottomButton);
 
         // Show
         primaryStage.setTitle("AnimatedContainer");
@@ -54,11 +57,11 @@ public class AnimatedContainerTest extends Application {
 
         // Random-colored rectangle with a "Click to remove" text that appears on hover on it.
 
-        public RectangleButton() {
+        public RectangleButton(Pane parent) {
             Rectangle rectangle = randomRectangle();
-            /*setPrefSize(100, 100);
+            setPrefSize(100, 100);
             rectangle.setWidth(100);
-            rectangle.setHeight(100);*/
+            rectangle.setHeight(100);
 
             Label text = new Label("Click to remove");
             text.setPrefSize(100, 100);
@@ -73,6 +76,8 @@ public class AnimatedContainerTest extends Application {
                     rectangle,
                     new AnimatedOpacity(text).custom(settings -> settings.withDuration(Duration.millis(150)).withCurve(Curve.EASE_IN_OUT))
             );
+
+            setOnMouseClicked(ev -> parent.getChildren().remove(this));
         }
     }
 }
