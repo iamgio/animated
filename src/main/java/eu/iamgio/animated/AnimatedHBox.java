@@ -7,17 +7,60 @@ import javafx.scene.layout.HBox;
  * An {@link HBox} with animated children.
  * @author Giorgio Garofalo
  */
-public class AnimatedHBox extends HBox implements AnimatedChildren {
+public class AnimatedHBox extends HBox implements AnimatedContainer {
 
-    public AnimatedHBox(Animation animationIn, Animation animationOut) {
-        AnimatedChildren.register(getChildren(), animationIn, animationOut);
+    private final Animation in;
+    private final Animation out;
+
+    /**
+     * Instantiates an {@link AnimatedHBox}. {@link Animation} wraps an {@link AnimationFX}, allowing customization.
+     * @param in entrance animation
+     * @param out exit animation
+     */
+    public AnimatedHBox(Animation in, Animation out) {
+        this.in = in;
+        this.out = out;
+        register();
     }
 
+    /**
+     * Instantiates an {@link AnimatedHBox}.
+     * @param animation a pair of in and out animations
+     */
     public AnimatedHBox(AnimationPair animation) {
         this(animation.getIn(), animation.getOut());
     }
 
-    public AnimatedHBox(AnimationFX animationIn, AnimationFX animationOut) {
-        this(new Animation(animationIn), new Animation(animationOut));
+    /**
+     * Instantiates an {@link AnimatedHBox}.
+     * @param in entrance animation
+     * @param out exit animation
+     */
+    public AnimatedHBox(AnimationFX in, AnimationFX out) {
+        this(new Animation(in), new Animation(out));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Animation getIn() {
+        return in;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Animation getOut() {
+        return out;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Handler.Direction getDirection() {
+        return Handler.Direction.HORIZONTAL;
     }
 }

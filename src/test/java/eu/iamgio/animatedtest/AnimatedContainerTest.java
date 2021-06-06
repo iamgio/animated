@@ -39,7 +39,7 @@ public class AnimatedContainerTest extends Application {
         addButton.setOnAction(e -> {
             RectangleButton button = new RectangleButton();
             button.setOnMouseClicked(ev -> vBox.getChildren().remove(button));
-            vBox.getChildren().add(button);
+            if(vBox.getChildren().size() > 0) vBox.getChildren().add(vBox.getChildren().size() - 1,button);else vBox.getChildren().add(button);
         });
 
         root.getChildren().addAll(vBox, addButton);
