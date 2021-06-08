@@ -22,7 +22,7 @@ Maven:
 <dependency>
     <groupId>com.github.iAmGio</groupId>
     <artifactId>animated</artifactId>
-    <version>v0.2.1</version>
+    <version>0.2.1</version>
 </dependency>
 ```
 
@@ -35,7 +35,7 @@ allprojects {
     }
 }
 dependencies {
-    implementation 'com.github.iAmGio:animated:v0.2.1'
+    implementation 'com.github.iAmGio:animated:0.2.1'
 }
 ```
 <br/>
