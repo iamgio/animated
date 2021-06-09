@@ -2,7 +2,7 @@ package eu.iamgio.animatedtest;
 
 import eu.iamgio.animated.AnimatedMulti;
 import eu.iamgio.animated.Curve;
-import eu.iamgio.animated.property.DoublePropertyWrapper;
+import eu.iamgio.animated.property.PropertyWrapper;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -38,11 +38,11 @@ public class AnimatedTest extends Application {
 
         // Setup the node and attach it to the root
         AnimatedMulti animated = new AnimatedMulti(pane,
-                new DoublePropertyWrapper(pane.opacityProperty())
+                PropertyWrapper.of(pane.opacityProperty())
                         .custom(settings -> settings.withDuration(Duration.seconds(.4))),
-                new DoublePropertyWrapper(pane.prefWidthProperty())
+                PropertyWrapper.of(pane.prefWidthProperty())
                         .custom(settings -> settings.withDuration(Duration.seconds(.3))),
-                new DoublePropertyWrapper(pane.prefHeightProperty())
+                PropertyWrapper.of(pane.prefHeightProperty())
                         .custom(settings -> settings.withDuration(Duration.seconds(.3)))
         ).custom(settings -> settings.withCurve(Curve.EASE_IN_OUT));
         root.getChildren().add(animated);
