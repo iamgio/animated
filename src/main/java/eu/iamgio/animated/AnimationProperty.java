@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
 
 /**
- * Class that animation of a JavaFX property wrapped inside of a {@link PropertyWrapper}.
+ * Class that animates of a JavaFX property wrapped inside of a {@link PropertyWrapper}.
  * @author Giorgio Garofalo
  */
 public class AnimationProperty<T> implements CustomizableAnimation<AnimationProperty<T>> {
