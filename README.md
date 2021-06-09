@@ -22,7 +22,7 @@ Maven:
 <dependency>
     <groupId>com.github.iAmGio</groupId>
     <artifactId>animated</artifactId>
-    <version>0.2.1</version>
+    <version>0.3.0</version>
 </dependency>
 ```
 
@@ -35,12 +35,14 @@ allprojects {
     }
 }
 dependencies {
-    implementation 'com.github.iAmGio:animated:0.2.1'
+    implementation 'com.github.iAmGio:animated:0.3.0'
 }
 ```
 <br/>
 
 ---
+
+<br/>
 
 ## Implicit animations
 
@@ -50,7 +52,7 @@ Forget about timelines, explicit animations and other stuff that pollutes your c
 **[Code](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedTest.java)**
 
 ```java
-Animated<Double> animated = new Animated<>(child, new DoublePropertyWrapper(child.opacityProperty()));
+Animated<Double> animated = new Animated<>(child, PropertyWrapper.of(child.opacityProperty()));
 root.getChildren().add(animated);
 
 // Later...
@@ -58,7 +60,10 @@ child.setOpacity(0.5); // Plays the transition
 ```  
 
 This approach instantiates an `Animated` node that contains one child and is bound to a property.  
-Now that we have set an animated bound, we'll see that `child.setOpacity(someValue)` creates a transition between the initial and final value.  
+Now that we have set an animated bound, we'll see that `child.setOpacity(someValue)` creates a transition between the initial and final value.
+
+> `PropertyWrapper.of` automatically finds out the best kind of wrapper for a given property.  
+> Currently supported wrappers are `DoublePropertyWrapper` and `ObjectPropertyWrapper<T>`.
 
 There are some pre-made animated nodes that take the child as an argument as well (list will expand):
 - `AnimatedBlur`
@@ -76,9 +81,9 @@ In case you need to animate more than one property of a single node, `AnimatedMu
 
 ```java
 AnimatedMulti animated = new AnimatedMulti(child,
-    new DoublePropertyWrapper(child.opacityProperty()),
-    new DoublePropertyWrapper(child.prefWidthProperty()),
-    new DoublePropertyWrapper(child.prefHeightProperty())
+    PropertyWrapper.of(child.opacityProperty()),
+    PropertyWrapper.of(child.prefWidthProperty()),
+    PropertyWrapper.of(child.prefHeightProperty())
 );
 root.getChildren().add(animated);
 
@@ -100,9 +105,9 @@ AnimatedOpacity animated = new AnimatedOpacity(child)
 
 ```java
 AnimatedMulti animated = new AnimatedMulti(child,
-    new DoublePropertyWrapper(child.opacityProperty())
+    PropertyWrapper.of(child.opacityProperty())
         .custom(settings -> settings.withDuration(Duration.seconds(.8))),
-    new DoublePropertyWrapper(child.rotateProperty())
+    PropertyWrapper.of(child.rotateProperty())
         .custom(settings -> settings.withDuration(Duration.seconds(.5)),
 ).custom(settings -> settings.withCurve(Curve.EASE_OUT)); // 'custom' applies only these settings to the properties.
                                                           // 'withSettings' overrides all instead.
@@ -111,6 +116,8 @@ root.getChildren().add(animated);
 <br/>
 
 ---
+
+<br/>
 
 ## Animated containers
 
@@ -137,6 +144,8 @@ vBox.getChildren().remove(someNode); // someNode fades out
 
 ---
 
+<br/>
+
 ## Animated switchers
 
 The library also provides an `AnimatedSwitcher` node that creates a transition whenever its child changes.  
@@ -162,6 +171,8 @@ switcher.setChild(secondChild); // Plays the transition
 <br/>
 
 ---
+
+<br/>
 
 ## Other examples
 
