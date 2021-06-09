@@ -50,14 +50,21 @@ public interface AnimatedContainer {
     Handler.Direction getDirection();
 
     /**
-     * @return curve used by the animation that relocates other nodes after a change
+     * @return curve used by the animation while relocating other nodes after a change
      */
     SimpleObjectProperty<Curve> relocationCurveProperty();
 
+    /**
+     * @return curve used by the animation while relocating other nodes after a change. Defaults to {@link Curve#EASE_IN_OUT}
+     */
     default Curve getRelocationCurve() {
         return relocationCurveProperty().get();
     }
 
+    /**
+     * Changes the curve used by the animation while relocating other nodes after a change.
+     * @param curve relocation curve to set
+     */
     default void setRelocationCurve(Curve curve) {
         relocationCurveProperty().set(curve);
     }
