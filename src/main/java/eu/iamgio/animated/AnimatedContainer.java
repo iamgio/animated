@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -50,6 +51,32 @@ public interface AnimatedContainer {
     Handler.Direction getDirection();
 
     /**
+     * @return whether animations are paused, so that this acts as a regular container
+     */
+    SimpleBooleanProperty pausedProperty();
+
+    /**
+     * @return whether animations are paused, so that this acts as a regular container
+     */
+    default boolean isPaused() {
+        return pausedProperty().get();
+    }
+
+    /**
+     * Prevents any animation from playing until {@link #resume()} is called.
+     */
+    default void pause() {
+        pausedProperty().set(true);
+    }
+
+    /**
+     * Lets animations play if {@link #isPaused()} is <tt>true</tt>.
+     */
+    default void resume() {
+        pausedProperty().set(false);
+    }
+
+    /**
      * @return curve used by the animation while relocating other nodes after a change
      */
     SimpleObjectProperty<Curve> relocationCurveProperty();
@@ -89,15 +116,15 @@ public interface AnimatedContainer {
          * @param container container to animate
          */
         static void register(AnimatedContainer container) {
-            ObservableList<Node> children = container.getChildren();
-            Animation animationIn = container.getIn();
-            Animation animationOut = container.getOut();
-            double spacing = container.getSpacing();
-            Direction direction = container.getDirection();
-            Curve relocationCurve = container.getRelocationCurve();
+            container.getChildren().addListener((ListChangeListener<? super Node>) change -> {
+                while(!container.isPaused() && change.next()) {
 
-            children.addListener((ListChangeListener<? super Node>) change -> {
-                while(change.next()) {
+                    ObservableList<Node> children = container.getChildren();
+                    Animation animationIn = container.getIn();
+                    Animation animationOut = container.getOut();
+                    double spacing = container.getSpacing();
+                    Direction direction = container.getDirection();
+                    Curve relocationCurve = container.getRelocationCurve();
 
                     // Animate inserted nodes
                     change.getAddedSubList().forEach(child -> {

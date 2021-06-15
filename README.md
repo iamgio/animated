@@ -132,6 +132,8 @@ This feature is based on animations from [AnimateFX](https://github.com/Typhon0/
 - `AnimationFX in, AnimationFX out` takes two raw AnimateFX animations that cannot be customized;
 - `AnimationPair animation` takes a pair of animations, mostly used with pre-made pairs (e.g. `AnimationPair.fade()`).
 
+`pause()` and `resume()` allow disabling/enabling animations so that you can switch back to the regular implementation and forth.
+
 Example:
 ```java
 AnimatedVBox vBox = new AnimatedVBox(AnimationPair.fade());
@@ -140,6 +142,7 @@ AnimatedVBox vBox = new AnimatedVBox(AnimationPair.fade());
 vBox.getChildren().add(someNode);    // someNode fades in
 vBox.getChildren().remove(someNode); // someNode fades out
 ```
+
 <br/>
 
 ---

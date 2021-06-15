@@ -1,6 +1,7 @@
 package eu.iamgio.animated;
 
 import animatefx.animation.AnimationFX;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.HBox;
 
@@ -12,6 +13,7 @@ public class AnimatedHBox extends HBox implements AnimatedContainer {
 
     private final Animation in;
     private final Animation out;
+    private final SimpleBooleanProperty pausedProperty = new SimpleBooleanProperty(false);
     private final SimpleObjectProperty<Curve> relocationCurveProperty = new SimpleObjectProperty<>(Curve.EASE_IN_OUT);
 
     /**
@@ -64,6 +66,14 @@ public class AnimatedHBox extends HBox implements AnimatedContainer {
     @Override
     public Handler.Direction getDirection() {
         return Handler.Direction.HORIZONTAL;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SimpleBooleanProperty pausedProperty() {
+        return pausedProperty;
     }
 
     /**
