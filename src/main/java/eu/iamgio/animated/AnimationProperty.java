@@ -54,8 +54,6 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
     private void handleChanges(T value) {
         AnimationSettings settings = property.getSettings();
 
-        timeline.stop();
-
         // The parallel property is used to check if the changes are applied by the animation or by external sources
         parallelProperty.set(property.getProperty().getValue());
 
@@ -98,17 +96,10 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
     public void register(Node target) {
         property.addListener(((observable, oldValue, newValue) -> {
             if(!isActive || (target != null && target.getScene() == null)) return;
-            if(timeline.getStatus() != Animation.Status.RUNNING) {
-                handleChanges ^= true;
-                if(handleChanges) {
+            if(timeline.getStatus() != Animation.Status.RUNNING || !isAnimationFrame(oldValue, newValue)) {
+                if(handleChanges ^= true) {
                     property.set(oldValue);
                     handleChanges(newValue);
-                }
-            } else if(!isAnimationFrame(oldValue, newValue)) {
-                handleChanges ^= true;
-                if(handleChanges) {
-                    property.set(newValue);
-                    handleChanges(oldValue);
                 }
             }
         }));
