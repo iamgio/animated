@@ -22,6 +22,11 @@ public abstract class PropertyWrapper<T> implements CustomizableAnimation<Proper
     public abstract Property<T> getProperty();
 
     /**
+     * @return the wrapped value
+     */
+    public abstract T getValue();
+
+    /**
      * Changes the value of the wrapped property
      * @param value new value to set
      */
@@ -32,6 +37,11 @@ public abstract class PropertyWrapper<T> implements CustomizableAnimation<Proper
      * @param listener listener to register
      */
     public abstract void addListener(ChangeListener<? super T> listener);
+
+    /**
+     * @return an empty property of the same type
+     */
+    public abstract Property<T> createParallelProperty();
 
     /**
      * {@inheritDoc}

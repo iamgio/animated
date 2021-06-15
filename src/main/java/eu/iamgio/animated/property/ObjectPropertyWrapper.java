@@ -2,6 +2,7 @@ package eu.iamgio.animated.property;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 
 /**
@@ -32,8 +33,24 @@ public class ObjectPropertyWrapper<T> extends PropertyWrapper<T> {
      * {@inheritDoc}
      */
     @Override
+    public T getValue() {
+        return property.getValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void set(T value) {
         property.set(value);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Property<T> createParallelProperty() {
+        return new SimpleObjectProperty<>();
     }
 
     /**

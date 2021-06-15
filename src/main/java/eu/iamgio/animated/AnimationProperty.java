@@ -3,8 +3,7 @@ package eu.iamgio.animated;
 import eu.iamgio.animated.property.PropertyWrapper;
 import javafx.animation.Animation;
 import javafx.animation.*;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.Property;
 import javafx.scene.Node;
 
 /**
@@ -17,7 +16,7 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
     private final PropertyWrapper<T> property;
 
     // The parallel property is used to check if the changes are applied by the animation or by external sources
-    private final ObjectProperty<T> parallelProperty;
+    private final Property<T> parallelProperty;
 
     // Animation timeline
     private final Timeline timeline;
@@ -35,7 +34,7 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
      */
     public AnimationProperty(PropertyWrapper<T> property, AnimationSettings settings) {
         this.property = property.withSettings(settings);
-        this.parallelProperty = new SimpleObjectProperty<>();
+        this.parallelProperty = property.createParallelProperty();
         this.timeline = new Timeline();
     }
 
@@ -55,7 +54,7 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
         AnimationSettings settings = property.getSettings();
 
         // The parallel property is used to check if the changes are applied by the animation or by external sources
-        parallelProperty.set(property.getProperty().getValue());
+        parallelProperty.setValue(property.getValue());
 
         Interpolator interpolator = settings.getCurve().toInterpolator();
 

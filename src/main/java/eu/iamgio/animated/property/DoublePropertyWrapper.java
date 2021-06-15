@@ -2,6 +2,7 @@ package eu.iamgio.animated.property;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 
 /**
@@ -32,8 +33,24 @@ public class DoublePropertyWrapper extends PropertyWrapper<Double> {
      * {@inheritDoc}
      */
     @Override
+    public Double getValue() {
+        return property.doubleValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void set(Double value) {
         property.set(value);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Property<Double> createParallelProperty() {
+        return new SimpleDoubleProperty().asObject();
     }
 
     /**
