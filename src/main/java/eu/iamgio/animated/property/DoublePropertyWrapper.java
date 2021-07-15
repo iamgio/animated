@@ -49,8 +49,8 @@ public class DoublePropertyWrapper extends PropertyWrapper<Double> {
      * {@inheritDoc}
      */
     @Override
-    public Property<Double> createParallelProperty() {
-        return new SimpleDoubleProperty().asObject();
+    public PropertyWrapper<Double> createParallelProperty() {
+        return new DoublePropertyWrapper(new SimpleDoubleProperty());
     }
 
     /**

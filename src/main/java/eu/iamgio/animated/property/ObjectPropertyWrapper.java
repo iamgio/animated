@@ -49,8 +49,8 @@ public class ObjectPropertyWrapper<T> extends PropertyWrapper<T> {
      * {@inheritDoc}
      */
     @Override
-    public Property<T> createParallelProperty() {
-        return new SimpleObjectProperty<>();
+    public PropertyWrapper<T> createParallelProperty() {
+        return new ObjectPropertyWrapper<>(new SimpleObjectProperty<>());
     }
 
     /**

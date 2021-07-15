@@ -3,11 +3,10 @@ package eu.iamgio.animated;
 import eu.iamgio.animated.property.PropertyWrapper;
 import javafx.animation.Animation;
 import javafx.animation.*;
-import javafx.beans.property.Property;
 import javafx.scene.Node;
 
 /**
- * Class that animates of a JavaFX property wrapped inside of a {@link PropertyWrapper}.
+ * Class that animates a JavaFX property wrapped inside of a {@link PropertyWrapper}.
  * @author Giorgio Garofalo
  */
 public class AnimationProperty<T> implements CustomizableAnimation<AnimationProperty<T>> {
@@ -16,7 +15,7 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
     private final PropertyWrapper<T> property;
 
     // The parallel property is used to check if the changes are applied by the animation or by external sources
-    private final Property<T> parallelProperty;
+    private final PropertyWrapper<T> parallelProperty;
 
     // Animation timeline
     private final Timeline timeline;
@@ -51,18 +50,24 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
      * @param value new property value
      */
     private void handleChanges(T value) {
-        AnimationSettings settings = property.getSettings();
+        // Temporarily stop the timeline in case it is currently running
+        timeline.stop();
 
         // The parallel property is used to check if the changes are applied by the animation or by external sources
-        parallelProperty.setValue(property.getValue());
+        parallelProperty.set(property.getValue());
 
+        // Retrieve settings
+        AnimationSettings settings = property.getSettings();
         Interpolator interpolator = settings.getCurve().toInterpolator();
 
+        // Set keyframes
         timeline.getKeyFrames().setAll(
                 new KeyFrame(settings.getDuration(), new KeyValue(property.getProperty(), value, interpolator)),
-                new KeyFrame(settings.getDuration(), new KeyValue(parallelProperty, value, interpolator))
+                new KeyFrame(settings.getDuration(), new KeyValue(parallelProperty.getProperty(), value, interpolator))
         );
-        timeline.playFromStart();
+
+        // Play the animation
+        timeline.play();
     }
 
     /**

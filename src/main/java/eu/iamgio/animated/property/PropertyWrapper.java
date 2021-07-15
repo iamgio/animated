@@ -41,7 +41,7 @@ public abstract class PropertyWrapper<T> implements CustomizableAnimation<Proper
     /**
      * @return an empty property of the same type
      */
-    public abstract Property<T> createParallelProperty();
+    public abstract PropertyWrapper<T> createParallelProperty();
 
     /**
      * {@inheritDoc}
