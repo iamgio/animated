@@ -1,0 +1,22 @@
+.central-box {
+    -fx-padding: 32;
+    -fx-spacing: 12;
+    -fx-alignment: center;
+    -fx-background-radius: 24;
+}
+
+.icon {
+    -fx-background-color: #FF7373;
+    -fx-pref-height: 50;
+}
+
+.title {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+}
+
+.subtitle {
+    -fx-font-size: 14;
+    -fx-opacity: .8;
+    -fx-text-alignment: center;
+}
