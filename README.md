@@ -7,6 +7,7 @@
 2. [Implicit animations](#implicit-animations)
 3. [Animated containers](#animated-containers)
 4. [Animated switchers](#animated-switchers)
+5. [Animated theme switch](#animated-theme-switch)
 
 ## Getting started
 
@@ -22,7 +23,7 @@ Maven:
 <dependency>
     <groupId>com.github.iAmGio</groupId>
     <artifactId>animated</artifactId>
-    <version>0.3.0</version>
+    <version>0.4.0</version>
 </dependency>
 ```
 
@@ -35,7 +36,7 @@ allprojects {
     }
 }
 dependencies {
-    implementation 'com.github.iAmGio:animated:0.3.0'
+    implementation 'com.github.iAmGio:animated:0.4.0'
 }
 ```
 <br/>
@@ -171,6 +172,32 @@ root.getChildren().add(switcher);
 // Later...
 switcher.setChild(secondChild); // Plays the transition
 ```
+<br/>
+
+---
+
+<br/>
+
+## Animated theme switch
+
+It is possible to create a transition whenever the stylesheets of the scene change via `AnimatedThemeSwitcher`, based on AnimateFX.
+
+
+![Theme](https://i.imgur.com/62GJe7D.gif)
+**[Code](src/test/java/eu/iamgio/animatedtest/AnimatedThemeTest.java)**
+
+```java
+AnimatedThemeSwitcher themeSwitcher = AnimatedThemeSwitcher.of(scene);
+themeSwitcher.setTheme("/light.css");         // Initial theme
+theme.setAnimation(new Animation(/* ... */)); // Optional: defaults to FadeOut
+
+// Later...
+themeSwitcher.animateTheme("/dark.css"); // Plays the transition
+```
+
+> **Note** that not every type of root can be animated properly, such as `VBox` and `HBox`.
+> Parents that allow overlapping children, i.e. `Pane`, are suggested. 
+
 <br/>
 
 ---
