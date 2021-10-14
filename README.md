@@ -183,7 +183,7 @@ switcher.setChild(secondChild); // Plays the transition
 It is possible to create a transition whenever the stylesheets of the scene change via `AnimatedThemeSwitcher`, based on AnimateFX.
 
 
-![Theme](https://i.imgur.com/62GJe7D.gif)
+![Theme](https://i.imgur.com/0PnOYbc.gif)  
 **[Code](src/test/java/eu/iamgio/animatedtest/AnimatedThemeTest.java)**
 
 ```java
