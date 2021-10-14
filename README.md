@@ -211,4 +211,4 @@ themeSwitcher.animateTheme("/dark.css"); // Plays the transition
 **[Drop shadows + switcher](src/test/java/eu/iamgio/animatedtest/AnimatedShadowTest.java)**
 
 ![Root switch](https://i.imgur.com/cYkSu9z.gif)  
-**[Root switch](src/test/java/eu/iamgio/animatedtest/AnimatedShadowTest.java)**
+**[Root switch](src/test/java/eu/iamgio/animatedtest/AnimatedRootSwitchTest.java)**
