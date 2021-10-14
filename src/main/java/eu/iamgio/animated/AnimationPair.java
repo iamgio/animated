@@ -124,7 +124,7 @@ public class AnimationPair {
      * @see SlideOutLeft
      */
     public static AnimationPair slideLeft() {
-        return new AnimationPair(new SlideInLeft(), new SlideOutRight());
+        return new AnimationPair(new SlideInLeft(), new SlideOutLeft());
     }
 
     /**
