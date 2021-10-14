@@ -65,6 +65,42 @@ public class AnimationPair {
     }
 
     /**
+     * @return fade-in-up / fade-out-up animation
+     * @see FadeInUp
+     * @see FadeOutUp
+     */
+    public static AnimationPair fadeUp() {
+        return new AnimationPair(new FadeInUp(), new FadeOutUp());
+    }
+
+    /**
+     * @return fade-in-down / fade-out-down animation
+     * @see FadeInDown
+     * @see FadeOutDown
+     */
+    public static AnimationPair fadeDown() {
+        return new AnimationPair(new FadeInDown(), new FadeOutDown());
+    }
+
+    /**
+     * @return fade-in-left / fade-out-left animation
+     * @see FadeInLeft
+     * @see FadeOutLeft
+     */
+    public static AnimationPair fadeLeft() {
+        return new AnimationPair(new FadeInLeft(), new FadeOutLeft());
+    }
+
+    /**
+     * @return fade-in-right / fade-out-right animation
+     * @see FadeInRight
+     * @see FadeOutRight
+     */
+    public static AnimationPair fadeRight() {
+        return new AnimationPair(new FadeInRight(), new FadeOutRight());
+    }
+
+    /**
      * @return zoom-in / zoom-out animation
      * @see ZoomIn
      * @see ZoomOut
