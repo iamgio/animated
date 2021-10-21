@@ -8,6 +8,7 @@
 3. [Animated containers](#animated-containers)
 4. [Animated switchers](#animated-switchers)
 5. [Animated theme switch](#animated-theme-switch)
+6. [Kotlin extensions](#kotlin-extensions)
 
 ## Getting started
 
@@ -208,3 +209,18 @@ themeSwitcher.animateTheme("/dark.css"); // Plays the transition
 
 ![Shadow](https://i.imgur.com/jd8Bbr4.gif)  
 [Drop shadows + switcher](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedShadowTest.java)
+
+<br/>
+
+---
+
+<br/>
+
+## Kotlin extensions
+
+[Extension functions](src/main/java/eu/iamgio/animated/AnimatedExtensions.kt) make the library less verbose with Kotlin.  
+Example:
+```kotlin
+val animated: Animated = Animated(child, child.someProperty().animated())
+val pair: AnimationPair = FadeIn().options(speed = 1.5) outTo FadeOut()
+```
