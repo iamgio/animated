@@ -8,7 +8,7 @@
 3. [Animated containers](#animated-containers)
 4. [Animated switchers](#animated-switchers)
 5. [Animated theme switch](#animated-theme-switch)
-6. [Kotlin extensions](#kotlin-extensions)
+6. [Other examples](#other-examples)
 
 ## Getting started
 
@@ -51,7 +51,7 @@ dependencies {
 Forget about timelines, explicit animations and other stuff that pollutes your code. This animation system will provide versatility to your code and interface.
 
 ![Demo](https://i.imgur.com/TKXA8de.gif)  
-**[Code](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedTest.java)**
+**[Code](src/test/java/eu/iamgio/animatedtest/AnimatedTest.java)**
 
 ```java
 Animated<Double> animated = new Animated<>(child, PropertyWrapper.of(child.opacityProperty()));
@@ -127,7 +127,7 @@ root.getChildren().add(animated);
 This feature is based on animations from [AnimateFX](https://github.com/Typhon0/AnimateFX).
 
 ![Demo](https://i.imgur.com/jqm9KDA.gif)  
-**[Code](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedContainerTest.java)**
+**[Code](src/test/java/eu/iamgio/animatedtest/AnimatedContainerTest.java)**
 
 **Constructors**:
 - `Animation in, Animation out` wraps two `AnimateFX` objects into customizable `animated` objects;
@@ -157,7 +157,7 @@ The library also provides an `AnimatedSwitcher` node that creates a transition w
 As for animated containers, this feature relies on AnimateFX.
 
 ![Demo](https://i.imgur.com/8v2Wn0a.gif)  
-**[Code](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedSwitcherTest.java)**
+**[Code](src/test/java/eu/iamgio/animatedtest/AnimatedSwitcherTest.java)**
 
 See [animated containers](#animated-containers) for information about constructors.  
 Right after the instantiation, calling `of(Node child)` will set the initial child without any animation played.
@@ -184,7 +184,7 @@ switcher.setChild(secondChild); // Plays the transition
 It is possible to create a transition whenever the stylesheets of the scene change via `AnimatedThemeSwitcher`, based on AnimateFX.
 
 
-![Theme](https://i.imgur.com/62GJe7D.gif)
+![Theme](https://i.imgur.com/0PnOYbc.gif)  
 **[Code](src/test/java/eu/iamgio/animatedtest/AnimatedThemeTest.java)**
 
 ```java
@@ -208,19 +208,7 @@ themeSwitcher.animateTheme("/dark.css"); // Plays the transition
 ## Other examples
 
 ![Shadow](https://i.imgur.com/jd8Bbr4.gif)  
-[Drop shadows + switcher](https://github.com/iAmGio/animated/blob/master/src/test/java/eu/iamgio/animatedtest/AnimatedShadowTest.java)
+**[Drop shadows + switcher](src/test/java/eu/iamgio/animatedtest/AnimatedShadowTest.java)**
 
-<br/>
-
----
-
-<br/>
-
-## Kotlin extensions
-
-[Extension functions](src/main/java/eu/iamgio/animated/AnimatedExtensions.kt) make the library less verbose with Kotlin.  
-Example:
-```kotlin
-val animated: Animated = Animated(child, child.someProperty().animated())
-val pair: AnimationPair = FadeIn().options(speed = 1.5) outTo FadeOut()
-```
+![Root switch](https://i.imgur.com/cYkSu9z.gif)  
+**[Root switch](src/test/java/eu/iamgio/animatedtest/AnimatedRootSwitchTest.java)**

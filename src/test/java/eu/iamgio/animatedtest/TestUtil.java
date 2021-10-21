@@ -31,7 +31,30 @@ public class TestUtil {
         double width = random.nextInt(200) + 100;
         double height = random.nextInt(200) + 100;
         // R, G and B values in 0.5-1 range
-        Color color = new Color((random.nextInt(5) + 5) / 10F, (random.nextInt(5) + 5) / 10F, (random.nextInt(5) + 5) / 10F, 1);
+        Color color = randomColor(random);
         return new Rectangle(width, height, color);
+    }
+
+    /**
+     * @param random {@link Random} object
+     * @return randomly generated color in 0.5-1 range
+     */
+    public static Color randomColor(Random random) {
+        return new Color((random.nextInt(5) + 5) / 10F, (random.nextInt(5) + 5) / 10F, (random.nextInt(5) + 5) / 10F, 1);
+    }
+
+    /**
+     * @return randomly generated color in 0.5-1 range
+     */
+    public static Color randomColor() {
+        return randomColor(new Random());
+    }
+
+    /**
+     * @param color base color
+     * @return complementary (opposite) color
+     */
+    public static Color complementaryColor(Color color) {
+        return Color.color(1 - color.getRed(), 1 - color.getGreen(), 1 - color.getBlue());
     }
 }
