@@ -12,6 +12,7 @@
 7. [Kotlin extensions](#kotlin-extensions)
 
 ## Getting started
+[![](https://jitpack.io/v/iamgio/animated.svg)](https://jitpack.io/#iamgio/animated)
 
 Maven:
 ```xml
