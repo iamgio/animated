@@ -9,6 +9,7 @@
 4. [Animated switchers](#animated-switchers)
 5. [Animated theme switch](#animated-theme-switch)
 6. [Other examples](#other-examples)
+7. [Kotlin extensions](#kotlin-extensions)
 
 ## Getting started
 
@@ -24,7 +25,7 @@ Maven:
 <dependency>
     <groupId>com.github.iAmGio</groupId>
     <artifactId>animated</artifactId>
-    <version>0.4.0</version>
+    <version>0.4.1</version>
 </dependency>
 ```
 
@@ -37,7 +38,7 @@ allprojects {
     }
 }
 dependencies {
-    implementation 'com.github.iAmGio:animated:0.4.0'
+    implementation 'com.github.iAmGio:animated:0.4.1'
 }
 ```
 <br/>
@@ -212,3 +213,18 @@ themeSwitcher.animateTheme("/dark.css"); // Plays the transition
 
 ![Root switch](https://i.imgur.com/cYkSu9z.gif)  
 **[Root switch](src/test/java/eu/iamgio/animatedtest/AnimatedRootSwitchTest.java)**
+
+<br/>
+
+---
+
+<br/>
+
+## Kotlin extensions
+
+[Extension functions](src/main/java/eu/iamgio/animated/AnimatedExtensions.kt) make the library less verbose with Kotlin.  
+Example:
+```kotlin
+val animated: Animated = Animated(child, child.someProperty().animated())
+val pair: AnimationPair = FadeIn().options(speed = 1.5) outTo FadeOut()
+```
