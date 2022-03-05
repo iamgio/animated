@@ -17,9 +17,7 @@ public class AnimationPair {
      * @param animationOut exit animation
      */
     public AnimationPair(Animation animationIn, Animation animationOut) {
-        if(animationIn == null || animationOut == null) {
-            throw new IllegalArgumentException("One or more null animations passed to AnimationPair.");
-        }
+        if(animationIn == null || animationOut == null) throwNullParamsException();
         this.animationIn = animationIn;
         this.animationOut = animationOut;
     }
@@ -31,9 +29,31 @@ public class AnimationPair {
      */
     public AnimationPair(AnimationFX animationIn, AnimationFX animationOut) {
         this(new Animation(animationIn), new Animation(animationOut));
-        if(animationIn == null || animationOut == null) {
-            throw new IllegalArgumentException("One or more null animations passed to AnimationPair.");
-        }
+        if(animationIn == null || animationOut == null) throwNullParamsException();
+    }
+
+    /**
+     * Instantiates a {@link AnimationPair} and passes its two required animations.
+     * @param animationIn entrance (wrapped) animation
+     * @param animationOut exit (unwrapped) animation
+     */
+    public AnimationPair(Animation animationIn, AnimationFX animationOut) {
+        this(animationIn, new Animation(animationOut));
+        if(animationIn == null || animationOut == null) throwNullParamsException();
+    }
+
+    /**
+     * Instantiates a {@link AnimationPair} and passes its two required animations.
+     * @param animationIn entrance (unwrapped) animation
+     * @param animationOut exit (wrapped) animation
+     */
+    public AnimationPair(AnimationFX animationIn, Animation animationOut) {
+        this(new Animation(animationIn), animationOut);
+        if(animationIn == null || animationOut == null) throwNullParamsException();
+    }
+
+    private static void throwNullParamsException() {
+        throw new IllegalArgumentException("One or more null animations passed to AnimationPair.");
     }
 
     /**
