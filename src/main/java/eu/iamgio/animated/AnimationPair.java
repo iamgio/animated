@@ -17,6 +17,9 @@ public class AnimationPair {
      * @param animationOut exit animation
      */
     public AnimationPair(Animation animationIn, Animation animationOut) {
+        if(animationIn == null || animationOut == null) {
+            throw new IllegalArgumentException("One or more null animations passed to AnimationPair.");
+        }
         this.animationIn = animationIn;
         this.animationOut = animationOut;
     }
@@ -28,6 +31,9 @@ public class AnimationPair {
      */
     public AnimationPair(AnimationFX animationIn, AnimationFX animationOut) {
         this(new Animation(animationIn), new Animation(animationOut));
+        if(animationIn == null || animationOut == null) {
+            throw new IllegalArgumentException("One or more null animations passed to AnimationPair.");
+        }
     }
 
     /**
