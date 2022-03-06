@@ -6,10 +6,10 @@
 
     <groupId>eu.iamgio.animated</groupId>
     <artifactId>animated</artifactId>
-    <version>0.4.1</version>
+    <version>0.4.2</version>
 
     <properties>
-        <kotlin.version>1.5.31</kotlin.version>
+        <kotlin.version>1.4.31</kotlin.version>
     </properties>
 
 
