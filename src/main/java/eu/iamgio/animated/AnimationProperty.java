@@ -14,11 +14,14 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
     // The target property
     private final PropertyWrapper<T> property;
 
-    // The parallel property is used to check if the changes are applied by the animation or by external sources
-    private final PropertyWrapper<T> parallelProperty;
-
     // Animation timeline
     private final Timeline timeline;
+
+    // Last time an animation frame was played (in millis)
+    private double lastUpdate;
+
+    // Last value the timeline changed
+    private T lastValue;
 
     // Whether the property should be animated
     private boolean isActive = true;
@@ -33,8 +36,12 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
      */
     public AnimationProperty(PropertyWrapper<T> property, AnimationSettings settings) {
         this.property = property.withSettings(settings);
-        this.parallelProperty = property.createParallelProperty();
         this.timeline = new Timeline();
+
+        timeline.currentTimeProperty().addListener(o -> {
+            lastUpdate = timeline.getCurrentTime().toMillis();
+            lastValue = property.getValue();
+        });
     }
 
     /**
@@ -53,17 +60,13 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
         // Temporarily stop the timeline in case it is currently running
         timeline.stop();
 
-        // The parallel property is used to check if the changes are applied by the animation or by external sources
-        parallelProperty.set(property.getValue());
-
         // Retrieve settings
         AnimationSettings settings = property.getSettings();
         Interpolator interpolator = settings.getCurve().toInterpolator();
 
         // Set keyframes
         timeline.getKeyFrames().setAll(
-                new KeyFrame(settings.getDuration(), new KeyValue(property.getProperty(), value, interpolator)),
-                new KeyFrame(settings.getDuration(), new KeyValue(parallelProperty.getProperty(), value, interpolator))
+                new KeyFrame(settings.getDuration(), new KeyValue(property.getProperty(), value, interpolator))
         );
 
         // Play the animation
@@ -74,8 +77,7 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
      * @return whether the current property change was fired by the animation or by an external source
      */
     private boolean isAnimationFrame(T oldPropertyValue, T newPropertyValue) {
-        Object parallelValue = parallelProperty.getValue();
-        return parallelValue != null && (parallelValue.equals(oldPropertyValue) || parallelValue.equals(newPropertyValue));
+        return timeline.getCurrentTime().toMillis() == lastUpdate && (newPropertyValue.equals(lastValue) || oldPropertyValue.equals(lastValue));
     }
 
     /**

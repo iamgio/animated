@@ -40,6 +40,7 @@ public abstract class PropertyWrapper<T> implements CustomizableAnimation<Proper
 
     /**
      * @return an empty property of the same type
+     * @deprecated Currently unused and will be likely removed.
      */
     public abstract PropertyWrapper<T> createParallelProperty();
 
