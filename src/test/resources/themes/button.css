@@ -1,0 +1,13 @@
+.root {
+    -fx-background-color: #1A1A1A;
+}
+
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-width: 4;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+    -fx-padding: 16 32 16 32;
+}
