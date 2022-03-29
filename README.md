@@ -26,7 +26,7 @@ Maven:
 <dependency>
     <groupId>com.github.iAmGio</groupId>
     <artifactId>animated</artifactId>
-    <version>0.4.2</version>
+    <version>0.5.0</version>
 </dependency>
 ```
 
@@ -39,7 +39,7 @@ allprojects {
     }
 }
 dependencies {
-    implementation 'com.github.iAmGio:animated:0.4.2'
+    implementation 'com.github.iAmGio:animated:0.5.0'
 }
 ```
 <br/>
@@ -208,6 +208,9 @@ themeSwitcher.animateTheme("/dark.css"); // Plays the transition
 <br/>
 
 ## Other examples
+
+![Button](https://i.imgur.com/mVGkKcx.gif)  
+**[Button color and border](src/test/java/eu/iamgio/animatedtest/AnimatedButtonTest.java)**
 
 ![Shadow](https://i.imgur.com/jd8Bbr4.gif)  
 **[Drop shadows + switcher](src/test/java/eu/iamgio/animatedtest/AnimatedShadowTest.java)**
