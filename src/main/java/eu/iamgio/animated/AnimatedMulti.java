@@ -13,6 +13,7 @@ import java.util.function.Function;
 public class AnimatedMulti extends SingleChildParent implements CustomizableAnimation<AnimatedMulti> {
 
     private final AnimationProperty<?>[] properties;
+    private boolean isActive;
 
     /**
      * Instantiates a group of animated properties
@@ -58,7 +59,7 @@ public class AnimatedMulti extends SingleChildParent implements CustomizableAnim
             if(anim.getScene() != null) {
                 System.err.println("Animated arguments of AnimatedMulti should not be already in scene.");
             }
-            this.properties[i] = anim.getProperty();
+            this.properties[i] = anim.getTargetProperty();
             getChildren().add(anim);
         }
     }
@@ -92,5 +93,29 @@ public class AnimatedMulti extends SingleChildParent implements CustomizableAnim
             property.custom(settings);
         }
         return (A) this;
+    }
+
+    /**
+     * @return target properties
+     */
+    public AnimationProperty<?>[] getTargetProperties() {
+        return properties;
+    }
+
+    /**
+     * @return whether the property should be animated
+     */
+    public boolean isActive() {
+        return isActive;
+    }
+
+    /**
+     * @param active whether the property should be animated
+     */
+    public void setActive(boolean active) {
+        isActive = active;
+        for(AnimationProperty<?> property : properties) {
+            property.setActive(active);
+        }
     }
 }

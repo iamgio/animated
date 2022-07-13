@@ -54,7 +54,7 @@ public class Animated<T> extends SingleChildParent implements CustomizableAnimat
     /**
      * @return target property
      */
-    public AnimationProperty<T> getProperty() {
+    public AnimationProperty<T> getTargetProperty() {
         return property;
     }
 
@@ -73,5 +73,19 @@ public class Animated<T> extends SingleChildParent implements CustomizableAnimat
     public <A extends Animated<T>> A withSettings(AnimationSettings settings) {
         this.property.withSettings(settings);
         return (A) this;
+    }
+
+    /**
+     * @return whether the property should be animated
+     */
+    public boolean isActive() {
+        return property.isActive();
+    }
+
+    /**
+     * @param active whether the property should be animated
+     */
+    public void setActive(boolean active) {
+        property.setActive(active);
     }
 }
