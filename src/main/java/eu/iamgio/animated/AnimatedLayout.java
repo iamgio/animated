@@ -19,6 +19,8 @@ public class AnimatedLayout extends AnimatedMulti {
     private final Region root;
     private final Pos alignment;
 
+    private boolean animateShrinking;
+
     // The latest registered child size
     private Bounds bounds;
 
@@ -29,13 +31,15 @@ public class AnimatedLayout extends AnimatedMulti {
      * @param child the node to wrap, whose layout should be animated
      * @param root root to rely relayouts on
      * @param alignment position of the node relative to its root
+     * @param animateShrinking whether the animation should be played when the root is shrunk
      */
-    public AnimatedLayout(Node child, Region root, Pos alignment) {
+    public AnimatedLayout(Node child, Region root, Pos alignment, boolean animateShrinking) {
         super(child, new DoublePropertyWrapper(child.layoutXProperty()), new DoublePropertyWrapper(child.layoutYProperty()));
 
         this.child = child;
         this.root = root;
         this.alignment = alignment;
+        this.animateShrinking = animateShrinking;
         this.bounds = child.getLayoutBounds();
 
         HPos hPos = alignment.getHpos();
@@ -50,10 +54,35 @@ public class AnimatedLayout extends AnimatedMulti {
     }
 
     /**
+     * Instantiates an {@link AnimatedLayout} node.
+     * @param child the node to wrap, whose layout should be animated
+     * @param root root to rely relayouts on
+     * @param alignment position of the node relative to its root
+     */
+    public AnimatedLayout(Node child, Region root, Pos alignment) {
+        this(child, root, alignment, false);
+    }
+
+    /**
      * @return alignment of the child relative to the root
      */
     public Pos getAlignment() {
         return alignment;
+    }
+
+    /**
+     * @return whether the animation should be played when the root is shrunk
+     */
+    public boolean isAnimateShrinking() {
+        return animateShrinking;
+    }
+
+    /**
+     * Enables or disables shrinking animation.
+     * @param animateShrinking whether the animation should be played when the root is shrunk
+     */
+    public void setAnimateShrinking(boolean animateShrinking) {
+        this.animateShrinking = animateShrinking;
     }
 
     /**
@@ -107,7 +136,14 @@ public class AnimatedLayout extends AnimatedMulti {
      */
     private void bindX(HPos hPos) {
         if(requiresBinding(hPos)) {
-            root.prefWidthProperty().addListener((o) -> updateX(isCenter(hPos)));
+            root.prefWidthProperty().addListener((observable, oldValue, newValue) -> {
+                boolean isShrunk = !animateShrinking && (double) newValue < (double) oldValue;
+                if(isShrunk) setActive(false);
+
+                updateX(isCenter(hPos));
+
+                if(isShrunk) setActive(true);
+            });
         }
     }
 
@@ -118,7 +154,14 @@ public class AnimatedLayout extends AnimatedMulti {
     private void bindY(VPos vPos) {
         if(requiresBinding(vPos)) {
             boolean center = vPos == VPos.CENTER;
-            root.prefHeightProperty().addListener((o) -> updateY(isCenter(vPos)));
+            root.prefHeightProperty().addListener((observable, oldValue, newValue) -> {
+                boolean isShrunk = !animateShrinking && (double) newValue < (double) oldValue;
+                if(isShrunk) setActive(false);
+
+                updateY(isCenter(vPos));
+
+                if(isShrunk) setActive(true);
+            });
         }
     }
 

@@ -18,4 +18,5 @@
 .layout-test .label {
     -fx-font-size: 16;
     -fx-font-weight: bold;
+    -fx-padding: 12;
 }
