@@ -71,7 +71,7 @@ public class AnimatedLayout extends AnimatedMulti {
     }
 
     /**
-     * @return whether the animation should be played when the root is shrunk
+     * @return whether the animation should be played when the root is shrunk. Does not affect centered alignments
      */
     public boolean isAnimateShrinking() {
         return animateShrinking;
@@ -137,7 +137,7 @@ public class AnimatedLayout extends AnimatedMulti {
     private void bindX(HPos hPos) {
         if(requiresBinding(hPos)) {
             root.prefWidthProperty().addListener((observable, oldValue, newValue) -> {
-                boolean isShrunk = !animateShrinking && (double) newValue < (double) oldValue;
+                boolean isShrunk = !animateShrinking && (double) newValue < (double) oldValue && !isCenter(hPos);
                 if(isShrunk) setActive(false);
 
                 updateX(isCenter(hPos));
@@ -155,7 +155,7 @@ public class AnimatedLayout extends AnimatedMulti {
         if(requiresBinding(vPos)) {
             boolean center = vPos == VPos.CENTER;
             root.prefHeightProperty().addListener((observable, oldValue, newValue) -> {
-                boolean isShrunk = !animateShrinking && (double) newValue < (double) oldValue;
+                boolean isShrunk = !animateShrinking && (double) newValue < (double) oldValue && !isCenter(vPos);
                 if(isShrunk) setActive(false);
 
                 updateY(isCenter(vPos));
