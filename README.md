@@ -26,7 +26,7 @@ Maven:
 <dependency>
     <groupId>com.github.iAmGio</groupId>
     <artifactId>animated</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
 </dependency>
 ```
 
@@ -39,7 +39,7 @@ allprojects {
     }
 }
 dependencies {
-    implementation 'com.github.iAmGio:animated:0.5.0'
+    implementation 'com.github.iAmGio:animated:0.5.1'
 }
 ```
 <br/>
@@ -78,6 +78,7 @@ There are some pre-made animated nodes that take the child as an argument as wel
 - `AnimatedRotation`
 - `AnimatedSize`
 - `AnimatedScale`
+- `AnimatedLayout`
 
 ### Multiple animations at once
 
@@ -217,6 +218,9 @@ themeSwitcher.animateTheme("/dark.css"); // Plays the transition
 
 ![Root switch](https://i.imgur.com/cYkSu9z.gif)  
 **[Root switch](src/test/java/eu/iamgio/animatedtest/AnimatedRootSwitchTest.java)**
+
+![Layout alignment](https://i.imgur.com/xNRltwq.gif)  
+**[Layout alignment](src/test/java/eu/iamgio/animatedtest/AnimatedLayoutTest.java)** (inspired by the Edge home page)
 
 <br/>
 
