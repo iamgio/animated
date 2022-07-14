@@ -1,6 +1,8 @@
 package eu.iamgio.animated;
 
 import eu.iamgio.animated.property.DoublePropertyWrapper;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Bounds;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -19,12 +21,10 @@ public class AnimatedLayout extends AnimatedMulti {
     private final Region root;
     private final Pos alignment;
 
-    private boolean animateShrinking;
+    private final BooleanProperty animateShrinking = new SimpleBooleanProperty();
 
     // The latest registered child size
     private Bounds bounds;
-
-    // TODO allow dynamic parent, reapply bindings on parent change
 
     /**
      * Instantiates an {@link AnimatedLayout} node.
@@ -39,8 +39,8 @@ public class AnimatedLayout extends AnimatedMulti {
         this.child = child;
         this.root = root;
         this.alignment = alignment;
-        this.animateShrinking = animateShrinking;
         this.bounds = child.getLayoutBounds();
+        this.animateShrinking.set(animateShrinking);
 
         HPos hPos = alignment.getHpos();
         VPos vPos = alignment.getVpos();
@@ -71,10 +71,17 @@ public class AnimatedLayout extends AnimatedMulti {
     }
 
     /**
+     * @return whether the animation should be played when the root is shrunk
+     */
+    public BooleanProperty animateShrinkingProperty() {
+        return animateShrinking;
+    }
+
+    /**
      * @return whether the animation should be played when the root is shrunk. Does not affect centered alignments
      */
     public boolean isAnimateShrinking() {
-        return animateShrinking;
+        return animateShrinking.get();
     }
 
     /**
@@ -82,7 +89,7 @@ public class AnimatedLayout extends AnimatedMulti {
      * @param animateShrinking whether the animation should be played when the root is shrunk
      */
     public void setAnimateShrinking(boolean animateShrinking) {
-        this.animateShrinking = animateShrinking;
+        this.animateShrinking.set(animateShrinking);
     }
 
     /**
@@ -137,7 +144,7 @@ public class AnimatedLayout extends AnimatedMulti {
     private void bindX(HPos hPos) {
         if(requiresBinding(hPos)) {
             root.prefWidthProperty().addListener((observable, oldValue, newValue) -> {
-                boolean isShrunk = !animateShrinking && (double) newValue < (double) oldValue && !isCenter(hPos);
+                boolean isShrunk = !isAnimateShrinking() && (double) newValue < (double) oldValue && !isCenter(hPos);
                 if(isShrunk) setActive(false);
 
                 updateX(isCenter(hPos));
@@ -155,7 +162,7 @@ public class AnimatedLayout extends AnimatedMulti {
         if(requiresBinding(vPos)) {
             boolean center = vPos == VPos.CENTER;
             root.prefHeightProperty().addListener((observable, oldValue, newValue) -> {
-                boolean isShrunk = !animateShrinking && (double) newValue < (double) oldValue && !isCenter(vPos);
+                boolean isShrunk = !isAnimateShrinking() && (double) newValue < (double) oldValue && !isCenter(vPos);
                 if(isShrunk) setActive(false);
 
                 updateY(isCenter(vPos));
