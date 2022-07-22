@@ -12,19 +12,11 @@
 7. [Kotlin extensions](#kotlin-extensions)
 
 ## Getting started
-[![](https://jitpack.io/v/iamgio/animated.svg)](https://jitpack.io/#iamgio/animated)
 
 Maven:
 ```xml
-<repositories>
-    <repository>
-      <id>jitpack.io</id>
-      <url>https://jitpack.io</url>
-    </repository>
-</repositories>
-...
 <dependency>
-    <groupId>com.github.iAmGio</groupId>
+    <groupId>eu.iamgio</groupId>
     <artifactId>animated</artifactId>
     <version>0.5.1</version>
 </dependency>
@@ -34,12 +26,11 @@ Gradle:
 ```gradle
 allprojects {
     repositories {
-        ...
-        maven { url 'https://jitpack.io' }
+        mavenCentral()
     }
 }
 dependencies {
-    implementation 'com.github.iAmGio:animated:0.5.1'
+    implementation 'eu.iamgio:animated:0.5.1'
 }
 ```
 <br/>
