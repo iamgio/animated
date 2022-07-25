@@ -1,6 +1,7 @@
 package eu.iamgio.animated;
 
 import animatefx.animation.AnimationFX;
+import eu.iamgio.animated.internal.AnimatedContainer;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.VBox;
@@ -64,8 +65,8 @@ public class AnimatedVBox extends VBox implements AnimatedContainer {
      * {@inheritDoc}
      */
     @Override
-    public Handler.Direction getDirection() {
-        return Handler.Direction.VERTICAL;
+    public Direction getDirection() {
+        return Direction.VERTICAL;
     }
 
     /**

@@ -1,4 +1,4 @@
-package eu.iamgio.animated;
+package eu.iamgio.animated.internal;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
@@ -8,7 +8,7 @@ import javafx.scene.Parent;
  * Parent node that has only one child
  * @author Giorgio Garofalo
  */
-class SingleChildParent extends Parent {
+public class SingleChildParent extends Parent {
 
     protected final SimpleObjectProperty<Node> child = new SimpleObjectProperty<>();
 

@@ -1,7 +1,7 @@
 package eu.iamgio.animated.property;
 
 import eu.iamgio.animated.AnimationSettings;
-import eu.iamgio.animated.CustomizableAnimation;
+import eu.iamgio.animated.internal.CustomizableAnimation;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;

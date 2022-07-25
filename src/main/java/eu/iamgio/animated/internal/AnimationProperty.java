@@ -1,7 +1,7 @@
-package eu.iamgio.animated;
+package eu.iamgio.animated.internal;
 
+import eu.iamgio.animated.AnimationSettings;
 import eu.iamgio.animated.property.PropertyWrapper;
-import javafx.animation.Animation;
 import javafx.animation.*;
 import javafx.scene.Node;
 

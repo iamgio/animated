@@ -1,5 +1,9 @@
-package eu.iamgio.animated;
+package eu.iamgio.animated.internal;
 
+import eu.iamgio.animated.AnimatedHBox;
+import eu.iamgio.animated.AnimatedVBox;
+import eu.iamgio.animated.Animation;
+import eu.iamgio.animated.Curve;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -48,7 +52,7 @@ public interface AnimatedContainer {
     /**
      * @return whether the children are displayed horizontally (HBox) or vertically (VBox)
      */
-    Handler.Direction getDirection();
+    Direction getDirection();
 
     /**
      * @return whether animations are paused, so that this acts as a regular container
@@ -101,6 +105,10 @@ public interface AnimatedContainer {
      */
     default void register() {
         Handler.register(this);
+    }
+
+    enum Direction {
+        HORIZONTAL, VERTICAL
     }
 
     /**
@@ -202,10 +210,6 @@ public interface AnimatedContainer {
             });
 
             timeline.playFromStart();
-        }
-
-        enum Direction {
-            HORIZONTAL, VERTICAL
         }
     }
 }

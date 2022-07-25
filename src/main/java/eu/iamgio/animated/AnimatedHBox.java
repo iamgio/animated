@@ -1,6 +1,7 @@
 package eu.iamgio.animated;
 
 import animatefx.animation.AnimationFX;
+import eu.iamgio.animated.internal.AnimatedContainer;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.HBox;
@@ -64,8 +65,8 @@ public class AnimatedHBox extends HBox implements AnimatedContainer {
      * {@inheritDoc}
      */
     @Override
-    public Handler.Direction getDirection() {
-        return Handler.Direction.HORIZONTAL;
+    public Direction getDirection() {
+        return Direction.HORIZONTAL;
     }
 
     /**
