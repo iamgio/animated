@@ -8,7 +8,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -27,7 +26,7 @@ import java.util.Set;
  * @see AnimatedHBox
  * @author Giorgio Garofalo
  */
-public interface AnimatedContainer {
+public interface AnimatedContainer extends Pausable {
 
     /**
      * @return target container's children
@@ -53,32 +52,6 @@ public interface AnimatedContainer {
      * @return whether the children are displayed horizontally (HBox) or vertically (VBox)
      */
     Direction getDirection();
-
-    /**
-     * @return whether animations are paused, so that this acts as a regular container
-     */
-    SimpleBooleanProperty pausedProperty();
-
-    /**
-     * @return whether animations are paused, so that this acts as a regular container
-     */
-    default boolean isPaused() {
-        return pausedProperty().get();
-    }
-
-    /**
-     * Prevents any animation from playing until {@link #resume()} is called.
-     */
-    default void pause() {
-        pausedProperty().set(true);
-    }
-
-    /**
-     * Lets animations play if {@link #isPaused()} is <tt>true</tt>.
-     */
-    default void resume() {
-        pausedProperty().set(false);
-    }
 
     /**
      * @return curve used by the animation while relocating other nodes after a change

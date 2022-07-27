@@ -2,6 +2,8 @@ package eu.iamgio.animated;
 
 import animatefx.animation.AnimationFX;
 import animatefx.animation.FadeOut;
+import eu.iamgio.animated.internal.Pausable;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -20,22 +22,21 @@ import java.util.List;
  * An {@link AnimatedThemeSwitcher} provides animated transitions that are played when changing the stylesheets of a {@link Scene}.
  * @author Giorgio Garofalo
  */
-public class AnimatedThemeSwitcher {
+public class AnimatedThemeSwitcher implements Pausable {
 
     private final Scene scene;
     private final SimpleObjectProperty<Animation> animation = new SimpleObjectProperty<>(new Animation(new FadeOut()));
+    private final SimpleBooleanProperty pausedProperty = new SimpleBooleanProperty(false);
 
     // Whether the changes to the stylesheets should be handled
     private boolean handleChanges = true;
-
-    // TODO implement pause/resume methods
 
     private AnimatedThemeSwitcher(Scene scene) {
         this.scene = scene;
 
         // Set-up stylesheets listener
         scene.getStylesheets().addListener((ListChangeListener<? super String>) change -> {
-            while(change.next() && handleChanges) {
+            while(change.next() && handleChanges && !isPaused()) {
 
                 // TODO keep added/removed indexes
 
@@ -44,10 +45,6 @@ public class AnimatedThemeSwitcher {
                 // Copy changes (to avoid ConcurrentModificationException)
                 final List<? extends String> added = new ArrayList<>(change.getAddedSubList());
                 final List<? extends String> removed = new ArrayList<>(change.getRemoved());
-
-                System.out.println("Added " + added);
-                System.out.println("Removed " + removed);
-                System.out.println();
 
                 handleChanges = false; // Puts the listener on hold
 
@@ -122,7 +119,7 @@ public class AnimatedThemeSwitcher {
     }
 
     /**
-     *  and plays the exit animation.
+     * Puts a snapshot/screenshot of the scene, puts it on top and plays the exit animation on it.
      */
     private void overlapSnapshot() {
         // Takes a screenshot
@@ -135,5 +132,13 @@ public class AnimatedThemeSwitcher {
 
         // Plays the exit animation and removes the image after the transition ends.
         getAnimation().playOut(imageView, root.getChildren());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SimpleBooleanProperty pausedProperty() {
+        return pausedProperty;
     }
 }

@@ -62,7 +62,6 @@ public class AnimatedThemeTest extends Application {
     // This is called every two seconds
     private void startTimeline(Scene scene, Timeline timeline) {
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2), e -> {
-            System.out.println(isLight);
             isLight ^= true;
             scene.getStylesheets().set(1, "/themes/" + (isLight ? "light" : "dark") + ".css");
             startTimeline(scene, timeline);
