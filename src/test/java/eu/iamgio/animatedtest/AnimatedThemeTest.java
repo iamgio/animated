@@ -18,6 +18,9 @@ import static eu.iamgio.animatedtest.TestUtil.center;
 
 public class AnimatedThemeTest extends Application {
 
+    // Whether the current theme is 'light' (if false = 'dark')
+    private boolean isLight = true;
+
     public void start(Stage primaryStage) {
         // Setup scene
         Pane root = new Pane();
@@ -43,19 +46,28 @@ public class AnimatedThemeTest extends Application {
         box.getChildren().add(subtitle);
 
         // Setup theme
+        scene.getStylesheets().add("/themes/light.css");
         AnimatedThemeSwitcher themeSwitcher = AnimatedThemeSwitcher.of(scene);
-        themeSwitcher.setTheme("/themes/light.css");
 
         // Setup timeline
         Timeline timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2), e -> themeSwitcher.animateTheme("/themes/dark.css")));
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(4), e -> themeSwitcher.animateTheme("/themes/light.css")));
-        timeline.play();
+        startTimeline(scene, timeline);
 
         // Show
         primaryStage.setTitle("AnimatedThemeSwitcher");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    // This is called every two seconds
+    private void startTimeline(Scene scene, Timeline timeline) {
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2), e -> {
+            System.out.println(isLight);
+            isLight ^= true;
+            scene.getStylesheets().set(1, "/themes/" + (isLight ? "light" : "dark") + ".css");
+            startTimeline(scene, timeline);
+        }));
+        timeline.playFromStart();
     }
 
     public static void main(String[] args) {

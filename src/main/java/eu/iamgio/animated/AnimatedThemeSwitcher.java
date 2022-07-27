@@ -3,6 +3,7 @@ package eu.iamgio.animated;
 import animatefx.animation.AnimationFX;
 import animatefx.animation.FadeOut;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,6 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An {@link AnimatedThemeSwitcher} provides animated transitions that are played when changing the stylesheets of a {@link Scene}.
@@ -21,26 +25,65 @@ public class AnimatedThemeSwitcher {
     private final Scene scene;
     private final SimpleObjectProperty<Animation> animation = new SimpleObjectProperty<>(new Animation(new FadeOut()));
 
-    private String stylesheet;
+    // Whether the changes to the stylesheets should be handled
+    private boolean handleChanges = true;
+
+    // TODO implement pause/resume methods
 
     private AnimatedThemeSwitcher(Scene scene) {
         this.scene = scene;
+
+        // Set-up stylesheets listener
+        scene.getStylesheets().addListener((ListChangeListener<? super String>) change -> {
+            while(change.next() && handleChanges) {
+
+                // TODO keep added/removed indexes
+
+                final ObservableList<String> stylesheets = scene.getStylesheets();
+
+                // Copy changes (to avoid ConcurrentModificationException)
+                final List<? extends String> added = new ArrayList<>(change.getAddedSubList());
+                final List<? extends String> removed = new ArrayList<>(change.getRemoved());
+
+                System.out.println("Added " + added);
+                System.out.println("Removed " + removed);
+                System.out.println();
+
+                handleChanges = false; // Puts the listener on hold
+
+                // Revert changes
+                stylesheets.removeAll(added);
+                stylesheets.addAll(removed);
+
+                // Screenshot the scene with the old theme applied and play the out animation
+                overlapSnapshot();
+
+                // Reapply changes
+                stylesheets.addAll(added);
+                stylesheets.removeAll(removed);
+
+                handleChanges = true; // Resumes the listener
+            }
+        });
     }
 
     /**
-     * Gets an {@link AnimatedThemeSwitcher} that wraps a {@link Scene}.
+     * Gets an {@link AnimatedThemeSwitcher} that wraps a {@link Scene} and registers a listener to its stylesheets.
+     *
      * @param scene JavaFX scene to affect
      * @return new {@link AnimatedThemeSwitcher} for the given {@link Scene}
      * @throws IllegalStateException if the root of the scene is not suitable for the transition (e.g. VBox and HBox)
      */
     public static AnimatedThemeSwitcher of(Scene scene) {
         Parent root = scene.getRoot();
+
         if(!(root instanceof Pane)) {
             throw new IllegalStateException("The root node is not a Pane (or subclass).");
         }
         if(root instanceof VBox || root instanceof HBox) {
             throw new IllegalStateException("The root node cannot be a VBox or HBox.");
         }
+
         return new AnimatedThemeSwitcher(scene);
     }
 
@@ -64,7 +107,8 @@ public class AnimatedThemeSwitcher {
      */
     public void setAnimation(Animation animationOut) {
         if(!animationOut.getAnimationFX().toString().contains("Out")) {
-            throw new IllegalArgumentException("AnimatedThemeSwitcher should feature an exit animation, such as FadeOut.");
+            throw new IllegalArgumentException(
+                    "AnimatedThemeSwitcher should feature an exit animation, such as FadeOut.");
         }
         this.animation.set(animationOut);
     }
@@ -78,25 +122,9 @@ public class AnimatedThemeSwitcher {
     }
 
     /**
-     * Changes the stylesheet of the scene without playing a transition.
-     * @param stylesheet path of the stylesheet
+     *  and plays the exit animation.
      */
-    public void setTheme(String stylesheet) {
-        ObservableList<String> stylesheets = scene.getStylesheets();
-        int index = stylesheets.indexOf(this.stylesheet);
-        if(index != -1) {
-            stylesheets.set(index, stylesheet);
-        } else {
-            stylesheets.add(stylesheet);
-        }
-        this.stylesheet = stylesheet;
-    }
-
-    /**
-     * Changes the stylesheet of the scene and plays the exit animation.
-     * @param stylesheet path of the stylesheet
-     */
-    public void animateTheme(String stylesheet) {
+    private void overlapSnapshot() {
         // Takes a screenshot
         Image snapshot = scene.snapshot(null);
         Pane root = (Pane) scene.getRoot();
@@ -104,7 +132,6 @@ public class AnimatedThemeSwitcher {
         // Adds the image on top of the root
         ImageView imageView = new ImageView(snapshot);
         root.getChildren().add(imageView);
-        setTheme(stylesheet);
 
         // Plays the exit animation and removes the image after the transition ends.
         getAnimation().playOut(imageView, root.getChildren());
