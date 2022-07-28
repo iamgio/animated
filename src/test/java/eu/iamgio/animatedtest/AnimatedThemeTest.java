@@ -47,7 +47,7 @@ public class AnimatedThemeTest extends Application {
 
         // Setup theme
         scene.getStylesheets().add("/themes/light.css");
-        AnimatedThemeSwitcher themeSwitcher = AnimatedThemeSwitcher.of(scene);
+        AnimatedThemeSwitcher themeSwitcher = AnimatedThemeSwitcher.init(scene);
 
         // Setup timeline
         Timeline timeline = new Timeline();

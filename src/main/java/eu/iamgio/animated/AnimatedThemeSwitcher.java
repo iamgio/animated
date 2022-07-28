@@ -33,7 +33,34 @@ public class AnimatedThemeSwitcher implements Pausable {
 
     private AnimatedThemeSwitcher(Scene scene) {
         this.scene = scene;
+        register();
+    }
 
+    /**
+     * Gets an {@link AnimatedThemeSwitcher} that wraps a {@link Scene} and registers a listener to its stylesheets.
+     *
+     * @param scene JavaFX scene to affect
+     * @return new {@link AnimatedThemeSwitcher} for the given {@link Scene}
+     * @throws IllegalStateException if the root of the scene is not suitable for the transition (e.g. VBox and HBox)
+     */
+    public static AnimatedThemeSwitcher init(Scene scene) throws IllegalStateException {
+        Parent root = scene.getRoot();
+
+        if(!(root instanceof Pane)) {
+            throw new IllegalStateException("The root node is not a Pane (or subclass).");
+        }
+        if(root instanceof VBox || root instanceof HBox) {
+            throw new IllegalStateException("The root node cannot be a VBox or HBox.");
+        }
+
+        return new AnimatedThemeSwitcher(scene);
+    }
+
+    /**
+     * Registers the listener that watches the stylesheets of the scene.
+     * Every time they change, an image of the 'old' scene is put on top and disappears via an animation.
+     */
+    private void register() {
         // Set-up stylesheets listener
         scene.getStylesheets().addListener((ListChangeListener<? super String>) change -> {
             while(change.next() && handleChanges && !isPaused()) {
@@ -65,23 +92,19 @@ public class AnimatedThemeSwitcher implements Pausable {
     }
 
     /**
-     * Gets an {@link AnimatedThemeSwitcher} that wraps a {@link Scene} and registers a listener to its stylesheets.
-     *
-     * @param scene JavaFX scene to affect
-     * @return new {@link AnimatedThemeSwitcher} for the given {@link Scene}
-     * @throws IllegalStateException if the root of the scene is not suitable for the transition (e.g. VBox and HBox)
+     * Takes a snapshot/screenshot of the scene, puts it on top and plays the exit animation on it.
      */
-    public static AnimatedThemeSwitcher of(Scene scene) {
-        Parent root = scene.getRoot();
+    private void overlapSnapshot() {
+        // Takes a screenshot
+        Image snapshot = scene.snapshot(null);
+        Pane root = (Pane) scene.getRoot();
 
-        if(!(root instanceof Pane)) {
-            throw new IllegalStateException("The root node is not a Pane (or subclass).");
-        }
-        if(root instanceof VBox || root instanceof HBox) {
-            throw new IllegalStateException("The root node cannot be a VBox or HBox.");
-        }
+        // Adds the image on top of the root
+        ImageView imageView = new ImageView(snapshot);
+        root.getChildren().add(imageView);
 
-        return new AnimatedThemeSwitcher(scene);
+        // Plays the exit animation and removes the image after the transition ends.
+        getAnimation().playOut(imageView, root.getChildren());
     }
 
     /**
@@ -116,22 +139,6 @@ public class AnimatedThemeSwitcher implements Pausable {
      */
     public void setAnimation(AnimationFX animationOut) {
         setAnimation(new Animation(animationOut));
-    }
-
-    /**
-     * Puts a snapshot/screenshot of the scene, puts it on top and plays the exit animation on it.
-     */
-    private void overlapSnapshot() {
-        // Takes a screenshot
-        Image snapshot = scene.snapshot(null);
-        Pane root = (Pane) scene.getRoot();
-
-        // Adds the image on top of the root
-        ImageView imageView = new ImageView(snapshot);
-        root.getChildren().add(imageView);
-
-        // Plays the exit animation and removes the image after the transition ends.
-        getAnimation().playOut(imageView, root.getChildren());
     }
 
     /**
