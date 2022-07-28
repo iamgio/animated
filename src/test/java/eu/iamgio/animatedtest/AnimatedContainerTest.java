@@ -33,6 +33,9 @@ public class AnimatedContainerTest extends Application {
         // Setup container
         AnimatedVBox vBox = new AnimatedVBox(new AnimationPair(new FadeInUp(), new SlideOutLeft()).setSpeed(3, 3));
 
+        // Also try HBox:
+        // AnimatedHBox hBox = new AnimatedHBox(new AnimationPair(new FadeInDown(), new SlideOutUp()).setSpeed(3, 3));
+
         // Setup + buttons
 
         Button topButton = new Button("+ Add on top");

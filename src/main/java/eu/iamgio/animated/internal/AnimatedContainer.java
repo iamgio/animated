@@ -136,6 +136,23 @@ public interface AnimatedContainer extends Pausable {
         }
 
         /**
+         * Updates the node's translate X or Y depending on the direction of the container.
+         * @param node target node
+         * @param direction direction of the container
+         * @param translate new translation value
+         */
+        private static void setTranslate(Node node, Direction direction, double translate) {
+            switch(direction) {
+                case HORIZONTAL:
+                    node.setTranslateX(translate);
+                    break;
+                case VERTICAL:
+                    node.setTranslateY(translate);
+                    break;
+            }
+        }
+
+        /**
          * Animates next nodes' position in order to have a smooth animation.
          * @param index start index
          * @param reverse whether the animation should be reversed (exit) or not (entrance)
@@ -155,7 +172,7 @@ public interface AnimatedContainer extends Pausable {
 
                 // Determine start (or end if reverse is true) value, based off direction and spacing
                 double start = -((direction == Direction.HORIZONTAL ? affectedBounds.getWidth() : affectedBounds.getHeight()) + spacing);
-                next.setTranslateY(reverse ? 0 : start);
+                setTranslate(next, direction, reverse ? 0 : start);
 
                 // Animate translate X/Y
                 Duration duration = animation.getAnimationFX().getTimeline().getCycleDuration().divide(animation.getSpeed());
@@ -171,14 +188,7 @@ public interface AnimatedContainer extends Pausable {
             // Reset positions
             timeline.setOnFinished(e -> {
                 for(Node node : toReset) {
-                    switch(direction) {
-                        case HORIZONTAL:
-                            node.setTranslateX(0);
-                            break;
-                        case VERTICAL:
-                            node.setTranslateY(0);
-                            break;
-                    }
+                    setTranslate(node, direction, 0);
                 }
             });
 
