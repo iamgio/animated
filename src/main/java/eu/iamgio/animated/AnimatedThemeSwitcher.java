@@ -63,12 +63,8 @@ public class AnimatedThemeSwitcher implements Pausable {
     private void register() {
         // Set-up stylesheets listener
         scene.getStylesheets().addListener((ListChangeListener<? super String>) change -> {
+            final ObservableList<String> stylesheets = scene.getStylesheets();
             while(change.next() && handleChanges && !isPaused()) {
-
-                // TODO keep added/removed indexes
-
-                final ObservableList<String> stylesheets = scene.getStylesheets();
-
                 // Copy changes (to avoid ConcurrentModificationException)
                 final List<? extends String> added = new ArrayList<>(change.getAddedSubList());
                 final List<? extends String> removed = new ArrayList<>(change.getRemoved());
@@ -77,13 +73,13 @@ public class AnimatedThemeSwitcher implements Pausable {
 
                 // Revert changes
                 stylesheets.removeAll(added);
-                stylesheets.addAll(removed);
+                stylesheets.addAll(change.getFrom(), removed);
 
                 // Screenshot the scene with the old theme applied and play the out animation
                 overlapSnapshot();
 
                 // Reapply changes
-                stylesheets.addAll(added);
+                stylesheets.addAll(change.getFrom(), added);
                 stylesheets.removeAll(removed);
 
                 handleChanges = true; // Resumes the listener
