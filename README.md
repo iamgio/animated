@@ -18,7 +18,7 @@ Maven:
 <dependency>
     <groupId>eu.iamgio</groupId>
     <artifactId>animated</artifactId>
-    <version>0.5.1</version>
+    <version>0.6.0</version>
 </dependency>
 ```
 
@@ -30,7 +30,7 @@ allprojects {
     }
 }
 dependencies {
-    implementation 'eu.iamgio:animated:0.5.1'
+    implementation 'eu.iamgio:animated:0.6.0'
 }
 ```
 <br/>
@@ -167,6 +167,19 @@ root.getChildren().add(switcher);
 // Later...
 switcher.setChild(secondChild); // Plays the transition
 ```
+
+### Related: animated text
+
+`AnimatedLabel` uses a switcher to animate text.
+
+Example:
+```java
+AnimatedLabel label = new AnimatedLabel("Text", AnimationPair.fade());
+
+// Later...
+label.setText("New text"); // Plays the transition
+```
+
 <br/>
 
 ---
@@ -182,12 +195,14 @@ It is possible to create a transition whenever the stylesheets of the scene chan
 **[Code](src/test/java/eu/iamgio/animatedtest/AnimatedThemeTest.java)**
 
 ```java
-AnimatedThemeSwitcher themeSwitcher = AnimatedThemeSwitcher.of(scene);
-themeSwitcher.setTheme("/light.css");         // Initial theme
-theme.setAnimation(new Animation(/* ... */)); // Optional: defaults to FadeOut
+scene.getStylesheets().setAll("/light.css"); // Initial theme
+AnimatedThemeSwitcher themeSwitcher = AnimatedThemeSwitcher.init(scene);
+themeSwitcher.setAnimation(new Animation(/* ... */)); // Optional: defaults to FadeOut
 
 // Later...
-themeSwitcher.animateTheme("/dark.css"); // Plays the transition
+scene.getStylesheets().setAll("/dark.css"); // Plays the transition
+
+// This also works with add, set, remove and other List methods.
 ```
 
 > **Note** that not every type of root can be animated properly, such as `VBox` and `HBox`.
@@ -205,7 +220,7 @@ themeSwitcher.animateTheme("/dark.css"); // Plays the transition
 **[Button color and border](src/test/java/eu/iamgio/animatedtest/AnimatedButtonTest.java)**
 
 ![Shadow](https://i.imgur.com/jd8Bbr4.gif)  
-**[Drop shadows + switcher](src/test/java/eu/iamgio/animatedtest/AnimatedShadowTest.java)**
+**[Drop shadows + label](src/test/java/eu/iamgio/animatedtest/AnimatedShadowTest.java)**
 
 ![Root switch](https://i.imgur.com/cYkSu9z.gif)  
 **[Root switch](src/test/java/eu/iamgio/animatedtest/AnimatedRootSwitchTest.java)**

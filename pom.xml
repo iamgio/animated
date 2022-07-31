@@ -6,7 +6,7 @@
 
     <groupId>eu.iamgio</groupId>
     <artifactId>animated</artifactId>
-    <version>0.5.1</version>
+    <version>0.6.0</version>
 
     <name>animated</name>
     <description>Implicit animations for JavaFX.</description>
