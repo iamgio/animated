@@ -1,11 +1,10 @@
 package eu.iamgio.animatedtest;
 
 import eu.iamgio.animated.AnimatedDropShadow;
-import eu.iamgio.animated.AnimatedSwitcher;
+import eu.iamgio.animated.AnimatedLabel;
 import eu.iamgio.animated.AnimationPair;
 import eu.iamgio.animated.Curve;
 import javafx.application.Application;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -36,9 +35,16 @@ public class AnimatedShadowTest extends Application {
         Button button = new Button("Animated shadow");
         center(button, scene);
 
-        // Setup animated switcher for text
-        AnimatedSwitcher textSwitcher = new AnimatedSwitcher(AnimationPair.fade().setSpeed(1, 2));
-        SimpleStringProperty textProperty = new SimpleStringProperty();
+        // Setup animated text label
+        AnimatedLabel label = new AnimatedLabel(AnimationPair.fade().setSpeed(1, 2));
+
+        label.setLabelFactory(text -> {
+            Label newLabel = new Label(text);
+            newLabel.prefWidthProperty().bind(scene.widthProperty());
+            newLabel.setAlignment(Pos.CENTER);
+            newLabel.setStyle("-fx-font-size: 18; -fx-padding: 60");
+            return newLabel;
+        });
 
         // Create effect
         DropShadow shadow = new DropShadow();
@@ -50,28 +56,20 @@ public class AnimatedShadowTest extends Application {
         button.pressedProperty().addListener((observable, oldValue, isPressed) -> {
             shadow.setRadius(isPressed ? RADIUS_PRESSED : RADIUS_HOVER);
             shadow.setColor(isPressed ? COLOR_PRESSED : COLOR_HOVER);
-            textProperty.set(isPressed ? TEXT_PRESSED : TEXT_HOVER);
+            label.setText(isPressed ? TEXT_PRESSED : TEXT_HOVER);
         });
 
         button.hoverProperty().addListener((observable, oldValue, isHover) -> {
             shadow.setRadius(isHover ? RADIUS_HOVER : RADIUS_DEFAULT);
             shadow.setColor(isHover ? COLOR_HOVER : COLOR_DEFAULT);
-            textProperty.set(isHover ? TEXT_HOVER : TEXT_DEFAULT);
+            label.setText(isHover ? TEXT_HOVER : TEXT_DEFAULT);
         });
-
-        textProperty.addListener(((observable, oldValue, newValue) -> {
-            Label label = new Label(newValue);
-            label.prefWidthProperty().bind(scene.widthProperty());
-            label.setAlignment(Pos.CENTER);
-            label.setStyle("-fx-font-size: 18; -fx-padding: 60");
-            textSwitcher.setChild(label);
-        }));
 
         // Setup animation
         AnimatedDropShadow animated = new AnimatedDropShadow(button)
                 .custom(settings -> settings.withDuration(Duration.millis(200)).withCurve(Curve.EASE_OUT_SINE));
 
-        root.getChildren().addAll(textSwitcher, animated);
+        root.getChildren().addAll(label, animated);
 
         // Show
         primaryStage.setTitle("AnimatedDropShadow");
