@@ -26,7 +26,7 @@ public class AnimatedLabel extends Parent {
     public AnimatedLabel(String text, AnimationPair animation, LabelFactory labelFactory) {
         this.textProperty.set(text);
         this.animation = animation;
-        this.labelFactory = labelFactory;
+        setLabelFactory(labelFactory);
         register();
     }
 
@@ -36,7 +36,7 @@ public class AnimatedLabel extends Parent {
      * @param animation a pair of in and out animations
      */
     public AnimatedLabel(String text, AnimationPair animation) {
-        this(text, animation, null);
+        this(text, animation, LabelFactory.DEFAULT);
     }
 
     /**
@@ -44,7 +44,7 @@ public class AnimatedLabel extends Parent {
      * @param animation a pair of in and out animations
      */
     public AnimatedLabel(AnimationPair animation) {
-        this("", animation, null);
+        this("", animation, LabelFactory.DEFAULT);
     }
 
     /**
@@ -65,20 +65,21 @@ public class AnimatedLabel extends Parent {
         this(new Animation(animationIn), new Animation(animationOut));
     }
 
-    private void updateCurrentLabel(String text) {
-        currentLabel = labelFactory != null ? labelFactory.newLabel(text) : new Label(text);
-    }
-
     /**
      * Registers the text listener.
      */
     private void register() {
-        updateCurrentLabel(getText());
+        // Initialization
+        currentLabel = labelFactory.newLabel(getText());
+
+        // AnimatedLabel works via this AnimatedSwitcher,
+        // which simply overlaps the old and new labels.
         AnimatedSwitcher switcher = new AnimatedSwitcher(animation).of(currentLabel);
         getChildren().add(switcher);
 
+        // Every time the text changes, a new label is placed on top and the switch is animated.
         textProperty.addListener(((observable, oldValue, newValue) -> {
-            updateCurrentLabel(newValue);
+            currentLabel = labelFactory.newLabel(newValue);
             switcher.setChild(currentLabel);
         }));
     }
@@ -120,7 +121,7 @@ public class AnimatedLabel extends Parent {
     }
 
     /**
-     * @return the active label generator. If <tt>null</tt>, the default one will be used.
+     * @return the non-null active label generator
      */
     public LabelFactory getLabelFactory() {
         return labelFactory;
@@ -141,7 +142,7 @@ public class AnimatedLabel extends Parent {
      * @param labelFactory the way new labels will be generated. If <tt>null</tt>, the default one will be used
      */
     public void setLabelFactory(LabelFactory labelFactory) {
-        this.labelFactory = labelFactory;
+        this.labelFactory = labelFactory != null ? labelFactory : LabelFactory.DEFAULT;
     }
 
     /**
@@ -149,6 +150,11 @@ public class AnimatedLabel extends Parent {
      */
     @FunctionalInterface
     public interface LabelFactory {
+
+        /**
+         * The default factory used, which returns a standard {@link Label} with the given text.
+         */
+        LabelFactory DEFAULT = Label::new;
 
         /**
          * @param text the updated text
