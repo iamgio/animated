@@ -132,7 +132,7 @@ public class AnimatedLabel extends Parent {
      *
      * Example:
      * <pre>
-     *     animatedLabel.setLabelFactory(text -&#062 {
+     *     animatedLabel.setLabelFactory(text{@literal ->} {
      *        Label label = new Label(text);
      *        // Apply label properties...
      *        return label;

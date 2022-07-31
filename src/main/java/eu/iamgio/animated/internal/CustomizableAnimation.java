@@ -26,7 +26,7 @@ public interface CustomizableAnimation<T> {
 
     /**
      * Applies custom animation settings
-     * @param settings settings to update. Example: <pre>custom(settings -&#062 settings.withDuration(...))</pre>
+     * @param settings settings to update. Example: <pre>custom(settings{@literal ->} settings.withDuration(...))</pre>
      * @param <A> either {@link T} or subclass
      * @return this for concatenation
      */
