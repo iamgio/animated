@@ -36,6 +36,8 @@
 
     <properties>
         <kotlin.version>1.4.31</kotlin.version>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
     </properties>
 
     <distributionManagement>
@@ -74,6 +76,17 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Automatic-Module-Name>eu.iamgio.animated</Automatic-Module-Name>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -164,7 +177,7 @@
         <dependency>
             <groupId>io.github.typhon0</groupId>
             <artifactId>AnimateFX</artifactId>
-            <version>1.2.1</version>
+            <version>1.2.3</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
