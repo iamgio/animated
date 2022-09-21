@@ -89,6 +89,19 @@ child.setPrefWidth(100); // Plays the transition
 child.setPrefHeight(50); // Plays the transition
 ```  
 
+### Independent animations
+
+`Animated` and `AnimatedMulti` are nodes that have to be added to the scene in order to work.  
+Here is a different approach that is independent from the scene:
+
+```java
+AnimationProperty property = new AnimationProperty<>(PropertyWrapper.of(node.opacityProperty()));
+property.register();
+
+// Later...
+node.setOpacity(0.5); // Plays the transition
+```
+
 ### Custom animations
 
 The default animation is linear and lasts 1 second. It can be customized by calling either `withSettings(AnimationSettings settings)` or `custom(Function<AnimationSettings, AnimationSettings> settings)`, both methods available on property wrappers and animated nodes.
