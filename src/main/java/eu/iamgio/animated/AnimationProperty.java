@@ -1,12 +1,13 @@
-package eu.iamgio.animated.internal;
+package eu.iamgio.animated;
 
-import eu.iamgio.animated.AnimationSettings;
+import eu.iamgio.animated.internal.CustomizableAnimation;
 import eu.iamgio.animated.property.PropertyWrapper;
+import javafx.animation.Animation;
 import javafx.animation.*;
 import javafx.scene.Node;
 
 /**
- * Class that animates a JavaFX property wrapped inside of a {@link PropertyWrapper}.
+ * Animation handler for a JavaFX property wrapped inside a {@link PropertyWrapper}.
  * @author Giorgio Garofalo
  */
 public class AnimationProperty<T> implements CustomizableAnimation<AnimationProperty<T>> {
