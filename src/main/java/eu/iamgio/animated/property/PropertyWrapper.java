@@ -62,18 +62,23 @@ public abstract class PropertyWrapper<T> implements CustomizableAnimation<Proper
     }
 
     /**
-     * Gets a {@link PropertyWrapper} for the given property.
-     * If no match is found, {@link ObjectPropertyWrapper} is used.
+     * Creates an {@link ObjectPropertyWrapper} for the given {@link ObjectProperty}.
      * @see eu.iamgio.animated.property
      * @param property JavaFX property to wrap
      * @param <T> property type
-     * @return an instance of the proper sub-class of {@link PropertyWrapper} that wraps <tt>property</tt>.
+     * @return an instance of the proper subclass of {@link PropertyWrapper} that wraps <tt>property</tt>.
      */
-    @SuppressWarnings("unchecked")
-    public static <T> PropertyWrapper<T> of(Property<T> property) {
-        if(property instanceof DoubleProperty) {
-            return (PropertyWrapper<T>) new DoublePropertyWrapper((DoubleProperty) property);
-        }
-        return new ObjectPropertyWrapper<>((ObjectProperty<T>) property);
+    public static <T> PropertyWrapper<T> of(ObjectProperty<T> property) {
+        return new ObjectPropertyWrapper<>(property);
+    }
+
+    /**
+     * Creates a {@link DoublePropertyWrapper} for the given {@link DoubleProperty}.
+     * @see eu.iamgio.animated.property
+     * @param property JavaFX property to wrap
+     * @return an instance of the proper subclass of {@link PropertyWrapper} that wraps <tt>property</tt>.
+     */
+    public static PropertyWrapper<Double> of(DoubleProperty property) {
+        return new DoublePropertyWrapper(property);
     }
 }
