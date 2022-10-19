@@ -2,15 +2,21 @@ package eu.iamgio.animated
 
 import animatefx.animation.AnimationFX
 import eu.iamgio.animated.property.PropertyWrapper
-import javafx.beans.property.Property
+import javafx.beans.property.DoubleProperty
+import javafx.beans.property.ObjectProperty
 import javafx.util.Duration
 
 // Utility extension functions for Kotlin
 
 /**
- * Wraps a JavaFX property into a [PropertyWrapper].
+ * Wraps a JavaFX double property into a [PropertyWrapper].
  */
-fun <T> Property<T>.animated(): PropertyWrapper<T> = PropertyWrapper.of(this)
+fun DoubleProperty.animated(): PropertyWrapper<Double> = PropertyWrapper.of(this)
+
+/**
+ * Wraps a JavaFX object property into a [PropertyWrapper].
+ */
+fun <T> ObjectProperty<T>.animated(): PropertyWrapper<T> = PropertyWrapper.of(this)
 
 /**
  * Wraps an AnimateFX animation into an Animated animation that supports customization.
