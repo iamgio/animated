@@ -13,47 +13,39 @@ public class AnimationPair {
 
     /**
      * Instantiates a {@link AnimationPair} and passes its two required animations.
-     * @param animationIn entrance animation
-     * @param animationOut exit animation
+     * @param animationIn non-null entrance animation
+     * @param animationOut non-null exit animation
      */
     public AnimationPair(Animation animationIn, Animation animationOut) {
-        if(animationIn == null || animationOut == null) throwNullParamsException();
-        this.animationIn = animationIn;
-        this.animationOut = animationOut;
+        this.animationIn = Animation.requireNonNull(animationIn);
+        this.animationOut = Animation.requireNonNull(animationOut);
     }
 
     /**
      * Instantiates a {@link AnimationPair} and passes its two required animations.
-     * @param animationIn entrance animation
-     * @param animationOut exit animation
+     * @param animationIn non-null entrance animation
+     * @param animationOut non-null exit animation
      */
     public AnimationPair(AnimationFX animationIn, AnimationFX animationOut) {
         this(new Animation(animationIn), new Animation(animationOut));
-        if(animationIn == null || animationOut == null) throwNullParamsException();
     }
 
     /**
      * Instantiates a {@link AnimationPair} and passes its two required animations.
-     * @param animationIn entrance (wrapped) animation
-     * @param animationOut exit (unwrapped) animation
+     * @param animationIn non-null entrance (wrapped) animation
+     * @param animationOut non-null exit (unwrapped) animation
      */
     public AnimationPair(Animation animationIn, AnimationFX animationOut) {
         this(animationIn, new Animation(animationOut));
-        if(animationIn == null || animationOut == null) throwNullParamsException();
     }
 
     /**
      * Instantiates a {@link AnimationPair} and passes its two required animations.
-     * @param animationIn entrance (unwrapped) animation
-     * @param animationOut exit (wrapped) animation
+     * @param animationIn non-null entrance (unwrapped) animation
+     * @param animationOut non-null exit (wrapped) animation
      */
     public AnimationPair(AnimationFX animationIn, Animation animationOut) {
         this(new Animation(animationIn), animationOut);
-        if(animationIn == null || animationOut == null) throwNullParamsException();
-    }
-
-    private static void throwNullParamsException() {
-        throw new IllegalArgumentException("One or more null animations passed to AnimationPair.");
     }
 
     /**

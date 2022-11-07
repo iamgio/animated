@@ -19,12 +19,12 @@ public class AnimatedHBox extends HBox implements AnimatedContainer {
 
     /**
      * Instantiates an {@link AnimatedHBox}. {@link Animation} wraps an {@link AnimationFX}, allowing customization.
-     * @param in entrance animation
-     * @param out exit animation
+     * @param animationIn non-null entrance animation
+     * @param animationOut non-null exit animation
      */
-    public AnimatedHBox(Animation in, Animation out) {
-        this.in = in;
-        this.out = out;
+    public AnimatedHBox(Animation animationIn, Animation animationOut) {
+        this.in = Animation.requireNonNull(animationIn);
+        this.out = Animation.requireNonNull(animationOut);
         register();
     }
 
@@ -38,11 +38,11 @@ public class AnimatedHBox extends HBox implements AnimatedContainer {
 
     /**
      * Instantiates an {@link AnimatedHBox}.
-     * @param in entrance animation
-     * @param out exit animation
+     * @param animationIn entrance animation
+     * @param animationOut exit animation
      */
-    public AnimatedHBox(AnimationFX in, AnimationFX out) {
-        this(new Animation(in), new Animation(out));
+    public AnimatedHBox(AnimationFX animationIn, AnimationFX animationOut) {
+        this(new Animation(animationIn), new Animation(animationOut));
     }
 
     /**

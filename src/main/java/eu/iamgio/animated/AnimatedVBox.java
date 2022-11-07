@@ -19,12 +19,12 @@ public class AnimatedVBox extends VBox implements AnimatedContainer {
 
     /**
      * Instantiates an {@link AnimatedVBox}. {@link Animation} wraps an {@link AnimationFX}, allowing customization.
-     * @param in entrance animation
-     * @param out exit animation
+     * @param animationIn non-null entrance animation
+     * @param animationOut non-null exit animation
      */
-    public AnimatedVBox(Animation in, Animation out) {
-        this.in = in;
-        this.out = out;
+    public AnimatedVBox(Animation animationIn, Animation animationOut) {
+        this.in = Animation.requireNonNull(animationIn);
+        this.out = Animation.requireNonNull(animationOut);
         register();
     }
 

@@ -6,11 +6,13 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
+import java.util.Objects;
+
 /**
  * Wrapper for {@link AnimationFX} with several properties.
  * @author Giorgio Garofalo
  */
-public class Animation implements Cloneable {
+public class Animation {
 
     private final AnimationFX animationFX;
 
@@ -126,5 +128,14 @@ public class Animation implements Cloneable {
     public Animation setCycleCount(int cycleCount) {
         this.cycleCount = cycleCount;
         return this;
+    }
+
+    /**
+     * Checks that the given animation is not <tt>null</tt>, or throws a {@link NullPointerException} otherwise.
+     * @param animation animation to check
+     * @return the given animation if not <tt>null</tt>
+     */
+    public static Animation requireNonNull(Animation animation) {
+        return Objects.requireNonNull(animation, "An animation cannot be null.");
     }
 }
