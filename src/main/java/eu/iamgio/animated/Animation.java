@@ -131,6 +131,13 @@ public class Animation {
     }
 
     /**
+     * @return a valid non-null playable {@link Animation} that does not perform any actual animation.
+     */
+    public static Animation none() {
+        return new Animation(null);
+    }
+
+    /**
      * Checks that the given animation is not <tt>null</tt>, or throws a {@link NullPointerException} otherwise.
      * @param animation animation to check
      * @return the given animation if not <tt>null</tt>
