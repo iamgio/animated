@@ -89,8 +89,8 @@ public interface AnimatedContainer extends Pausable {
      */
     class Handler {
 
-        // This set contains hash code of nodes whose animation should be skipped.
-        private static final Set<Integer> skipNodesHash = new HashSet<>();
+        // Nodes whose animation should be temporarily skipped.
+        private static final Set<Node> skipped = new HashSet<>();
 
         /**
          * Registers the listener.
@@ -99,40 +99,65 @@ public interface AnimatedContainer extends Pausable {
         static void register(AnimatedContainer container) {
             container.getChildren().addListener((ListChangeListener<? super Node>) change -> {
                 while(!container.isPaused() && change.next()) {
-
-                    ObservableList<Node> children = container.getChildren();
-                    Animation animationIn = container.getIn();
-                    Animation animationOut = container.getOut();
-                    double spacing = container.getSpacing();
-                    Direction direction = container.getDirection();
-                    Curve relocationCurve = container.getRelocationCurve();
-
                     // Animate inserted nodes
-                    change.getAddedSubList().forEach(child -> {
-                        if(!skipNodesHash.contains(child.hashCode())) {
-                            animationIn.playIn(child, null);
-                            Platform.runLater(() -> relocate(children, animationIn, spacing, direction, change.getFrom(), false, relocationCurve));
-                        } else {
-                            skipNodesHash.remove(child.hashCode());
-                        }
-                    });
-
+                    if(container.getIn().getAnimationFX() != null) {
+                        playIn(change, container);
+                    }
                     // Animate removed nodes
-                    change.getRemoved().forEach(child -> {
-                        if(skipNodesHash.contains(child.hashCode())) {
-                            skipNodesHash.remove(child.hashCode());
-                            return;
-                        }
-                        skipNodesHash.add(child.hashCode());
-                        Platform.runLater(() -> {
-                            children.add(change.getFrom(), child);
-                            skipNodesHash.add(child.hashCode());
-                            animationOut.playOut(child, children);
-                            relocate(children, animationOut, spacing, direction, change.getFrom(), true, relocationCurve);
-                        });
-                    });
+                    if(container.getOut().getAnimationFX() != null) {
+                        playOut(change, container);
+                    }
                 }
             });
+        }
+
+        /**
+         * Plays the entrance animation for each added node.
+         * @param change change that affected the children
+         * @param container animated container to handle
+         */
+        private static void playIn(ListChangeListener.Change<? extends Node> change, AnimatedContainer container) {
+            for(Node child : change.getAddedSubList()) {
+                if(skipped.contains(child)) {
+                    skipped.remove(child);
+                    continue;
+                }
+
+                container.getIn().playIn(child, null);
+                Platform.runLater(() -> relocate(
+                        container,
+                        container.getIn(),
+                        change.getFrom(),
+                        false
+                ));
+            }
+        }
+
+        /**
+         * Plays the exit animation for each removed node.
+         * @param change change that affected the children
+         * @param container animated container to handle
+         */
+        private static void playOut(ListChangeListener.Change<? extends Node> change, AnimatedContainer container) {
+            for(Node child : change.getRemoved()) {
+                if(skipped.contains(child)) {
+                    skipped.remove(child);
+                    continue;
+                }
+
+                skipped.add(child);
+                Platform.runLater(() -> {
+                    container.getChildren().add(change.getFrom(), child);
+                    skipped.add(child);
+                    container.getOut().playOut(child, container.getChildren());
+                    relocate(
+                            container,
+                            container.getOut(),
+                            change.getFrom(),
+                            true
+                    );
+                });
+            }
         }
 
         /**
@@ -154,10 +179,17 @@ public interface AnimatedContainer extends Pausable {
 
         /**
          * Animates next nodes' position in order to have a smooth animation.
+         * @param container animated container to handle
+         * @param animation last animation to relocate from
          * @param index start index
          * @param reverse whether the animation should be reversed (exit) or not (entrance)
          */
-        private static void relocate(ObservableList<Node> children, Animation animation, double spacing, Direction direction, int index, boolean reverse, Curve relocationCurve) {
+        private static void relocate(AnimatedContainer container, Animation animation, int index, boolean reverse) {
+            ObservableList<Node> children = container.getChildren();
+            double spacing = container.getSpacing();
+            Direction direction = container.getDirection();
+            Curve relocationCurve = container.getRelocationCurve();
+
             Timeline timeline = new Timeline();
 
             // Affected nodes
