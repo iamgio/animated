@@ -122,7 +122,7 @@ public class AnimatedThemeSwitcher implements Pausable {
      * @throws IllegalArgumentException if the animation is not an exit animation.
      */
     public void setAnimation(Animation animationOut) {
-        if(!animationOut.getAnimationFX().toString().contains("Out")) {
+        if(animationOut.getAnimationFX() != null && !animationOut.getAnimationFX().toString().contains("Out")) {
             throw new IllegalArgumentException(
                     "AnimatedThemeSwitcher should feature an exit animation, such as FadeOut.");
         }
