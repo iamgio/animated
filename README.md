@@ -95,8 +95,7 @@ child.setPrefHeight(50); // Plays the transition
 Here is a different approach that is independent from the scene:
 
 ```java
-AnimationProperty<Double> property = new AnimationProperty<>(PropertyWrapper.of(node.opacityProperty()));
-property.register();
+PropertyWrapper.of(node.opacityProperty()).registerAnimation();
 
 // Later...
 node.setOpacity(0.5); // Plays the transition

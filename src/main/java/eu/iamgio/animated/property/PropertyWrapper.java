@@ -1,5 +1,6 @@
 package eu.iamgio.animated.property;
 
+import eu.iamgio.animated.AnimationProperty;
 import eu.iamgio.animated.AnimationSettings;
 import eu.iamgio.animated.internal.CustomizableAnimation;
 import javafx.beans.property.DoubleProperty;
@@ -49,6 +50,16 @@ public abstract class PropertyWrapper<T> implements CustomizableAnimation<Proper
      */
     public AnimationSettings getSettings() {
         return settings;
+    }
+
+    /**
+     * Creates a new implicitly animated binding for this property and registers a listener for it.
+     * @return new animation property linked to this property
+     */
+    public AnimationProperty<T> registerAnimation() {
+        AnimationProperty<T> property = new AnimationProperty<>(this, settings);
+        property.register();
+        return property;
     }
 
     /**
