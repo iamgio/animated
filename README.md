@@ -18,7 +18,7 @@ Maven:
 <dependency>
     <groupId>eu.iamgio</groupId>
     <artifactId>animated</artifactId>
-    <version>0.6.1</version>
+    <version>0.7.0</version>
 </dependency>
 ```
 
@@ -30,7 +30,7 @@ allprojects {
     }
 }
 dependencies {
-    implementation 'eu.iamgio:animated:0.6.1'
+    implementation 'eu.iamgio:animated:0.7.0'
 }
 ```
 <br/>
