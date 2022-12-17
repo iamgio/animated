@@ -55,6 +55,8 @@ public class Animation {
             applyProperties();
             if(children != null) animationFX.setOnFinished(e -> children.remove(target));
             animationFX.play();
+        } else if(children != null) {
+            children.remove(target);
         }
     }
 
