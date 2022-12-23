@@ -1,6 +1,6 @@
 package eu.iamgio.animatedtest;
 
-import eu.iamgio.animated.AnimatedThemeSwitcher;
+import eu.iamgio.animated.transition.AnimatedThemeSwitcher;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;

@@ -1,4 +1,4 @@
-package eu.iamgio.animated;
+package eu.iamgio.animated.binding;
 
 import javafx.animation.Interpolator;
 

@@ -1,8 +1,6 @@
-package eu.iamgio.animated;
+package eu.iamgio.animated.binding;
 
-import eu.iamgio.animated.internal.CustomizableAnimation;
-import eu.iamgio.animated.internal.SingleChildParent;
-import eu.iamgio.animated.property.PropertyWrapper;
+import eu.iamgio.animated.binding.property.PropertyWrapper;
 import javafx.scene.Node;
 
 /**

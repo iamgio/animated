@@ -1,8 +1,8 @@
-package eu.iamgio.animated.property;
+package eu.iamgio.animated.binding.property;
 
-import eu.iamgio.animated.AnimationProperty;
-import eu.iamgio.animated.AnimationSettings;
-import eu.iamgio.animated.internal.CustomizableAnimation;
+import eu.iamgio.animated.binding.AnimationProperty;
+import eu.iamgio.animated.binding.AnimationSettings;
+import eu.iamgio.animated.binding.CustomizableAnimation;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
@@ -74,7 +74,7 @@ public abstract class PropertyWrapper<T> implements CustomizableAnimation<Proper
 
     /**
      * Creates an {@link ObjectPropertyWrapper} for the given {@link ObjectProperty}.
-     * @see eu.iamgio.animated.property
+     * @see eu.iamgio.animated.binding.property
      * @param property JavaFX property to wrap
      * @param <T> property type
      * @return an instance of the proper subclass of {@link PropertyWrapper} that wraps <tt>property</tt>.
@@ -85,7 +85,7 @@ public abstract class PropertyWrapper<T> implements CustomizableAnimation<Proper
 
     /**
      * Creates a {@link DoublePropertyWrapper} for the given {@link DoubleProperty}.
-     * @see eu.iamgio.animated.property
+     * @see eu.iamgio.animated.binding.property
      * @param property JavaFX property to wrap
      * @return an instance of the proper subclass of {@link PropertyWrapper} that wraps <tt>property</tt>.
      */

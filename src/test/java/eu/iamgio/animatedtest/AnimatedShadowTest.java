@@ -1,9 +1,9 @@
 package eu.iamgio.animatedtest;
 
-import eu.iamgio.animated.AnimatedDropShadow;
-import eu.iamgio.animated.AnimatedLabel;
-import eu.iamgio.animated.AnimationPair;
-import eu.iamgio.animated.Curve;
+import eu.iamgio.animated.binding.AnimatedDropShadow;
+import eu.iamgio.animated.binding.Curve;
+import eu.iamgio.animated.transition.AnimatedLabel;
+import eu.iamgio.animated.transition.AnimationPair;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

@@ -1,6 +1,6 @@
-package eu.iamgio.animated;
+package eu.iamgio.animated.binding;
 
-import eu.iamgio.animated.property.ObjectPropertyWrapper;
+import eu.iamgio.animated.binding.property.ObjectPropertyWrapper;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
 

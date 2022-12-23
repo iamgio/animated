@@ -1,9 +1,8 @@
-package eu.iamgio.animated.internal;
+package eu.iamgio.animated.transition.container;
 
-import eu.iamgio.animated.AnimatedHBox;
-import eu.iamgio.animated.AnimatedVBox;
-import eu.iamgio.animated.Animation;
-import eu.iamgio.animated.Curve;
+import eu.iamgio.animated.binding.Curve;
+import eu.iamgio.animated.transition.Animation;
+import eu.iamgio.animated.transition.Pausable;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;

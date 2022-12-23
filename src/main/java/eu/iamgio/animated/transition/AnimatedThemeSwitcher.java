@@ -1,8 +1,7 @@
-package eu.iamgio.animated;
+package eu.iamgio.animated.transition;
 
 import animatefx.animation.AnimationFX;
 import animatefx.animation.FadeOut;
-import eu.iamgio.animated.internal.Pausable;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;

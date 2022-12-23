@@ -1,4 +1,4 @@
-package eu.iamgio.animated;
+package eu.iamgio.animated.transition;
 
 import animatefx.animation.AnimationFX;
 import javafx.application.Platform;

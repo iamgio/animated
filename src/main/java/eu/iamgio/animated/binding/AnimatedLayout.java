@@ -1,6 +1,6 @@
-package eu.iamgio.animated;
+package eu.iamgio.animated.binding;
 
-import eu.iamgio.animated.property.DoublePropertyWrapper;
+import eu.iamgio.animated.binding.property.DoublePropertyWrapper;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Bounds;

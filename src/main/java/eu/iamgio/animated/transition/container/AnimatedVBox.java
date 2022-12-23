@@ -1,7 +1,9 @@
-package eu.iamgio.animated;
+package eu.iamgio.animated.transition.container;
 
 import animatefx.animation.AnimationFX;
-import eu.iamgio.animated.internal.AnimatedContainer;
+import eu.iamgio.animated.binding.Curve;
+import eu.iamgio.animated.transition.Animation;
+import eu.iamgio.animated.transition.AnimationPair;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.VBox;

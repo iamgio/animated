@@ -1,7 +1,7 @@
-package eu.iamgio.animated;
+package eu.iamgio.animated.binding;
 
-import eu.iamgio.animated.property.DoublePropertyWrapper;
-import eu.iamgio.animated.property.ObjectPropertyWrapper;
+import eu.iamgio.animated.binding.property.DoublePropertyWrapper;
+import eu.iamgio.animated.binding.property.ObjectPropertyWrapper;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
 

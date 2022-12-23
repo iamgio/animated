@@ -1,7 +1,7 @@
 package eu.iamgio.animatedtest;
 
-import eu.iamgio.animated.AnimatedLayout;
-import eu.iamgio.animated.AnimationSettings;
+import eu.iamgio.animated.binding.AnimatedLayout;
+import eu.iamgio.animated.binding.AnimationSettings;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

@@ -1,7 +1,7 @@
 package eu.iamgio.animatedtest;
 
-import eu.iamgio.animated.AnimatedSwitcher;
-import eu.iamgio.animated.AnimationPair;
+import eu.iamgio.animated.transition.AnimatedSwitcher;
+import eu.iamgio.animated.transition.AnimationPair;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;

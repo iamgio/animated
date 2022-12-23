@@ -1,4 +1,4 @@
-package eu.iamgio.animated.internal;
+package eu.iamgio.animated.transition;
 
 import javafx.beans.property.SimpleBooleanProperty;
 

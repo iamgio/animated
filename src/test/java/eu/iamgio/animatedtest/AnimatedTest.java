@@ -1,8 +1,8 @@
 package eu.iamgio.animatedtest;
 
-import eu.iamgio.animated.AnimatedMulti;
-import eu.iamgio.animated.Curve;
-import eu.iamgio.animated.property.PropertyWrapper;
+import eu.iamgio.animated.binding.AnimatedMulti;
+import eu.iamgio.animated.binding.Curve;
+import eu.iamgio.animated.binding.property.PropertyWrapper;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

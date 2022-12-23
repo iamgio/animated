@@ -1,6 +1,6 @@
-package eu.iamgio.animated;
+package eu.iamgio.animated.binding;
 
-import eu.iamgio.animated.property.DoublePropertyWrapper;
+import eu.iamgio.animated.binding.property.DoublePropertyWrapper;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;

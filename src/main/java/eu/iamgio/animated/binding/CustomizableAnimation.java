@@ -1,6 +1,4 @@
-package eu.iamgio.animated.internal;
-
-import eu.iamgio.animated.AnimationSettings;
+package eu.iamgio.animated.binding;
 
 import java.util.function.Function;
 
