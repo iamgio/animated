@@ -1,6 +1,7 @@
 package eu.iamgio.animated.transition;
 
 import animatefx.animation.AnimationFX;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -9,16 +10,21 @@ import javafx.scene.Parent;
  * This node plays a transition when its child node changes.
  * @author Giorgio Garofalo
  */
-public class AnimatedSwitcher extends Parent {
+public class AnimatedSwitcher extends Parent implements Pausable {
 
     private final Animation in;
     private final Animation out;
     private final SimpleObjectProperty<Node> child = new SimpleObjectProperty<>();
+    private final SimpleBooleanProperty pausedProperty = new SimpleBooleanProperty(false);
 
     // Whether the handler has been set
     private boolean isHandlerRegistered;
 
     private void handleChanges(Node oldChild, Node newChild) {
+        if(isPaused()) {
+            getChildren().setAll(newChild);
+            return;
+        }
         if(newChild != null) {
             in.playIn(newChild, getChildren());
         }
@@ -93,5 +99,13 @@ public class AnimatedSwitcher extends Parent {
     public void setChild(Node child) {
         if(!isHandlerRegistered) registerHandler();
         this.child.set(child);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SimpleBooleanProperty pausedProperty() {
+        return pausedProperty;
     }
 }

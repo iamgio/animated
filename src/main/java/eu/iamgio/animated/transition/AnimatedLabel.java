@@ -1,6 +1,7 @@
 package eu.iamgio.animated.transition;
 
 import animatefx.animation.AnimationFX;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -10,12 +11,14 @@ import javafx.scene.control.Label;
  *
  * @author Giorgio Garofalo
  */
-public class AnimatedLabel extends Parent {
+public class AnimatedLabel extends Parent implements Pausable {
     private final SimpleStringProperty textProperty = new SimpleStringProperty();
     private final AnimationPair animation;
 
     private LabelFactory labelFactory;
     private Label currentLabel;
+
+    private final SimpleBooleanProperty pausedProperty = new SimpleBooleanProperty();
 
     /**
      * Instantiates an {@link AnimatedLabel}.
@@ -75,6 +78,7 @@ public class AnimatedLabel extends Parent {
         // AnimatedLabel works via this AnimatedSwitcher,
         // which simply overlaps the old and new labels.
         AnimatedSwitcher switcher = new AnimatedSwitcher(animation).of(currentLabel);
+        this.pausedProperty.bindBidirectional(switcher.pausedProperty());
         getChildren().add(switcher);
 
         // Every time the text changes, a new label is placed on top and the switch is animated.
@@ -128,8 +132,15 @@ public class AnimatedLabel extends Parent {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SimpleBooleanProperty pausedProperty() {
+        return pausedProperty;
+    }
+
+    /**
      * Sets the active label generator.
-     *
      * Example:
      * <pre>
      *     animatedLabel.setLabelFactory(text{@literal ->} {
