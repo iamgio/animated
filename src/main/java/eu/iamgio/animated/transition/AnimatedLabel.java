@@ -1,10 +1,7 @@
 package eu.iamgio.animated.transition;
 
 import animatefx.animation.AnimationFX;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 
@@ -18,10 +15,10 @@ public class AnimatedLabel extends Parent implements Pausable, EntranceAndExitAn
     private final ObjectProperty<Animation> in;
     private final ObjectProperty<Animation> out;
 
-    private final SimpleStringProperty textProperty = new SimpleStringProperty();
+    private final StringProperty textProperty = new SimpleStringProperty();
 
-    private LabelFactory labelFactory = LabelFactory.DEFAULT;
-    private Label currentLabel;
+    private final ObjectProperty<LabelFactory> labelFactory = new SimpleObjectProperty<>(LabelFactory.DEFAULT);
+    private final ObjectProperty<Label> currentLabel = new SimpleObjectProperty<>();
 
     private final SimpleBooleanProperty pausedProperty = new SimpleBooleanProperty();
 
@@ -95,11 +92,12 @@ public class AnimatedLabel extends Parent implements Pausable, EntranceAndExitAn
      */
     private void register() {
         // Initialization
-        currentLabel = labelFactory.newLabel(getText());
+        final Label initialLabel = labelFactory.get().newLabel(getText());
+        currentLabel.set(initialLabel);
 
         // AnimatedLabel works via this AnimatedSwitcher,
         // which simply overlaps the old and new labels.
-        AnimatedSwitcher switcher = new AnimatedSwitcher().of(currentLabel);
+        final AnimatedSwitcher switcher = new AnimatedSwitcher().of(initialLabel);
         this.in.bindBidirectional(switcher.animationInProperty());
         this.out.bindBidirectional(switcher.animationOutProperty());
         this.pausedProperty.bindBidirectional(switcher.pausedProperty());
@@ -107,15 +105,16 @@ public class AnimatedLabel extends Parent implements Pausable, EntranceAndExitAn
 
         // Every time the text changes, a new label is placed on top and the switch is animated.
         textProperty.addListener(((observable, oldValue, newValue) -> {
-            currentLabel = labelFactory.newLabel(newValue);
-            switcher.setChild(currentLabel);
+            final Label newLabel = labelFactory.get().newLabel(newValue);
+            currentLabel.set(newLabel);
+            switcher.setChild(newLabel);
         }));
     }
 
     /**
      * @return the displayed text
      */
-    public SimpleStringProperty textProperty() {
+    public StringProperty textProperty() {
         return textProperty;
     }
 
@@ -137,8 +136,15 @@ public class AnimatedLabel extends Parent implements Pausable, EntranceAndExitAn
     /**
      * @return the latest {@link Label} initialized
      */
+    public ObjectProperty<Label> currentLabelProperty() {
+        return this.currentLabel;
+    }
+
+    /**
+     * @return the latest {@link Label} initialized
+     */
     public Label getCurrentLabel() {
-        return currentLabel;
+        return this.currentLabel.get();
     }
 
     /**
@@ -160,8 +166,15 @@ public class AnimatedLabel extends Parent implements Pausable, EntranceAndExitAn
     /**
      * @return the non-null active label generator
      */
+    public ObjectProperty<LabelFactory> labelFactoryProperty() {
+        return this.labelFactory;
+    }
+
+    /**
+     * @return the non-null active label generator
+     */
     public LabelFactory getLabelFactory() {
-        return labelFactory;
+        return this.labelFactory.get();
     }
 
     /**
@@ -186,7 +199,7 @@ public class AnimatedLabel extends Parent implements Pausable, EntranceAndExitAn
      * @param labelFactory the way new labels will be generated. If <tt>null</tt>, the default one will be used
      */
     public void setLabelFactory(LabelFactory labelFactory) {
-        this.labelFactory = labelFactory != null ? labelFactory : LabelFactory.DEFAULT;
+        this.labelFactory.set(labelFactory != null ? labelFactory : LabelFactory.DEFAULT);
     }
 
     /**
