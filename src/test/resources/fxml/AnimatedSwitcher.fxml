@@ -1,0 +1,12 @@
+<?import eu.iamgio.animated.transition.AnimatedSwitcher?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<AnchorPane prefWidth="650" prefHeight="500">
+    <Button text="Switch" id="button" layoutY="100" />
+    <AnimatedSwitcher id="animated-switcher">
+        <child>
+            <Rectangle width="50" height="50" fill="indianred" />
+        </child>
+    </AnimatedSwitcher>
+</AnchorPane>
