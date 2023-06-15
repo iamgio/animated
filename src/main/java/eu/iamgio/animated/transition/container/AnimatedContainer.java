@@ -1,7 +1,7 @@
 package eu.iamgio.animated.transition.container;
 
 import eu.iamgio.animated.binding.Curve;
-import eu.iamgio.animated.transition.Animation;
+import eu.iamgio.animated.transition.EntranceAndExitAnimationCompatible;
 import eu.iamgio.animated.transition.Pausable;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
@@ -13,52 +13,12 @@ import javafx.scene.Node;
  * @see AnimatedHBox
  * @author Giorgio Garofalo
  */
-public interface AnimatedContainer extends Pausable {
+public interface AnimatedContainer extends Pausable, EntranceAndExitAnimationCompatible {
 
     /**
      * @return target container's children
      */
     ObservableList<Node> getChildren();
-
-    /**
-     * @return entrance animation
-     */
-    ObjectProperty<Animation> animationInProperty();
-
-    /**
-     * @return exit animation
-     */
-    ObjectProperty<Animation> animationOutProperty();
-
-    /**
-     * @return entrance animation
-     */
-    default Animation getIn() {
-        return this.animationInProperty().get();
-    }
-
-    /**
-     * Sets a new entrance animation.
-     * @param in new entrance animation
-     */
-    default void setIn(Animation in) {
-        this.animationInProperty().set(in);
-    }
-
-    /**
-     * @return exit animation
-     */
-    default Animation getOut() {
-        return this.animationOutProperty().get();
-    }
-
-    /**
-     * Sets a new exit animation.
-     * @param out new exit animation
-     */
-    default void setOut(Animation out) {
-        this.animationOutProperty().set(out);
-    }
 
     /**
      * @return spacing between children
