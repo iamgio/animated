@@ -1,7 +1,9 @@
 package eu.iamgio.animated.transition;
 
 import animatefx.animation.AnimationFX;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -11,11 +13,14 @@ import javafx.scene.control.Label;
  *
  * @author Giorgio Garofalo
  */
-public class AnimatedLabel extends Parent implements Pausable {
-    private final SimpleStringProperty textProperty = new SimpleStringProperty();
-    private final AnimationPair animation;
+public class AnimatedLabel extends Parent implements Pausable, EntranceAndExitAnimationCompatible {
 
-    private LabelFactory labelFactory;
+    private final ObjectProperty<Animation> in;
+    private final ObjectProperty<Animation> out;
+
+    private final SimpleStringProperty textProperty = new SimpleStringProperty();
+
+    private LabelFactory labelFactory = LabelFactory.DEFAULT;
     private Label currentLabel;
 
     private final SimpleBooleanProperty pausedProperty = new SimpleBooleanProperty();
@@ -23,49 +28,66 @@ public class AnimatedLabel extends Parent implements Pausable {
     /**
      * Instantiates an {@link AnimatedLabel}.
      * @param text initial text, displayed without animations
-     * @param animation a pair of in and out animations
-     * @param labelFactory label generator - can be <tt>null</tt>
+     * @param animationIn non-null entrance animation
+     * @param animationOut non-null exit animation
      */
-    public AnimatedLabel(String text, AnimationPair animation, LabelFactory labelFactory) {
+    public AnimatedLabel(String text, Animation animationIn, Animation animationOut) {
         this.textProperty.set(text);
-        this.animation = animation;
-        setLabelFactory(labelFactory);
+        this.in = new SimpleObjectProperty<>(Animation.requireNonNull(animationIn));
+        this.out = new SimpleObjectProperty<>(Animation.requireNonNull(animationOut));
         register();
+    }
+
+    /**
+     * Instantiates an initially empty {@link AnimatedLabel}.
+     * @param animationIn non-null entrance animation
+     * @param animationOut non-null exit animation
+     */
+    public AnimatedLabel(Animation animationIn, Animation animationOut) {
+        this("", animationIn, animationOut);
     }
 
     /**
      * Instantiates an {@link AnimatedLabel}.
      * @param text initial text, displayed without animations
-     * @param animation a pair of in and out animations
+     * @param animation pair of non-null in and out animations
      */
     public AnimatedLabel(String text, AnimationPair animation) {
-        this(text, animation, LabelFactory.DEFAULT);
+        this(text, animation.getIn(), animation.getOut());
     }
 
     /**
-     * Instantiates an {@link AnimatedLabel}.
-     * @param animation a pair of in and out animations
+     * Instantiates an initially empty {@link AnimatedLabel}.
+     * @param animation pair of non-null in and out animations
      */
     public AnimatedLabel(AnimationPair animation) {
-        this("", animation, LabelFactory.DEFAULT);
-    }
-
-    /**
-     * Instantiates an {@link AnimatedLabel}. {@link Animation} wraps an {@link AnimationFX} allowing customization.
-     * @param animationIn entrance animation
-     * @param animationOut exit animation
-     */
-    public AnimatedLabel(Animation animationIn, Animation animationOut) {
-        this(new AnimationPair(animationIn, animationOut));
+        this("", animation.getIn(), animation.getOut());
     }
 
     /**
      * Instantiates an {@link AnimatedLabel}.
-     * @param animationIn entrance animation
-     * @param animationOut exit animation
+     * @param text initial text, displayed without animations
+     * @param animationIn raw entrance animation
+     * @param animationOut raw exit animation
+     */
+    public AnimatedLabel(String text, AnimationFX animationIn, AnimationFX animationOut) {
+        this(text, new Animation(animationIn), new Animation(animationOut));
+    }
+
+    /**
+     * Instantiates an initially empty {@link AnimatedLabel}.
+     * @param animationIn raw entrance animation
+     * @param animationOut raw exit animation
      */
     public AnimatedLabel(AnimationFX animationIn, AnimationFX animationOut) {
-        this(new Animation(animationIn), new Animation(animationOut));
+        this("", new Animation(animationIn), new Animation(animationOut));
+    }
+
+    /**
+     * Instantiates an initially empty {@link AnimatedLabel} with default animations.
+     */
+    public AnimatedLabel() {
+        this("", AnimationPair.fade());
     }
 
     /**
@@ -77,7 +99,9 @@ public class AnimatedLabel extends Parent implements Pausable {
 
         // AnimatedLabel works via this AnimatedSwitcher,
         // which simply overlaps the old and new labels.
-        AnimatedSwitcher switcher = new AnimatedSwitcher(animation).of(currentLabel);
+        AnimatedSwitcher switcher = new AnimatedSwitcher().of(currentLabel);
+        this.in.bindBidirectional(switcher.animationInProperty());
+        this.out.bindBidirectional(switcher.animationOutProperty());
         this.pausedProperty.bindBidirectional(switcher.pausedProperty());
         getChildren().add(switcher);
 
@@ -118,10 +142,19 @@ public class AnimatedLabel extends Parent implements Pausable {
     }
 
     /**
-     * @return the in-out animation used to switch labels
+     * {@inheritDoc}
      */
-    public AnimationPair getAnimation() {
-        return animation;
+    @Override
+    public ObjectProperty<Animation> animationInProperty() {
+        return this.in;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ObjectProperty<Animation> animationOutProperty() {
+        return this.out;
     }
 
     /**

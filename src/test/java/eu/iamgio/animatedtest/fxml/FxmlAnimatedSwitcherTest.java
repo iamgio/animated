@@ -1,6 +1,7 @@
 package eu.iamgio.animatedtest.fxml;
 
 import animatefx.animation.SlideOutUp;
+import eu.iamgio.animated.transition.AnimatedLabel;
 import eu.iamgio.animated.transition.AnimatedSwitcher;
 import eu.iamgio.animated.transition.Animation;
 import javafx.application.Application;
@@ -15,6 +16,8 @@ import java.util.Objects;
 
 public class FxmlAnimatedSwitcherTest extends Application {
 
+    private int times = 0;
+
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/AnimatedSwitcher.fxml")));
         Scene scene = new Scene(root, 650, 500);
@@ -27,6 +30,11 @@ public class FxmlAnimatedSwitcherTest extends Application {
         AnimatedSwitcher switcher = (AnimatedSwitcher) Objects.requireNonNull(root.lookup("#animated-switcher"));
         switcher.setOut(new Animation(new SlideOutUp()));
 
-        switchButton.setOnAction(e -> switcher.setChild(new Rectangle(50, 50)));
+        AnimatedLabel label = (AnimatedLabel) Objects.requireNonNull(root.lookup("#animated-label"));
+
+        switchButton.setOnAction(e -> {
+            switcher.setChild(new Rectangle(50, 50));
+            label.setText(String.valueOf(++times));
+        });
     }
 }
