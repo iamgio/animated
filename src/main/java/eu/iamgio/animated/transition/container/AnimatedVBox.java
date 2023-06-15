@@ -4,6 +4,8 @@ import animatefx.animation.AnimationFX;
 import eu.iamgio.animated.binding.Curve;
 import eu.iamgio.animated.transition.Animation;
 import eu.iamgio.animated.transition.AnimationPair;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.VBox;
@@ -14,10 +16,11 @@ import javafx.scene.layout.VBox;
  */
 public class AnimatedVBox extends VBox implements AnimatedContainer {
 
-    private final Animation in;
-    private final Animation out;
-    private final SimpleBooleanProperty pausedProperty = new SimpleBooleanProperty(false);
-    private final SimpleObjectProperty<Curve> relocationCurveProperty = new SimpleObjectProperty<>(Curve.EASE_IN_OUT);
+    private final ObjectProperty<Animation> in;
+    private final ObjectProperty<Animation> out;
+
+    private final BooleanProperty pausedProperty = new SimpleBooleanProperty(false);
+    private final ObjectProperty<Curve> relocationCurveProperty = new SimpleObjectProperty<>(Curve.EASE_IN_OUT);
 
     /**
      * Instantiates an {@link AnimatedVBox}. {@link Animation} wraps an {@link AnimationFX}, allowing customization.
@@ -25,8 +28,8 @@ public class AnimatedVBox extends VBox implements AnimatedContainer {
      * @param animationOut non-null exit animation
      */
     public AnimatedVBox(Animation animationIn, Animation animationOut) {
-        this.in = Animation.requireNonNull(animationIn);
-        this.out = Animation.requireNonNull(animationOut);
+        this.in = new SimpleObjectProperty<>(Animation.requireNonNull(animationIn));
+        this.out = new SimpleObjectProperty<>(Animation.requireNonNull(animationOut));
         register();
     }
 
@@ -51,16 +54,16 @@ public class AnimatedVBox extends VBox implements AnimatedContainer {
      * {@inheritDoc}
      */
     @Override
-    public Animation getIn() {
-        return in;
+    public ObjectProperty<Animation> animationInProperty() {
+        return this.in;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Animation getOut() {
-        return out;
+    public ObjectProperty<Animation> animationOutProperty() {
+        return this.out;
     }
 
     /**
@@ -75,7 +78,7 @@ public class AnimatedVBox extends VBox implements AnimatedContainer {
      * {@inheritDoc}
      */
     @Override
-    public SimpleBooleanProperty pausedProperty() {
+    public BooleanProperty pausedProperty() {
         return pausedProperty;
     }
 
@@ -83,7 +86,7 @@ public class AnimatedVBox extends VBox implements AnimatedContainer {
      * {@inheritDoc}
      */
     @Override
-    public SimpleObjectProperty<Curve> relocationCurveProperty() {
+    public ObjectProperty<Curve> relocationCurveProperty() {
         return relocationCurveProperty;
     }
 }

@@ -4,6 +4,8 @@ import animatefx.animation.AnimationFX;
 import eu.iamgio.animated.binding.Curve;
 import eu.iamgio.animated.transition.Animation;
 import eu.iamgio.animated.transition.AnimationPair;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.HBox;
@@ -14,10 +16,11 @@ import javafx.scene.layout.HBox;
  */
 public class AnimatedHBox extends HBox implements AnimatedContainer {
 
-    private final Animation in;
-    private final Animation out;
-    private final SimpleBooleanProperty pausedProperty = new SimpleBooleanProperty(false);
-    private final SimpleObjectProperty<Curve> relocationCurveProperty = new SimpleObjectProperty<>(Curve.EASE_IN_OUT);
+    private final ObjectProperty<Animation> in;
+    private final ObjectProperty<Animation> out;
+
+    private final BooleanProperty pausedProperty = new SimpleBooleanProperty(false);
+    private final ObjectProperty<Curve> relocationCurveProperty = new SimpleObjectProperty<>(Curve.EASE_IN_OUT);
 
     /**
      * Instantiates an {@link AnimatedHBox}. {@link Animation} wraps an {@link AnimationFX}, allowing customization.
@@ -25,8 +28,8 @@ public class AnimatedHBox extends HBox implements AnimatedContainer {
      * @param animationOut non-null exit animation
      */
     public AnimatedHBox(Animation animationIn, Animation animationOut) {
-        this.in = Animation.requireNonNull(animationIn);
-        this.out = Animation.requireNonNull(animationOut);
+        this.in = new SimpleObjectProperty<>(Animation.requireNonNull(animationIn));
+        this.out = new SimpleObjectProperty<>(Animation.requireNonNull(animationOut));
         register();
     }
 
@@ -48,19 +51,26 @@ public class AnimatedHBox extends HBox implements AnimatedContainer {
     }
 
     /**
-     * {@inheritDoc}
+     * Instantiates an {@link AnimatedHBox} with default animations.
      */
-    @Override
-    public Animation getIn() {
-        return in;
+    public AnimatedHBox() {
+        this(AnimationPair.fade());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Animation getOut() {
-        return out;
+    public ObjectProperty<Animation> animationInProperty() {
+        return this.in;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ObjectProperty<Animation> animationOutProperty() {
+        return this.out;
     }
 
     /**
@@ -75,7 +85,7 @@ public class AnimatedHBox extends HBox implements AnimatedContainer {
      * {@inheritDoc}
      */
     @Override
-    public SimpleBooleanProperty pausedProperty() {
+    public BooleanProperty pausedProperty() {
         return pausedProperty;
     }
 
@@ -83,7 +93,7 @@ public class AnimatedHBox extends HBox implements AnimatedContainer {
      * {@inheritDoc}
      */
     @Override
-    public SimpleObjectProperty<Curve> relocationCurveProperty() {
+    public ObjectProperty<Curve> relocationCurveProperty() {
         return relocationCurveProperty;
     }
 }

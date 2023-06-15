@@ -1,6 +1,6 @@
 package eu.iamgio.animated.transition;
 
-import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.BooleanProperty;
 
 /**
  * A {@link Pausable} object features a boolean value that represents whether animations should be skipped, alias the <i>animated</i> implementation should be ignored.
@@ -11,7 +11,7 @@ public interface Pausable {
     /**
      * @return whether animations are paused, so that animations are skipped
      */
-    SimpleBooleanProperty pausedProperty();
+    BooleanProperty pausedProperty();
 
     /**
      * @return whether animations are paused, so that animations are skipped

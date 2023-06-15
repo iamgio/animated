@@ -3,7 +3,7 @@ package eu.iamgio.animated.transition.container;
 import eu.iamgio.animated.binding.Curve;
 import eu.iamgio.animated.transition.Animation;
 import eu.iamgio.animated.transition.Pausable;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
@@ -23,12 +23,42 @@ public interface AnimatedContainer extends Pausable {
     /**
      * @return entrance animation
      */
-    Animation getIn();
+    ObjectProperty<Animation> animationInProperty();
 
     /**
      * @return exit animation
      */
-    Animation getOut();
+    ObjectProperty<Animation> animationOutProperty();
+
+    /**
+     * @return entrance animation
+     */
+    default Animation getIn() {
+        return this.animationInProperty().get();
+    }
+
+    /**
+     * Sets a new entrance animation.
+     * @param in new entrance animation
+     */
+    default void setIn(Animation in) {
+        this.animationInProperty().set(in);
+    }
+
+    /**
+     * @return exit animation
+     */
+    default Animation getOut() {
+        return this.animationOutProperty().get();
+    }
+
+    /**
+     * Sets a new exit animation.
+     * @param out new exit animation
+     */
+    default void setOut(Animation out) {
+        this.animationOutProperty().set(out);
+    }
 
     /**
      * @return spacing between children
@@ -43,7 +73,7 @@ public interface AnimatedContainer extends Pausable {
     /**
      * @return curve used by the animation while relocating other nodes after a change
      */
-    SimpleObjectProperty<Curve> relocationCurveProperty();
+    ObjectProperty<Curve> relocationCurveProperty();
 
     /**
      * @return curve used by the animation while relocating other nodes after a change. Defaults to {@link Curve#EASE_IN_OUT}
