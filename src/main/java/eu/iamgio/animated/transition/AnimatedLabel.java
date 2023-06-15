@@ -98,9 +98,9 @@ public class AnimatedLabel extends Parent implements Pausable, EntranceAndExitAn
         // AnimatedLabel works via this AnimatedSwitcher,
         // which simply overlaps the old and new labels.
         final AnimatedSwitcher switcher = new AnimatedSwitcher().of(initialLabel);
-        this.in.bindBidirectional(switcher.animationInProperty());
-        this.out.bindBidirectional(switcher.animationOutProperty());
-        this.pausedProperty.bindBidirectional(switcher.pausedProperty());
+        switcher.animationInProperty().bindBidirectional(this.in);
+        switcher.animationOutProperty().bindBidirectional(this.out);
+        switcher.pausedProperty().bindBidirectional(this.pausedProperty);
         getChildren().add(switcher);
 
         // Every time the text changes, a new label is placed on top and the switch is animated.
