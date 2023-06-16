@@ -18,7 +18,7 @@ Maven:
 <dependency>
     <groupId>eu.iamgio</groupId>
     <artifactId>animated</artifactId>
-    <version>0.7.0</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
@@ -30,9 +30,14 @@ allprojects {
     }
 }
 dependencies {
-    implementation 'eu.iamgio:animated:0.7.0'
+    implementation 'eu.iamgio:animated:1.0.0'
 }
 ```
+
+> **Note:** v1.0.0 brought several important changes, including a different project structure,
+> that may cause compilation errors when upgrading from 0.x versions.  
+> Please check its changelog (TODO URL) to see what changed and quickly learn how to fix those errors.
+
 <br/>
 
 ---
