@@ -22,15 +22,15 @@ public interface EntranceAnimationCompatible {
 
     /**
      * Sets a new entrance animation.
-     * @param in new entrance animation
+     * @param in new non-null entrance animation
      */
     default void setIn(Animation in) {
-        this.animationInProperty().set(in);
+        this.animationInProperty().set(Animation.requireNonNull(in));
     }
 
     /**
      * Sets a new entrance animation.
-     * @param in new raw entrance animation
+     * @param in new non-null raw entrance animation
      */
     default void setIn(AnimationFX in) {
         this.setIn(new Animation(in));

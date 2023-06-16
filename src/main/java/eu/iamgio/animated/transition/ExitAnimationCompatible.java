@@ -22,15 +22,15 @@ public interface ExitAnimationCompatible {
 
     /**
      * Sets a new exit animation.
-     * @param out new exit animation
+     * @param out new non-null exit animation
      */
     default void setOut(Animation out) {
-        this.animationOutProperty().set(out);
+        this.animationOutProperty().set(Animation.requireNonNull(out));
     }
 
     /**
      * Sets a new exit animation.
-     * @param out new raw exit animation
+     * @param out new non-null raw exit animation
      */
     default void setOut(AnimationFX out) {
         this.setOut(new Animation(out));
