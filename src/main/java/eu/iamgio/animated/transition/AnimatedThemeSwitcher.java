@@ -1,5 +1,6 @@
 package eu.iamgio.animated.transition;
 
+import animatefx.animation.AnimationFX;
 import animatefx.animation.FadeOut;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -32,19 +33,43 @@ public class AnimatedThemeSwitcher implements Pausable, ExitAnimationCompatible 
     // Whether the changes to the stylesheets should be handled
     private boolean handleChanges = true;
 
-    private AnimatedThemeSwitcher(Scene scene) {
+    /**
+     * Instantiates an {@link AnimatedThemeSwitcher}.
+     * In order for this switcher to work, {@link #init()} has to be called.
+     * @param scene JavaFX scene to register the hook onto
+     * @param animationOut non-null exit animation
+     */
+    public AnimatedThemeSwitcher(Scene scene, Animation animationOut) {
         this.scene = scene;
-        this.out = new SimpleObjectProperty<>(new Animation(new FadeOut()));
+        this.out = new SimpleObjectProperty<>(Animation.requireNonNull(animationOut));
     }
 
     /**
-     * Gets an {@link AnimatedThemeSwitcher} that wraps a {@link Scene} and registers a listener to its stylesheets.
-     *
-     * @param scene JavaFX scene to affect
-     * @return new {@link AnimatedThemeSwitcher} for the given {@link Scene}
-     * @throws IllegalStateException if the root of the scene is not suitable for the transition (e.g. VBox and HBox)
+     * Instantiates an {@link AnimatedThemeSwitcher}.
+     * In order for this switcher to work, {@link #init()} has to be called.
+     * @param scene JavaFX scene to register the hook onto
+     * @param animationOut non-null raw exit animation
      */
-    public static AnimatedThemeSwitcher init(Scene scene) throws IllegalStateException {
+    public AnimatedThemeSwitcher(Scene scene, AnimationFX animationOut) {
+        this(scene, new Animation(animationOut));
+    }
+
+    /**
+     * Instantiates an {@link AnimatedThemeSwitcher} with a default animation.
+     * In order for this switcher to work, {@link #init()} has to be called.
+     * @param scene JavaFX scene to register the hook onto
+     */
+    public AnimatedThemeSwitcher(Scene scene) {
+        this(scene, new Animation(new FadeOut()));
+    }
+
+    /**
+     * Registers the stylesheets hook on the wrapped scene.
+     *
+     * @throws IllegalStateException if the root of the scene is not suitable for the transition
+     *                               (i.e. containers like <tt>VBox</tt> and <tt>HBox</tt> are not supported)
+     */
+    public void init() throws IllegalStateException {
         final Parent root = scene.getRoot();
 
         if (root == null) {
@@ -57,10 +82,7 @@ public class AnimatedThemeSwitcher implements Pausable, ExitAnimationCompatible 
             throw new IllegalStateException("The root node cannot be a VBox or HBox.");
         }
 
-        final AnimatedThemeSwitcher switcher = new AnimatedThemeSwitcher(scene);
-        switcher.register();
-
-        return switcher;
+        this.register();
     }
 
     /**

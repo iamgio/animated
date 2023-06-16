@@ -210,8 +210,8 @@ It is possible to create a transition whenever the stylesheets of the scene chan
 
 ```java
 scene.getStylesheets().setAll("/light.css"); // Initial theme
-AnimatedThemeSwitcher themeSwitcher = AnimatedThemeSwitcher.init(scene);
-themeSwitcher.setAnimation(new Animation(/* ... */)); // Optional: defaults to FadeOut
+AnimatedThemeSwitcher themeSwitcher = new AnimatedThemeSwitcher(scene, new FadeOut());
+themeSwitcher.init(); // Required!
 
 // Later...
 scene.getStylesheets().setAll("/dark.css"); // Plays the transition
