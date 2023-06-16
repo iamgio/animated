@@ -136,7 +136,7 @@ public class AnimatedLabel extends Parent implements Pausable, EntranceAndExitAn
     /**
      * @return the latest {@link Label} initialized
      */
-    public ObjectProperty<Label> currentLabelProperty() {
+    public ReadOnlyObjectProperty<Label> currentLabelProperty() {
         return this.currentLabel;
     }
 
