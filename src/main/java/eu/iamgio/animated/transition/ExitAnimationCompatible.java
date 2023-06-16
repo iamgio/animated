@@ -30,9 +30,9 @@ public interface ExitAnimationCompatible {
 
     /**
      * Sets a new exit animation.
-     * @param in raw new exit animation
+     * @param out new raw exit animation
      */
-    default void setOut(AnimationFX in) {
-        this.animationOutProperty().set(new Animation(in));
+    default void setOut(AnimationFX out) {
+        this.setOut(new Animation(out));
     }
 }

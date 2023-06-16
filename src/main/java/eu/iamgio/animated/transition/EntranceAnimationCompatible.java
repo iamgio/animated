@@ -30,9 +30,9 @@ public interface EntranceAnimationCompatible {
 
     /**
      * Sets a new entrance animation.
-     * @param in raw new entrance animation
+     * @param in new raw entrance animation
      */
     default void setIn(AnimationFX in) {
-        this.animationInProperty().set(new Animation(in));
+        this.setIn(new Animation(in));
     }
 }
