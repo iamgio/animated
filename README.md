@@ -34,7 +34,7 @@ dependencies {
 }
 ```
 
-> **Note:** v1.0.0 brought several important changes, including a different project structure,
+> **Note**: v1.0.0 brought several important changes, including a different project structure,
 > that may cause compilation errors when upgrading from 0.x versions.  
 > Please check its changelog (TODO URL) to see what changed and quickly learn how to fix those errors.
 
