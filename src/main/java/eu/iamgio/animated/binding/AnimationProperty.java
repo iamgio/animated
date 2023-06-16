@@ -1,14 +1,17 @@
 package eu.iamgio.animated.binding;
 
 import eu.iamgio.animated.binding.property.PropertyWrapper;
+import eu.iamgio.animated.transition.Pausable;
 import javafx.animation.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
 
 /**
  * Animation handler for a JavaFX property wrapped inside a {@link PropertyWrapper}.
  * @author Giorgio Garofalo
  */
-public class AnimationProperty<T> implements CustomizableAnimation<AnimationProperty<T>> {
+public class AnimationProperty<T> implements CustomizableAnimation<AnimationProperty<T>>, Pausable {
 
     // The target property
     private final PropertyWrapper<T> property;
@@ -16,14 +19,14 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
     // Animation timeline
     private final Timeline timeline;
 
+    // Whether the property should be animated
+    private final BooleanProperty pausedProperty = new SimpleBooleanProperty(false);
+
     // Last time an animation frame was played (in millis)
     private double lastUpdate;
 
     // Last value the timeline changed
     private T lastValue;
-
-    // Whether the property should be animated
-    private boolean isActive = true;
 
     // Whether the changes should be handled (internally handled)
     private boolean handleChanges = false;
@@ -100,9 +103,11 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
      */
     public void register(Node target) {
         property.addListener(((observable, oldValue, newValue) -> {
-            if(!isActive || (target != null && target.getScene() == null)) return;
-            if(timeline.getStatus() != Animation.Status.RUNNING || !isAnimationFrame(oldValue, newValue)) {
-                if(handleChanges ^= true) {
+            if (isPaused() || (target != null && target.getScene() == null)) {
+                return;
+            }
+            if (timeline.getStatus() != Animation.Status.RUNNING || !isAnimationFrame(oldValue, newValue)) {
+                if (handleChanges ^= true) {
                     property.set(oldValue);
                     handleChanges(newValue);
                 }
@@ -125,16 +130,10 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
     }
 
     /**
-     * @return whether the property should be animated
+     * {@inheritDoc}
      */
-    public boolean isActive() {
-        return isActive;
-    }
-
-    /**
-     * @param active whether the property should be animated
-     */
-    public void setActive(boolean active) {
-        isActive = active;
+    @Override
+    public BooleanProperty pausedProperty() {
+        return this.pausedProperty;
     }
 }

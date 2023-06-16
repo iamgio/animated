@@ -1,6 +1,9 @@
 package eu.iamgio.animated.binding;
 
 import eu.iamgio.animated.binding.property.PropertyWrapper;
+import eu.iamgio.animated.transition.Pausable;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
 
 import java.util.function.Function;
@@ -10,10 +13,12 @@ import java.util.function.Function;
  * @see Animated
  * @author Giorgio Garofalo
  */
-public class AnimatedMulti extends SingleChildParent implements CustomizableAnimation<AnimatedMulti> {
+public class AnimatedMulti extends SingleChildParent implements CustomizableAnimation<AnimatedMulti>, Pausable {
 
     private final AnimationProperty<?>[] properties;
-    private boolean isActive;
+
+    // Whether the property should be animated
+    private final BooleanProperty pausedProperty = new SimpleBooleanProperty(false);
 
     /**
      * Instantiates a group of animated properties
@@ -26,6 +31,8 @@ public class AnimatedMulti extends SingleChildParent implements CustomizableAnim
         for(AnimationProperty<?> property : properties) {
             property.register(child);
         }
+
+        registerPause();
     }
 
     /**
@@ -41,6 +48,8 @@ public class AnimatedMulti extends SingleChildParent implements CustomizableAnim
             this.properties[i] = property;
             property.register(child);
         }
+
+        registerPause();
     }
 
     /**
@@ -51,16 +60,24 @@ public class AnimatedMulti extends SingleChildParent implements CustomizableAnim
     public AnimatedMulti(Node child, Animated<?>... animated) {
         super(child);
         this.properties = new AnimationProperty[animated.length];
-        for(int i = 0; i < animated.length; i++) {
+        for (int i = 0; i < animated.length; i++) {
             Animated<?> anim = animated[i];
-            if(anim.getChild() != null) {
+            if (anim.getChild() != null) {
                 System.err.println("Animated arguments of AnimatedMulti should not have any children.");
             }
-            if(anim.getScene() != null) {
+            if (anim.getScene() != null) {
                 System.err.println("Animated arguments of AnimatedMulti should not be already in scene.");
             }
             this.properties[i] = anim.getTargetProperty();
             getChildren().add(anim);
+        }
+
+        registerPause();
+    }
+
+    private void registerPause() {
+        for (AnimationProperty<?> property : properties) {
+            property.pausedProperty().bind(this.pausedProperty);
         }
     }
 
@@ -103,19 +120,10 @@ public class AnimatedMulti extends SingleChildParent implements CustomizableAnim
     }
 
     /**
-     * @return whether the property should be animated
+     * {@inheritDoc}
      */
-    public boolean isActive() {
-        return isActive;
-    }
-
-    /**
-     * @param active whether the property should be animated
-     */
-    public void setActive(boolean active) {
-        isActive = active;
-        for(AnimationProperty<?> property : properties) {
-            property.setActive(active);
-        }
+    @Override
+    public BooleanProperty pausedProperty() {
+        return this.pausedProperty;
     }
 }

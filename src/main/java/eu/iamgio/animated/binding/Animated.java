@@ -1,6 +1,8 @@
 package eu.iamgio.animated.binding;
 
 import eu.iamgio.animated.binding.property.PropertyWrapper;
+import eu.iamgio.animated.transition.Pausable;
+import javafx.beans.property.BooleanProperty;
 import javafx.scene.Node;
 
 /**
@@ -8,7 +10,7 @@ import javafx.scene.Node;
  * @param <T> type of the target property
  * @author Giorgio Garofalo
  */
-public class Animated<T> extends SingleChildParent implements CustomizableAnimation<Animated<T>> {
+public class Animated<T> extends SingleChildParent implements CustomizableAnimation<Animated<T>>, Pausable {
 
     private final AnimationProperty<T> property;
 
@@ -76,16 +78,10 @@ public class Animated<T> extends SingleChildParent implements CustomizableAnimat
     }
 
     /**
-     * @return whether the property should be animated
+     * {@inheritDoc}
      */
-    public boolean isActive() {
-        return property.isActive();
-    }
-
-    /**
-     * @param active whether the property should be animated
-     */
-    public void setActive(boolean active) {
-        property.setActive(active);
+    @Override
+    public BooleanProperty pausedProperty() {
+        return this.property.pausedProperty();
     }
 }

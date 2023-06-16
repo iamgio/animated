@@ -99,18 +99,26 @@ public class AnimatedLayout extends AnimatedMulti {
      */
     private void registerBoundsListener(HPos hPos, VPos vPos) {
         child.layoutBoundsProperty().addListener((o, oldValue, newValue) -> {
-            if(oldValue != newValue || newValue != bounds) {
+            if (oldValue != newValue || newValue != bounds) {
                 bounds = newValue;
 
                 // Don't animate if this is the first update
                 boolean wasEmpty = oldValue.getWidth() == 0 && oldValue.getHeight() == 0;
-                if(wasEmpty) setActive(false);
+                if (wasEmpty) {
+                    pause();
+                }
 
                 // Update coordinates
-                if(requiresBinding(hPos)) updateX(isCenter(hPos));
-                if(requiresBinding(vPos)) updateY(isCenter(vPos));
+                if (requiresBinding(hPos)) {
+                    updateX(isCenter(hPos));
+                }
+                if (requiresBinding(vPos)) {
+                    updateY(isCenter(vPos));
+                }
 
-                if(wasEmpty) setActive(true);
+                if (wasEmpty) {
+                    resume();
+                }
             }
         });
     }
@@ -120,7 +128,9 @@ public class AnimatedLayout extends AnimatedMulti {
      * @param center whether the node should be centered to the root
      */
     private void updateX(boolean center) {
-        if(bounds == null) return;
+        if (bounds == null) {
+            return;
+        }
 
         double x = root.getPrefWidth() - bounds.getWidth();
         child.setLayoutX(center ? x / 2 : x);
@@ -131,7 +141,9 @@ public class AnimatedLayout extends AnimatedMulti {
      * @param center whether the node should be centered to the root
      */
     private void updateY(boolean center) {
-        if(bounds == null) return;
+        if (bounds == null) {
+            return;
+        }
 
         double y = root.getPrefHeight() - bounds.getHeight();
         child.setLayoutY(center ? y / 2 : y);
@@ -142,14 +154,18 @@ public class AnimatedLayout extends AnimatedMulti {
      * @param hPos horizontal position of the alignment
      */
     private void bindX(HPos hPos) {
-        if(requiresBinding(hPos)) {
+        if (requiresBinding(hPos)) {
             root.prefWidthProperty().addListener((observable, oldValue, newValue) -> {
                 boolean isShrunk = !isAnimateShrinking() && (double) newValue < (double) oldValue && !isCenter(hPos);
-                if(isShrunk) setActive(false);
+                if (isShrunk) {
+                    pause();
+                }
 
                 updateX(isCenter(hPos));
 
-                if(isShrunk) setActive(true);
+                if (isShrunk) {
+                    resume();
+                }
             });
         }
     }
@@ -159,15 +175,19 @@ public class AnimatedLayout extends AnimatedMulti {
      * @param vPos vertical position of the alignment
      */
     private void bindY(VPos vPos) {
-        if(requiresBinding(vPos)) {
+        if (requiresBinding(vPos)) {
             boolean center = vPos == VPos.CENTER;
             root.prefHeightProperty().addListener((observable, oldValue, newValue) -> {
                 boolean isShrunk = !isAnimateShrinking() && (double) newValue < (double) oldValue && !isCenter(vPos);
-                if(isShrunk) setActive(false);
+                if (isShrunk) {
+                    pause();
+                }
 
                 updateY(isCenter(vPos));
 
-                if(isShrunk) setActive(true);
+                if (isShrunk) {
+                    resume();
+                }
             });
         }
     }
