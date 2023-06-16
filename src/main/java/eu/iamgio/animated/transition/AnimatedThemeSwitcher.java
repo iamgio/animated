@@ -1,7 +1,8 @@
 package eu.iamgio.animated.transition;
 
-import animatefx.animation.AnimationFX;
 import animatefx.animation.FadeOut;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
@@ -14,25 +15,26 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * An {@link AnimatedThemeSwitcher} provides animated transitions that are played when changing the stylesheets of a {@link Scene}.
  * @author Giorgio Garofalo
  */
-public class AnimatedThemeSwitcher implements Pausable {
+public class AnimatedThemeSwitcher implements Pausable, ExitAnimationCompatible {
 
     private final Scene scene;
-    private final SimpleObjectProperty<Animation> animation = new SimpleObjectProperty<>(new Animation(new FadeOut()));
-    private final SimpleBooleanProperty pausedProperty = new SimpleBooleanProperty(false);
+
+    private final ObjectProperty<Animation> out;
+    private final BooleanProperty pausedProperty = new SimpleBooleanProperty(false);
 
     // Whether the changes to the stylesheets should be handled
     private boolean handleChanges = true;
 
     private AnimatedThemeSwitcher(Scene scene) {
         this.scene = scene;
-        register();
+        this.out = new SimpleObjectProperty<>(new Animation(new FadeOut()));
     }
 
     /**
@@ -43,16 +45,22 @@ public class AnimatedThemeSwitcher implements Pausable {
      * @throws IllegalStateException if the root of the scene is not suitable for the transition (e.g. VBox and HBox)
      */
     public static AnimatedThemeSwitcher init(Scene scene) throws IllegalStateException {
-        Parent root = scene.getRoot();
+        final Parent root = scene.getRoot();
 
-        if(!(root instanceof Pane)) {
+        if (root == null) {
+            throw new IllegalStateException("The given scene does not have a root node.");
+        }
+        if (!(root instanceof Pane)) {
             throw new IllegalStateException("The root node is not a Pane (or subclass).");
         }
-        if(root instanceof VBox || root instanceof HBox) {
+        if (root instanceof VBox || root instanceof HBox) {
             throw new IllegalStateException("The root node cannot be a VBox or HBox.");
         }
 
-        return new AnimatedThemeSwitcher(scene);
+        final AnimatedThemeSwitcher switcher = new AnimatedThemeSwitcher(scene);
+        switcher.register();
+
+        return switcher;
     }
 
     /**
@@ -63,10 +71,10 @@ public class AnimatedThemeSwitcher implements Pausable {
         // Set-up stylesheets listener
         scene.getStylesheets().addListener((ListChangeListener<? super String>) change -> {
             final ObservableList<String> stylesheets = scene.getStylesheets();
-            while(change.next() && handleChanges && !isPaused()) {
+            while (change.next() && handleChanges && !isPaused()) {
                 // Copy changes (to avoid ConcurrentModificationException)
-                final List<? extends String> added = new ArrayList<>(change.getAddedSubList());
-                final List<? extends String> removed = new ArrayList<>(change.getRemoved());
+                final List<? extends String> added = new LinkedList<>(change.getAddedSubList());
+                final List<? extends String> removed = new LinkedList<>(change.getRemoved());
 
                 handleChanges = false; // Puts the listener on hold
 
@@ -99,48 +107,22 @@ public class AnimatedThemeSwitcher implements Pausable {
         root.getChildren().add(imageView);
 
         // Plays the exit animation and removes the image after the transition ends.
-        getAnimation().playOut(imageView, root.getChildren());
-    }
-
-    /**
-     * @return the animation played during the transition
-     */
-    public SimpleObjectProperty<Animation> animationProperty() {
-        return animation;
-    }
-
-    /**
-     * @return the exit animation played during the transition, defaults to {@link FadeOut}
-     */
-    public Animation getAnimation() {
-        return animation.get();
-    }
-
-    /**
-     * @param animationOut exit animation to be played during the transition.
-     * @throws IllegalArgumentException if the animation is not an exit animation.
-     */
-    public void setAnimation(Animation animationOut) {
-        if(animationOut.getAnimationFX() != null && !animationOut.getAnimationFX().toString().contains("Out")) {
-            throw new IllegalArgumentException(
-                    "AnimatedThemeSwitcher should feature an exit animation, such as FadeOut.");
-        }
-        this.animation.set(animationOut);
-    }
-
-    /**
-     * @param animationOut raw exit animation to be played during the transition.
-     * @throws IllegalArgumentException if the animation is not an exit animation.
-     */
-    public void setAnimation(AnimationFX animationOut) {
-        setAnimation(new Animation(animationOut));
+        getOut().playOut(imageView, root.getChildren());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public SimpleBooleanProperty pausedProperty() {
-        return pausedProperty;
+    public ObjectProperty<Animation> animationOutProperty() {
+        return this.out;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BooleanProperty pausedProperty() {
+        return this.pausedProperty;
     }
 }
