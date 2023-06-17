@@ -40,12 +40,6 @@ public abstract class PropertyWrapper<T> implements CustomizableAnimation<Proper
     public abstract void addListener(ChangeListener<? super T> listener);
 
     /**
-     * @return an empty property of the same type
-     * @deprecated Currently unused and will be likely removed.
-     */
-    public abstract PropertyWrapper<T> createParallelProperty();
-
-    /**
      * {@inheritDoc}
      */
     public AnimationSettings getSettings() {
