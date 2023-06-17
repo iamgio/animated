@@ -82,14 +82,6 @@ public class AnimatedMulti extends SingleChildParent implements CustomizableAnim
     }
 
     /**
-     * @throws UnsupportedOperationException {@link AnimatedMulti} does not have global settings
-     */
-    @Override
-    public AnimationSettings getSettings() throws UnsupportedOperationException {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")

@@ -7,6 +7,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
 
+import java.util.function.Function;
+
 /**
  * Animation handler for a JavaFX property wrapped inside a {@link PropertyWrapper}.
  * @author Giorgio Garofalo
@@ -83,18 +85,27 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
     }
 
     /**
-     * {@inheritDoc}
+     * @return the current animation settings
      */
-    @Override
     public AnimationSettings getSettings() {
         return property.getSettings();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     @Override
     public <A extends AnimationProperty<T>> A withSettings(AnimationSettings settings) {
         this.property.withSettings(settings);
         return (A) this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public <A extends AnimationProperty<T>> A custom(Function<AnimationSettings, AnimationSettings> settings) {
+        return withSettings(settings.apply(getSettings()));
     }
 
     /**

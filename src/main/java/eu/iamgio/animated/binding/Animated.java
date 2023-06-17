@@ -5,6 +5,8 @@ import eu.iamgio.animated.transition.Pausable;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.Node;
 
+import java.util.function.Function;
+
 /**
  * A node that automatically animates a property of its child.
  * @param <T> type of the target property
@@ -63,18 +65,15 @@ public class Animated<T> extends SingleChildParent implements CustomizableAnimat
     /**
      * {@inheritDoc}
      */
-    @Override
-    public AnimationSettings getSettings() {
-        return property.getSettings();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     public <A extends Animated<T>> A withSettings(AnimationSettings settings) {
         this.property.withSettings(settings);
         return (A) this;
+    }
+
+    @Override
+    public <A extends Animated<T>> A custom(Function<AnimationSettings, AnimationSettings> settings) {
+        return withSettings(settings.apply(property.getSettings()));
     }
 
     /**
