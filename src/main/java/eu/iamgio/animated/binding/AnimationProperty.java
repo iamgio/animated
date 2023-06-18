@@ -22,7 +22,7 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
     private final Timeline timeline;
 
     // Whether the property should be animated
-    private final BooleanProperty pausedProperty = new SimpleBooleanProperty(false);
+    private final BooleanProperty paused = new SimpleBooleanProperty(false);
 
     // Last time an animation frame was played (in millis)
     private double lastUpdate;
@@ -145,6 +145,6 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
      */
     @Override
     public BooleanProperty pausedProperty() {
-        return this.pausedProperty;
+        return this.paused;
     }
 }
