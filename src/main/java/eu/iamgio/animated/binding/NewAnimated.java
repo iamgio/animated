@@ -76,4 +76,8 @@ public class NewAnimated extends SingleChildParent implements CustomizableAnimat
     public BooleanProperty pausedProperty() {
         return this.paused;
     }
+
+    public ObservableList<AnimationProperty<?>> getTargetProperties() {
+        return this.properties;
+    }
 }

@@ -4,6 +4,8 @@ import eu.iamgio.animated.binding.property.PropertyWrapper;
 import eu.iamgio.animated.transition.Pausable;
 import javafx.animation.*;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
 
@@ -24,6 +26,9 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
     // Whether the property should be animated
     private final BooleanProperty paused = new SimpleBooleanProperty(false);
 
+    // Animation settings
+    private AnimationSettings settings;
+
     // Last time an animation frame was played (in millis)
     private double lastUpdate;
 
@@ -39,7 +44,8 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
      * @param settings animation settings
      */
     public AnimationProperty(PropertyWrapper<T> property, AnimationSettings settings) {
-        this.property = property.withSettings(settings);
+        this.property = property;
+        this.settings = settings;
         this.timeline = new Timeline();
 
         timeline.currentTimeProperty().addListener(o -> {
@@ -53,7 +59,7 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
      * @param property target property
      */
     public AnimationProperty(PropertyWrapper<T> property) {
-        this(property, property.getSettings());
+        this(property, new AnimationSettings());
     }
 
     /**
@@ -64,8 +70,6 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
         // Temporarily stop the timeline in case it is currently running
         timeline.stop();
 
-        // Retrieve settings
-        AnimationSettings settings = property.getSettings();
         Interpolator interpolator = settings.getCurve().toInterpolator();
 
         // Set keyframes
@@ -88,7 +92,7 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
      * @return the current animation settings
      */
     public AnimationSettings getSettings() {
-        return property.getSettings();
+        return this.settings;
     }
 
     /**
@@ -97,7 +101,7 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
     @SuppressWarnings("unchecked")
     @Override
     public <A extends AnimationProperty<T>> A withSettings(AnimationSettings settings) {
-        this.property.withSettings(settings);
+        this.settings = settings;
         return (A) this;
     }
 
@@ -146,5 +150,26 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
     @Override
     public BooleanProperty pausedProperty() {
         return this.paused;
+    }
+
+    /**
+     * Creates an {@link AnimationProperty} that wraps the given {@link ObjectProperty}.
+     * @see eu.iamgio.animated.binding.property
+     * @param property JavaFX property to wrap
+     * @param <T> property type
+     * @return instance of a new animation property that wraps <tt>property</tt>.
+     */
+    public static <T> AnimationProperty<T> of(ObjectProperty<T> property) {
+        return new AnimationProperty<>(PropertyWrapper.of(property));
+    }
+
+    /**
+     * Creates an {@link AnimationProperty} that wraps the given {@link DoubleProperty}.
+     * @see eu.iamgio.animated.binding.property
+     * @param property JavaFX property to wrap
+     * @return instance of a new animation property that wraps <tt>property</tt>.
+     */
+    public static AnimationProperty<Double> of(DoubleProperty property) {
+        return new AnimationProperty<>(PropertyWrapper.of(property));
     }
 }

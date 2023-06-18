@@ -44,7 +44,7 @@ public class Animated<T> extends SingleChildParent implements CustomizableAnimat
      * @param property target property
      */
     public Animated(Node child, PropertyWrapper<T> property) {
-        this(child, property, property.getSettings());
+        this(child, property, new AnimationSettings());
     }
 
     /**

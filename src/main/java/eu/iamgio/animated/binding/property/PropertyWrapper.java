@@ -1,23 +1,16 @@
 package eu.iamgio.animated.binding.property;
 
-import eu.iamgio.animated.binding.AnimationProperty;
-import eu.iamgio.animated.binding.AnimationSettings;
-import eu.iamgio.animated.binding.CustomizableAnimation;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
-
-import java.util.function.Function;
 
 /**
  * Abstract class that allows wrapping object and primitive JavaFX properties without the explicit <pre>asObject()</pre> call ands allows animation customization.
  * @param <T> property type
  * @author Giorgio Garofalo
  */
-public abstract class PropertyWrapper<T> implements CustomizableAnimation<PropertyWrapper<T>> {
-
-    private AnimationSettings settings = new AnimationSettings();
+public abstract class PropertyWrapper<T> {
 
     /**
      * @return the wrapped JavaFX property
@@ -40,41 +33,6 @@ public abstract class PropertyWrapper<T> implements CustomizableAnimation<Proper
      * @param listener listener to register
      */
     public abstract void addListener(ChangeListener<? super T> listener);
-
-    /**
-     * {@inheritDoc}
-     */
-    public AnimationSettings getSettings() {
-        return settings;
-    }
-
-    /**
-     * Creates a new implicitly animated binding for this property and registers a listener for it.
-     * @return new animation property linked to this property
-     */
-    public AnimationProperty<T> registerAnimation() {
-        AnimationProperty<T> property = new AnimationProperty<>(this, settings);
-        property.register();
-        return property;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public <A extends PropertyWrapper<T>> A withSettings(AnimationSettings settings) {
-        this.settings = settings;
-        return (A) this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <A extends PropertyWrapper<T>> A custom(Function<AnimationSettings, AnimationSettings> settings) {
-        return withSettings(settings.apply(this.settings));
-    }
 
     /**
      * Creates an {@link ObjectPropertyWrapper} for the given {@link ObjectProperty}.
