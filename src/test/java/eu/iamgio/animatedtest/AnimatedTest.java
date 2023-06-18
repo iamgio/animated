@@ -1,7 +1,7 @@
 package eu.iamgio.animatedtest;
 
-import eu.iamgio.animated.binding.AnimatedMulti;
-import eu.iamgio.animated.binding.Curve;
+import eu.iamgio.animated.binding.AnimationProperty;
+import eu.iamgio.animated.binding.NewAnimated;
 import eu.iamgio.animated.binding.property.PropertyWrapper;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -12,7 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import static eu.iamgio.animatedtest.TestUtil.center;
 import static eu.iamgio.animatedtest.TestUtil.randomRectangle;
@@ -37,14 +36,19 @@ public class AnimatedTest extends Application {
         rectangle.heightProperty().bind(pane.heightProperty());
 
         // Setup the node and attach it to the root
-        AnimatedMulti animated = new AnimatedMulti(pane,
+        /*AnimatedMulti animated = new AnimatedMulti(pane,
                 PropertyWrapper.of(pane.opacityProperty())
                         .custom(settings -> settings.withDuration(Duration.seconds(.4))),
                 PropertyWrapper.of(pane.prefWidthProperty())
                         .custom(settings -> settings.withDuration(Duration.seconds(.3))),
                 PropertyWrapper.of(pane.prefHeightProperty())
                         .custom(settings -> settings.withDuration(Duration.seconds(.3)))
-        ).custom(settings -> settings.withCurve(Curve.EASE_IN_OUT));
+        ).custom(settings -> settings.withCurve(Curve.EASE_IN_OUT));*/
+
+        NewAnimated animated = new NewAnimated(pane,
+                new AnimationProperty<>(PropertyWrapper.of(pane.prefWidthProperty()))
+        );
+
         root.getChildren().add(animated);
 
         // Setup the controls

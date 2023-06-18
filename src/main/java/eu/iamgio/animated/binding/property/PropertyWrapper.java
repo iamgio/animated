@@ -8,6 +8,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
 
+import java.util.function.Function;
+
 /**
  * Abstract class that allows wrapping object and primitive JavaFX properties without the explicit <pre>asObject()</pre> call ands allows animation customization.
  * @param <T> property type
@@ -64,6 +66,14 @@ public abstract class PropertyWrapper<T> implements CustomizableAnimation<Proper
     public <A extends PropertyWrapper<T>> A withSettings(AnimationSettings settings) {
         this.settings = settings;
         return (A) this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <A extends PropertyWrapper<T>> A custom(Function<AnimationSettings, AnimationSettings> settings) {
+        return withSettings(settings.apply(this.settings));
     }
 
     /**

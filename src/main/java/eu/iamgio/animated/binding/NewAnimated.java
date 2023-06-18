@@ -16,33 +16,38 @@ import java.util.function.Function;
  */
 public class NewAnimated extends SingleChildParent implements CustomizableAnimation<NewAnimated>, Pausable {
 
-    private final ObservableList<AnimationProperty<?>> properties = FXCollections.emptyObservableList();
+    private final ObservableList<AnimationProperty<?>> properties = FXCollections.observableArrayList();
     private final BooleanProperty paused = new SimpleBooleanProperty(false);
 
     public NewAnimated() {
-        registerPause();
+        registerPropertyListeners();
     }
 
     public NewAnimated(Node child, AnimationProperty<?>... properties) {
         super(child);
-        registerPause();
+        registerPropertyListeners();
         this.properties.addAll(properties);
     }
 
     public NewAnimated(Node child) {
         super(child);
-        registerPause();
+        registerPropertyListeners();
     }
 
     public NewAnimated(AnimationProperty<?>... properties) {
-        registerPause();
+        registerPropertyListeners();
         this.properties.addAll(properties);
     }
 
-    private void registerPause() {
+    private void registerPropertyListeners() {
         properties.addListener((ListChangeListener<? super AnimationProperty<?>>) change -> {
-            change.getAddedSubList().forEach(property -> property.pausedProperty().bind(this.paused));
-            // TODO unbind on remove
+            while (change.next()) {
+                change.getAddedSubList().forEach(property -> {
+                    property.register();
+                    property.pausedProperty().bind(this.paused);
+                });
+                // TODO unbind on remove
+            }
         });
     }
 
