@@ -1,6 +1,7 @@
-package eu.iamgio.animated.binding;
+package eu.iamgio.animated.binding.presets;
 
-import eu.iamgio.animated.binding.property.wrapper.DoublePropertyWrapper;
+import eu.iamgio.animated.binding.property.animation.OnDemandAnimationPropertyGroup;
+import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Bounds;
@@ -10,12 +11,14 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 
+import java.util.Arrays;
+
 /**
  * Node that animates its child's position based on an alignment relative to an anchor root.
  *
  * @author Giorgio Garofalo
  */
-public class AnimatedLayout extends AnimatedMulti {
+public class AnimatedLayout extends OnDemandAnimationPropertyGroup<Node, Double> {
 
     private final Node child;
     private final Region root;
@@ -34,7 +37,12 @@ public class AnimatedLayout extends AnimatedMulti {
      * @param animateShrinking whether the animation should be played when the root is shrunk
      */
     public AnimatedLayout(Node child, Region root, Pos alignment, boolean animateShrinking) {
-        super(child, new DoublePropertyWrapper(child.layoutXProperty()), new DoublePropertyWrapper(child.layoutYProperty()));
+        super(Arrays.asList(
+                node -> PropertyWrapper.of(node.layoutXProperty()),
+                node -> PropertyWrapper.of(node.layoutYProperty())
+        ));
+
+        targetNodeProperty().set(child);
 
         this.child = child;
         this.root = root;
@@ -157,6 +165,7 @@ public class AnimatedLayout extends AnimatedMulti {
         if (requiresBinding(hPos)) {
             root.prefWidthProperty().addListener((observable, oldValue, newValue) -> {
                 boolean isShrunk = !isAnimateShrinking() && (double) newValue < (double) oldValue && !isCenter(hPos);
+
                 if (isShrunk) {
                     pause();
                 }

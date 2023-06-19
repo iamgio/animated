@@ -45,7 +45,7 @@ public class NewAnimated extends SingleChildParent implements CustomizableAnimat
             while (change.next()) {
                 change.getAddedSubList().forEach(property -> {
                     property.attachTo(this);
-                    property.pausedProperty().bind(this.paused);
+                    property.pausedProperty().bindBidirectional(this.paused);
                 });
                 // TODO unbind on remove
             }
