@@ -1,15 +1,20 @@
 package eu.iamgio.animated.binding;
 
-import eu.iamgio.animated.binding.property.DoublePropertyWrapper;
+import eu.iamgio.animated.binding.property.PropertyWrapper;
 import javafx.scene.Node;
 
 /**
  * Node that animates its child's opacity.
  * @author Giorgio Garofalo
  */
-public class AnimatedOpacity extends Animated<Double> {
+public class AnimatedOpacity extends OnDemandAnimationProperty<Double> {
+
+    public AnimatedOpacity() {
+        super(node -> PropertyWrapper.of(node.opacityProperty()));
+    }
 
     public AnimatedOpacity(Node child) {
-        super(child, new DoublePropertyWrapper(child.opacityProperty()));
+        this();
+        targetNodeProperty().set(child);
     }
 }

@@ -1,5 +1,6 @@
 package eu.iamgio.animatedtest;
 
+import eu.iamgio.animated.binding.AnimatedOpacity;
 import eu.iamgio.animated.binding.AnimationProperty;
 import eu.iamgio.animated.binding.Curve;
 import eu.iamgio.animated.binding.NewAnimated;
@@ -36,18 +37,9 @@ public class AnimatedTest extends Application {
         rectangle.widthProperty().bind(pane.prefWidthProperty());
         rectangle.heightProperty().bind(pane.heightProperty());
 
-        // Setup the node and attach it to the root
-        /*AnimatedMulti animated = new AnimatedMulti(pane,
-                PropertyWrapper.of(pane.opacityProperty())
-                        .custom(settings -> settings.withDuration(Duration.seconds(.4))),
-                PropertyWrapper.of(pane.prefWidthProperty())
-                        .custom(settings -> settings.withDuration(Duration.seconds(.3))),
-                PropertyWrapper.of(pane.prefHeightProperty())
-                        .custom(settings -> settings.withDuration(Duration.seconds(.3)))
-        ).custom(settings -> settings.withCurve(Curve.EASE_IN_OUT));*/
-
+        // Set up the node and attach it to the root
         NewAnimated animated = new NewAnimated(pane,
-                AnimationProperty.of(pane.opacityProperty())
+                new AnimatedOpacity()
                         .custom(settings -> settings.withDuration(Duration.seconds(.4))),
                 AnimationProperty.of(pane.prefWidthProperty())
                         .custom(settings -> settings.withDuration(Duration.seconds(.3))),
@@ -57,7 +49,7 @@ public class AnimatedTest extends Application {
 
         root.getChildren().add(animated);
 
-        // Setup the controls
+        // Set up the controls
         root.getChildren().add(setupControls(pane));
 
         // Show

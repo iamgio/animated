@@ -4,6 +4,7 @@ import animatefx.animation.FadeInUp;
 import animatefx.animation.SlideOutLeft;
 import eu.iamgio.animated.binding.AnimatedOpacity;
 import eu.iamgio.animated.binding.Curve;
+import eu.iamgio.animated.binding.NewAnimated;
 import eu.iamgio.animated.transition.AnimationPair;
 import eu.iamgio.animated.transition.container.AnimatedVBox;
 import javafx.application.Application;
@@ -77,7 +78,8 @@ public class AnimatedContainerTest extends Application {
 
             getChildren().addAll(
                     rectangle,
-                    new AnimatedOpacity(text).custom(settings -> settings.withDuration(Duration.millis(150)).withCurve(Curve.EASE_IN_OUT))
+                    new NewAnimated(text, new AnimatedOpacity())
+                            .custom(settings -> settings.withDuration(Duration.millis(150)).withCurve(Curve.EASE_IN_OUT))
             );
 
             setOnMouseClicked(ev -> parent.getChildren().remove(this));
