@@ -3,6 +3,7 @@ package eu.iamgio.animated.binding;
 import eu.iamgio.animated.binding.property.PropertyWrapper;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.Node;
 
 import java.util.function.Function;
@@ -35,5 +36,22 @@ public abstract class OnDemandAnimationProperty<T> extends AnimationProperty<T> 
     @Override
     public void register(Node target) {
 
+    }
+
+    public void attachTo(NewAnimated animated) {
+        if (targetNode.get() == null) {
+            targetNode.bind(animated.childProperty());
+        }
+
+        final ChangeListener<Node> listener = (observable, oldChild, newChild) -> {
+            final AnimationProperty<?> requested = requestProperty();
+            requested.register(targetNode.get());
+        };
+
+        if (animated.getChild() != null) {
+            listener.changed(null, null, targetNode.get());
+        }
+
+        animated.childProperty().addListener(listener);
     }
 }
