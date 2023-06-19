@@ -34,12 +34,8 @@ public class OnDemandAnimationProperty<N extends Node, T> extends AnimationPrope
         return property;
     }
 
-    @Override
-    public void register(Node target) {
-
-    }
-
     @SuppressWarnings("unchecked")
+    @Override
     public void attachTo(NewAnimated animated) {
         if (targetNode.get() == null) {
             // Not a beautiful way to achieve this.

@@ -43,10 +43,7 @@ public class NewAnimated extends SingleChildParent implements CustomizableAnimat
         properties.addListener((ListChangeListener<? super AnimationProperty<?>>) change -> {
             while (change.next()) {
                 change.getAddedSubList().forEach(property -> {
-                    if (property instanceof OnDemandAnimationProperty) {
-                        ((OnDemandAnimationProperty<?, ?>) property).attachTo(this);
-                    }
-                    property.register(getChild());
+                    property.attachTo(this);
                     property.pausedProperty().bind(this.paused);
                 });
                 // TODO unbind on remove

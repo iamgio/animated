@@ -138,6 +138,14 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
     }
 
     /**
+     * Attaches this property to an {@link NewAnimated} node.
+     * @param animated animated node to link this property to
+     */
+    public void attachTo(NewAnimated animated) {
+        this.register(animated.getChild());
+    }
+
+    /**
      * @return target property
      */
     public PropertyWrapper<T> getProperty() {
