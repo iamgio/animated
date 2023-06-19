@@ -1,7 +1,7 @@
 package eu.iamgio.animatedtest;
 
 import eu.iamgio.animated.binding.AnimatedOpacity;
-import eu.iamgio.animated.binding.AnimationProperty;
+import eu.iamgio.animated.binding.AnimatedPrefSize;
 import eu.iamgio.animated.binding.Curve;
 import eu.iamgio.animated.binding.NewAnimated;
 import javafx.application.Application;
@@ -41,9 +41,7 @@ public class AnimatedTest extends Application {
         NewAnimated animated = new NewAnimated(pane,
                 new AnimatedOpacity()
                         .custom(settings -> settings.withDuration(Duration.seconds(.4))),
-                AnimationProperty.of(pane.prefWidthProperty())
-                        .custom(settings -> settings.withDuration(Duration.seconds(.3))),
-                AnimationProperty.of(pane.prefHeightProperty())
+                new AnimatedPrefSize()
                         .custom(settings -> settings.withDuration(Duration.seconds(.3)))
         ).custom(settings -> settings.withCurve(Curve.EASE_IN_OUT));
 
