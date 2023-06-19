@@ -12,7 +12,7 @@ import java.util.function.Function;
 /**
  *
  */
-public class OnDemandAnimationProperty<N extends Node, T> extends AnimationProperty<T> implements BindableContextNode {
+public class OnDemandAnimationProperty<N extends Node, T> extends AnimationProperty<T> implements BindableContextNode<N> {
 
     private final Function<N, PropertyWrapper<T>> propertyRetriever;
     private final ObjectProperty<N> targetNode;
@@ -30,8 +30,8 @@ public class OnDemandAnimationProperty<N extends Node, T> extends AnimationPrope
 
     public AnimationProperty<T> requestProperty() {
         final AnimationProperty<T> property = new AnimationProperty<>(propertyRetriever.apply(targetNode.get()));
-        property.pausedProperty().bindBidirectional(pausedProperty());
-        return property.withSettings(this.getSettings());
+        super.copyAttributesTo(property);
+        return property;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class OnDemandAnimationProperty<N extends Node, T> extends AnimationPrope
     public void attachTo(NewAnimated animated) {
         if (targetNode.get() == null) {
             // Not a beautiful way to achieve this.
-            // The cast is a workaround and should be handled better in the future.
+            // Casting is a workaround and should be handled better in the future.
             targetNode.bind((Property<N>) animated.childProperty());
         }
 

@@ -23,8 +23,7 @@ public class OnDemandAnimationPropertyGroup<N extends Node, T> extends OnDemandA
         for (Function<N, PropertyWrapper<T>> propertyRetriever : this.propertyRetrievers) {
             final OnDemandAnimationProperty<N, T> property = new OnDemandAnimationProperty<>(propertyRetriever);
             property.targetNodeProperty().bind(targetNodeProperty());
-            property.pausedProperty().bindBidirectional(pausedProperty());
-            property.withSettings(this.getSettings());
+            super.copyAttributesTo(property);
             property.attachTo(animated);
         }
     }

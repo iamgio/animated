@@ -153,6 +153,15 @@ public class AnimationProperty<T> implements CustomizableAnimation<AnimationProp
     }
 
     /**
+     * Copies settings and other attributes (pause status) from this property to another (and overrides existing values).
+     * @param to property to copy attributes to
+     */
+    void copyAttributesTo(AnimationProperty<?> to) {
+        to.pausedProperty().bindBidirectional(pausedProperty());
+        to.withSettings(this.getSettings());
+    }
+
+    /**
      * Creates an {@link AnimationProperty} that wraps the given {@link ObjectProperty}.
      * @see eu.iamgio.animated.binding.property
      * @param property JavaFX property to wrap
