@@ -1,6 +1,7 @@
 package eu.iamgio.animated.binding;
 
-import eu.iamgio.animated.binding.property.PropertyWrapper;
+import eu.iamgio.animated.binding.property.animation.OnDemandAnimationPropertyGroup;
+import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import javafx.scene.layout.Region;
 
 import java.util.Arrays;

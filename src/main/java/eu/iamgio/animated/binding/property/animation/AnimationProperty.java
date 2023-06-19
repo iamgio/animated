@@ -1,6 +1,9 @@
-package eu.iamgio.animated.binding;
+package eu.iamgio.animated.binding.property.animation;
 
-import eu.iamgio.animated.binding.property.PropertyWrapper;
+import eu.iamgio.animated.binding.AnimationSettings;
+import eu.iamgio.animated.binding.CustomizableAnimation;
+import eu.iamgio.animated.binding.NewAnimated;
+import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import eu.iamgio.animated.transition.Pausable;
 import javafx.animation.*;
 import javafx.beans.property.BooleanProperty;

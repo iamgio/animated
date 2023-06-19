@@ -1,6 +1,7 @@
-package eu.iamgio.animated.binding;
+package eu.iamgio.animated.binding.property.animation;
 
-import eu.iamgio.animated.binding.property.PropertyWrapper;
+import eu.iamgio.animated.binding.NewAnimated;
+import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;

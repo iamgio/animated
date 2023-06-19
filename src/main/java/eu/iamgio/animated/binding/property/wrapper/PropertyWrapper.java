@@ -1,4 +1,4 @@
-package eu.iamgio.animated.binding.property;
+package eu.iamgio.animated.binding.property.wrapper;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;

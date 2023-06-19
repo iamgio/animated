@@ -1,6 +1,6 @@
 package eu.iamgio.animated.binding;
 
-import eu.iamgio.animated.binding.property.DoublePropertyWrapper;
+import eu.iamgio.animated.binding.property.wrapper.DoublePropertyWrapper;
 import javafx.scene.Node;
 import javafx.scene.effect.GaussianBlur;
 

@@ -1,4 +1,4 @@
-package eu.iamgio.animated.binding;
+package eu.iamgio.animated.binding.property.animation;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.Node;

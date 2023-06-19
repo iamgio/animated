@@ -1,5 +1,6 @@
 package eu.iamgio.animated.binding;
 
+import eu.iamgio.animated.binding.property.animation.AnimationProperty;
 import eu.iamgio.animated.transition.Pausable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

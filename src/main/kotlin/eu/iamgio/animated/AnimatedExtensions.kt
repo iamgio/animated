@@ -1,7 +1,7 @@
 package eu.iamgio.animated
 
 import animatefx.animation.AnimationFX
-import eu.iamgio.animated.binding.property.PropertyWrapper
+import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper
 import eu.iamgio.animated.transition.Animation
 import eu.iamgio.animated.transition.AnimationPair
 import javafx.beans.property.DoubleProperty
