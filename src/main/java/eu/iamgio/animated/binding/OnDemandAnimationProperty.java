@@ -11,7 +11,7 @@ import java.util.function.Function;
 /**
  *
  */
-public abstract class OnDemandAnimationProperty<T> extends AnimationProperty<T> implements BindableContextNode {
+public class OnDemandAnimationProperty<T> extends AnimationProperty<T> implements BindableContextNode {
 
     private final Function<Node, PropertyWrapper<T>> propertyRetriever;
     private final ObjectProperty<Node> targetNode;
