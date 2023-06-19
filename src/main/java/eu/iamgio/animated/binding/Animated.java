@@ -1,6 +1,7 @@
 package eu.iamgio.animated.binding;
 
 import eu.iamgio.animated.binding.property.animation.AnimationProperty;
+import eu.iamgio.animated.binding.property.animation.SimpleAnimationProperty;
 import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import eu.iamgio.animated.transition.Pausable;
 import javafx.beans.property.BooleanProperty;
@@ -36,7 +37,7 @@ public class Animated<T> extends SingleChildParent implements CustomizableAnimat
      * @param settings animation settings
      */
     public Animated(Node child, PropertyWrapper<T> property, AnimationSettings settings) {
-        this(child, new AnimationProperty<>(property), settings);
+        this(child, new SimpleAnimationProperty<>(property), settings);
     }
 
     /**

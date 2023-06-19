@@ -1,6 +1,7 @@
 package eu.iamgio.animated.binding;
 
 import eu.iamgio.animated.binding.property.animation.AnimationProperty;
+import eu.iamgio.animated.binding.property.animation.SimpleAnimationProperty;
 import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import eu.iamgio.animated.transition.Pausable;
 import javafx.beans.property.BooleanProperty;
@@ -45,7 +46,7 @@ public class AnimatedMulti extends SingleChildParent implements CustomizableAnim
         super(child);
         this.properties = new AnimationProperty[properties.length];
         for(int i = 0; i < properties.length; i++) {
-            AnimationProperty<?> property = new AnimationProperty<>(properties[i]);
+            AnimationProperty<?> property = new SimpleAnimationProperty<>(properties[i]);
             this.properties[i] = property;
             property.register(child);
         }
