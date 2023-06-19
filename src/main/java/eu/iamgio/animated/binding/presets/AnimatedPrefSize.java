@@ -1,4 +1,4 @@
-package eu.iamgio.animated.binding;
+package eu.iamgio.animated.binding.presets;
 
 import eu.iamgio.animated.binding.property.animation.OnDemandAnimationPropertyGroup;
 import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
@@ -7,8 +7,7 @@ import javafx.scene.layout.Region;
 import java.util.Arrays;
 
 /**
- * Property that animates its child's preferred size (pref size for {@link Region}.
- * @author Giorgio Garofalo
+ * Property that animates its child's preferred size.
  */
 public class AnimatedPrefSize extends OnDemandAnimationPropertyGroup<Region, Double> {
 

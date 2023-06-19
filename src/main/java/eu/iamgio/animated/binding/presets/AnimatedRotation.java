@@ -1,20 +1,19 @@
-package eu.iamgio.animated.binding;
+package eu.iamgio.animated.binding.presets;
 
 import eu.iamgio.animated.binding.property.animation.OnDemandAnimationProperty;
 import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import javafx.scene.Node;
 
 /**
- * Node that animates its child's opacity.
- * @author Giorgio Garofalo
+ * Property that animates its child's rotation.
  */
-public class AnimatedOpacity extends OnDemandAnimationProperty<Node, Double> {
+public class AnimatedRotation extends OnDemandAnimationProperty<Node, Double> {
 
-    public AnimatedOpacity() {
+    public AnimatedRotation() {
         super(node -> PropertyWrapper.of(node.opacityProperty()));
     }
 
-    public AnimatedOpacity(Node child) {
+    public AnimatedRotation(Node child) {
         this();
         targetNodeProperty().set(child);
     }

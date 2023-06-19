@@ -1,9 +1,9 @@
 package eu.iamgio.animatedtest;
 
-import eu.iamgio.animated.binding.AnimatedOpacity;
-import eu.iamgio.animated.binding.AnimatedPrefSize;
 import eu.iamgio.animated.binding.Curve;
 import eu.iamgio.animated.binding.NewAnimated;
+import eu.iamgio.animated.binding.presets.AnimatedOpacity;
+import eu.iamgio.animated.binding.presets.AnimatedPrefSize;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

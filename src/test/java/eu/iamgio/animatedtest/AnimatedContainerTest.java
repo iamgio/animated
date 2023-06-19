@@ -2,9 +2,9 @@ package eu.iamgio.animatedtest;
 
 import animatefx.animation.FadeInUp;
 import animatefx.animation.SlideOutLeft;
-import eu.iamgio.animated.binding.AnimatedOpacity;
 import eu.iamgio.animated.binding.Curve;
 import eu.iamgio.animated.binding.NewAnimated;
+import eu.iamgio.animated.binding.presets.AnimatedOpacity;
 import eu.iamgio.animated.transition.AnimationPair;
 import eu.iamgio.animated.transition.container.AnimatedVBox;
 import javafx.application.Application;
