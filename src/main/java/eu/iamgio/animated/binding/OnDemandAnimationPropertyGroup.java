@@ -9,21 +9,22 @@ import java.util.function.Function;
 /**
  *
  */
-public class OnDemandAnimationPropertyGroup<T> extends OnDemandAnimationProperty<T> {
+public class OnDemandAnimationPropertyGroup<N extends Node, T> extends OnDemandAnimationProperty<N, T> {
 
-    private final List<Function<Node, PropertyWrapper<T>>> propertyRetrievers;
+    private final List<Function<N, PropertyWrapper<T>>> propertyRetrievers;
 
-    public OnDemandAnimationPropertyGroup(List<Function<Node, PropertyWrapper<T>>> propertyRetrievers) {
+    public OnDemandAnimationPropertyGroup(List<Function<N, PropertyWrapper<T>>> propertyRetrievers) {
         super(null);
         this.propertyRetrievers = propertyRetrievers;
     }
 
     @Override
     public void attachTo(NewAnimated animated) {
-        for (Function<Node, PropertyWrapper<T>> propertyRetriever : this.propertyRetrievers) {
-            final OnDemandAnimationProperty<T> property = new OnDemandAnimationProperty<>(propertyRetriever);
+        for (Function<N, PropertyWrapper<T>> propertyRetriever : this.propertyRetrievers) {
+            final OnDemandAnimationProperty<N, T> property = new OnDemandAnimationProperty<>(propertyRetriever);
             property.targetNodeProperty().bind(targetNodeProperty());
             property.pausedProperty().bindBidirectional(pausedProperty());
+            property.withSettings(this.getSettings());
             property.attachTo(animated);
         }
     }

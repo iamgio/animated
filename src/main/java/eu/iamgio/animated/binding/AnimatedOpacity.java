@@ -7,7 +7,7 @@ import javafx.scene.Node;
  * Node that animates its child's opacity.
  * @author Giorgio Garofalo
  */
-public class AnimatedOpacity extends OnDemandAnimationProperty<Double> {
+public class AnimatedOpacity extends OnDemandAnimationProperty<Node, Double> {
 
     public AnimatedOpacity() {
         super(node -> PropertyWrapper.of(node.opacityProperty()));

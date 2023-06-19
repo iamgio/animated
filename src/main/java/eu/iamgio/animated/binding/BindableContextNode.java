@@ -6,7 +6,7 @@ import javafx.scene.Node;
 /**
  *
  */
-public interface BindableContextNode {
+public interface BindableContextNode<N extends Node> {
 
-    ObjectProperty<Node> targetNodeProperty();
+    ObjectProperty<N> targetNodeProperty();
 }
