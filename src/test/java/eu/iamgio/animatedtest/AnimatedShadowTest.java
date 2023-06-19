@@ -1,7 +1,7 @@
 package eu.iamgio.animatedtest;
 
+import eu.iamgio.animated.binding.Animated;
 import eu.iamgio.animated.binding.Curve;
-import eu.iamgio.animated.binding.NewAnimated;
 import eu.iamgio.animated.binding.presets.AnimatedDropShadow;
 import eu.iamgio.animated.transition.AnimatedLabel;
 import eu.iamgio.animated.transition.AnimationPair;
@@ -67,7 +67,7 @@ public class AnimatedShadowTest extends Application {
         });
 
         // Setup animation
-        NewAnimated animated = new NewAnimated(button, new AnimatedDropShadow.Color(), new AnimatedDropShadow.Radius())
+        Animated animated = new Animated(button, new AnimatedDropShadow.Color(), new AnimatedDropShadow.Radius())
                 .custom(settings -> settings.withDuration(Duration.millis(200)).withCurve(Curve.EASE_OUT_SINE));
 
         root.getChildren().addAll(label, animated);

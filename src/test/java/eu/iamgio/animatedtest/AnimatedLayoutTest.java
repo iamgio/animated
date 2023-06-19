@@ -1,7 +1,7 @@
 package eu.iamgio.animatedtest;
 
+import eu.iamgio.animated.binding.Animated;
 import eu.iamgio.animated.binding.AnimationSettings;
-import eu.iamgio.animated.binding.NewAnimated;
 import eu.iamgio.animated.binding.presets.AnimatedLayout;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -38,10 +38,10 @@ public class AnimatedLayoutTest extends Application {
 
         // Add nodes
         root.getChildren().addAll(
-                new NewAnimated(topLeft, new AnimatedLayout(topLeft, root, Pos.TOP_LEFT)).withSettings(settings),
-                new NewAnimated(topRight, new AnimatedLayout(topRight, root, Pos.TOP_RIGHT)).withSettings(settings),
-                new NewAnimated(bottomLeft, new AnimatedLayout(bottomLeft, root, Pos.BOTTOM_LEFT)).withSettings(settings),
-                new NewAnimated(bottomRight, new AnimatedLayout(bottomRight, root, Pos.BOTTOM_RIGHT)).withSettings(settings)
+                new Animated(topLeft, new AnimatedLayout(topLeft, root, Pos.TOP_LEFT)).withSettings(settings),
+                new Animated(topRight, new AnimatedLayout(topRight, root, Pos.TOP_RIGHT)).withSettings(settings),
+                new Animated(bottomLeft, new AnimatedLayout(bottomLeft, root, Pos.BOTTOM_LEFT)).withSettings(settings),
+                new Animated(bottomRight, new AnimatedLayout(bottomRight, root, Pos.BOTTOM_RIGHT)).withSettings(settings)
         );
 
         // Show

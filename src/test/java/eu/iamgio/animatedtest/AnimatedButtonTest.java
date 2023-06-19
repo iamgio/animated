@@ -2,7 +2,7 @@ package eu.iamgio.animatedtest;
 
 import eu.iamgio.animated.binding.Animated;
 import eu.iamgio.animated.binding.Curve;
-import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
+import eu.iamgio.animated.binding.property.animation.AnimationProperty;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
@@ -63,9 +63,8 @@ public class AnimatedButtonTest extends Application {
 
         // Setup animation
 
-        Animated<Color> animated = new Animated<>(button,
-                PropertyWrapper.of(backgroundColorProperty)
-        ).custom(settings -> settings.withCurve(Curve.EASE_OUT));
+        Animated animated = new Animated(button, AnimationProperty.of(backgroundColorProperty))
+                .custom(settings -> settings.withCurve(Curve.EASE_OUT));
 
         root.getChildren().add(animated);
 

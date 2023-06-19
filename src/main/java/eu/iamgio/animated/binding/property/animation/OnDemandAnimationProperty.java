@@ -1,6 +1,6 @@
 package eu.iamgio.animated.binding.property.animation;
 
-import eu.iamgio.animated.binding.NewAnimated;
+import eu.iamgio.animated.binding.Animated;
 import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.ObjectProperty;
@@ -13,7 +13,7 @@ import java.util.function.Function;
 /**
  * An on-demand animation property is a 'lazy evaluation' of an {@link AnimationProperty}:
  * its wrapped property is defined by a {@link Function} that is applied to the child
- * of the attached {@link NewAnimated} node only when it changes.
+ * of the attached {@link Animated} node only when it changes.
  * Optionally, a constant target node can be specified instead of using the bound one from the animated node.
  * @param <N> type of the JavaFX node to extract the property from
  * @param <T> type of the wrapped value
@@ -65,7 +65,7 @@ public class OnDemandAnimationProperty<N extends Node, T> extends AnimationPrope
      */
     @SuppressWarnings("unchecked")
     @Override
-    public void attachTo(NewAnimated animated) {
+    public void attachTo(Animated animated) {
         if (targetNode.get() == null) {
             // Not a beautiful way to achieve this.
             // Casting is a workaround and should be handled better in the future.

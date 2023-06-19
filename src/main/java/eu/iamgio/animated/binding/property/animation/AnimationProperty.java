@@ -1,8 +1,8 @@
 package eu.iamgio.animated.binding.property.animation;
 
+import eu.iamgio.animated.binding.Animated;
 import eu.iamgio.animated.binding.AnimationSettings;
 import eu.iamgio.animated.binding.CustomizableAnimation;
-import eu.iamgio.animated.binding.NewAnimated;
 import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import eu.iamgio.animated.transition.Pausable;
 import javafx.beans.property.BooleanProperty;
@@ -86,10 +86,10 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
     }
 
     /**
-     * Attaches this property to an {@link NewAnimated} node.
+     * Attaches this property to an {@link Animated} node.
      * @param animated animated node to link this property to
      */
-    public abstract void attachTo(NewAnimated animated);
+    public abstract void attachTo(Animated animated);
 
     /**
      * @return target property

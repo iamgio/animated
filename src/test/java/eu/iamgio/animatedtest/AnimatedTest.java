@@ -1,7 +1,7 @@
 package eu.iamgio.animatedtest;
 
+import eu.iamgio.animated.binding.Animated;
 import eu.iamgio.animated.binding.Curve;
-import eu.iamgio.animated.binding.NewAnimated;
 import eu.iamgio.animated.binding.presets.AnimatedOpacity;
 import eu.iamgio.animated.binding.presets.AnimatedPrefSize;
 import javafx.application.Application;
@@ -38,7 +38,7 @@ public class AnimatedTest extends Application {
         rectangle.heightProperty().bind(pane.heightProperty());
 
         // Set up the node and attach it to the root
-        NewAnimated animated = new NewAnimated(pane,
+        Animated animated = new Animated(pane,
                 new AnimatedOpacity()
                         .custom(settings -> settings.withDuration(Duration.seconds(.4))),
                 new AnimatedPrefSize()

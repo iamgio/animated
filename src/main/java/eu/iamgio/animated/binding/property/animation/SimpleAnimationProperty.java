@@ -1,7 +1,7 @@
 package eu.iamgio.animated.binding.property.animation;
 
+import eu.iamgio.animated.binding.Animated;
 import eu.iamgio.animated.binding.AnimationSettings;
-import eu.iamgio.animated.binding.NewAnimated;
 import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import javafx.animation.*;
 import javafx.scene.Node;
@@ -97,7 +97,7 @@ public class SimpleAnimationProperty<T> extends AnimationProperty<T> {
      * {@inheritDoc}
      */
     @Override
-    public void attachTo(NewAnimated animated) {
+    public void attachTo(Animated animated) {
         this.register(animated.getChild());
     }
 }

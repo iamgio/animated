@@ -1,81 +1,94 @@
 package eu.iamgio.animated.binding;
 
 import eu.iamgio.animated.binding.property.animation.AnimationProperty;
-import eu.iamgio.animated.binding.property.animation.SimpleAnimationProperty;
-import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import eu.iamgio.animated.transition.Pausable;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
 import java.util.function.Function;
 
 /**
- * A node that automatically animates a property of its child.
- * @param <T> type of the target property
+ * A node that automatically animates multiple properties related to its child.
  * @author Giorgio Garofalo
  */
-public class Animated<T> extends SingleChildParent implements CustomizableAnimation<Animated<T>>, Pausable {
+public class Animated extends SingleChildParent implements CustomizableAnimation<Animated>, Pausable {
 
-    private final AnimationProperty<T> property;
+    private final ObservableList<AnimationProperty<?>> properties = FXCollections.observableArrayList();
+    private final BooleanProperty paused = new SimpleBooleanProperty(false);
 
     /**
-     * Instantiates an {@link Animated} node
-     * @param child initial child
-     * @param property target property
-     * @param settings animation settings
+     * Instantiates a new {@link Animated} node without a child and with no target properties.
      */
-    public Animated(Node child, AnimationProperty<T> property, AnimationSettings settings) {
+    public Animated() {
+        registerPropertyListeners();
+    }
+
+    /**
+     * Instantiates a new {@link Animated} node.
+     * @param child the target node that should be animated, to be wrapped by this {@link Animated} node
+     * @param properties target properties that should be animated.
+     *                   It is good practice to target properties that are related to this node's child
+     * @see AnimationProperty#of(DoubleProperty)
+     */
+    public Animated(Node child, AnimationProperty<?>... properties) {
         super(child);
-        this.property = property.withSettings(settings);
-        this.property.register(child);
+        registerPropertyListeners();
+        this.properties.addAll(properties);
     }
 
     /**
-     * Instantiates an {@link Animated} node
-     * @param child initial child
-     * @param property target property
-     * @param settings animation settings
+     * Instantiates a new {@link Animated} node with no target properties.
+     * @param child the target node that should be animated, to be wrapped by this {@link Animated} node
      */
-    public Animated(Node child, PropertyWrapper<T> property, AnimationSettings settings) {
-        this(child, new SimpleAnimationProperty<>(property), settings);
+    public Animated(Node child) {
+        super(child);
+        registerPropertyListeners();
     }
 
     /**
-     * Instantiates an {@link Animated} node
-     * @param child initial child
-     * @param property target property
+     * Instantiates a new {@link Animated} node without a child.
+     * @param properties target properties that should be animated.
+     *                   It is good practice to target properties that are related to this node's child
+     * @see AnimationProperty#of(DoubleProperty)
      */
-    public Animated(Node child, PropertyWrapper<T> property) {
-        this(child, property, new AnimationSettings());
+    public Animated(AnimationProperty<?>... properties) {
+        registerPropertyListeners();
+        this.properties.addAll(properties);
     }
 
-    /**
-     * Instantiates an {@link Animated} node
-     * @param property target property
-     */
-    public Animated(PropertyWrapper<T> property) {
-        this(null, property);
-    }
-
-    /**
-     * @return target property
-     */
-    public AnimationProperty<T> getTargetProperty() {
-        return property;
+    private void registerPropertyListeners() {
+        properties.addListener((ListChangeListener<? super AnimationProperty<?>>) change -> {
+            while (change.next()) {
+                change.getAddedSubList().forEach(property -> {
+                    property.attachTo(this);
+                    property.pausedProperty().bindBidirectional(this.paused);
+                });
+                // TODO unbind on remove
+            }
+        });
     }
 
     /**
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public <A extends Animated<T>> A withSettings(AnimationSettings settings) {
-        this.property.withSettings(settings);
+    public <A extends Animated> A withSettings(AnimationSettings settings) {
+        this.properties.forEach(property -> property.withSettings(settings));
         return (A) this;
     }
 
-    @Override
-    public <A extends Animated<T>> A custom(Function<AnimationSettings, AnimationSettings> settings) {
-        return withSettings(settings.apply(property.getSettings()));
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    public <A extends Animated> A custom(Function<AnimationSettings, AnimationSettings> settings) {
+        this.properties.forEach(property -> property.custom(settings));
+        return (A) this;
     }
 
     /**
@@ -83,6 +96,14 @@ public class Animated<T> extends SingleChildParent implements CustomizableAnimat
      */
     @Override
     public BooleanProperty pausedProperty() {
-        return this.property.pausedProperty();
+        return this.paused;
+    }
+
+    /**
+     * @return a mutable list of the target properties that should be animated.
+     *         It is good practice to target properties that are related to this node's child
+     */
+    public ObservableList<AnimationProperty<?>> getTargetProperties() {
+        return this.properties;
     }
 }

@@ -1,6 +1,6 @@
 package eu.iamgio.animated.binding.property.animation;
 
-import eu.iamgio.animated.binding.NewAnimated;
+import eu.iamgio.animated.binding.Animated;
 import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import javafx.scene.Node;
 
@@ -30,7 +30,7 @@ public class OnDemandAnimationPropertyGroup<N extends Node, T> extends OnDemandA
      * @implNote all the sub-properties are applied to the target animated node
      */
     @Override
-    public void attachTo(NewAnimated animated) {
+    public void attachTo(Animated animated) {
         for (Function<N, PropertyWrapper<T>> propertyRetriever : this.propertyRetrievers) {
             final OnDemandAnimationProperty<N, T> property = new OnDemandAnimationProperty<>(propertyRetriever);
             property.targetNodeProperty().bind(targetNodeProperty());

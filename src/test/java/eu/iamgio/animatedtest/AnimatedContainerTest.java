@@ -2,8 +2,8 @@ package eu.iamgio.animatedtest;
 
 import animatefx.animation.FadeInUp;
 import animatefx.animation.SlideOutLeft;
+import eu.iamgio.animated.binding.Animated;
 import eu.iamgio.animated.binding.Curve;
-import eu.iamgio.animated.binding.NewAnimated;
 import eu.iamgio.animated.binding.presets.AnimatedOpacity;
 import eu.iamgio.animated.transition.AnimationPair;
 import eu.iamgio.animated.transition.container.AnimatedVBox;
@@ -78,7 +78,7 @@ public class AnimatedContainerTest extends Application {
 
             getChildren().addAll(
                     rectangle,
-                    new NewAnimated(text, new AnimatedOpacity())
+                    new Animated(text, new AnimatedOpacity())
                             .custom(settings -> settings.withDuration(Duration.millis(150)).withCurve(Curve.EASE_IN_OUT))
             );
 
