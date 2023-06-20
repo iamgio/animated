@@ -9,7 +9,8 @@
 4. [Animated switchers](#animated-switchers)
 5. [Animated theme switch](#animated-theme-switch)
 6. [Other examples](#other-examples)
-7. [Kotlin extensions](#kotlin-extensions)
+7. [FXML](#fxml)
+8. [Kotlin extensions](#kotlin-extensions)
 
 ## Getting started
 
