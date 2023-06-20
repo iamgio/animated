@@ -259,6 +259,10 @@ Version 1.0.0 brought FXML compatibility:
 
 - **Animated**
   ```xml
+  <?import eu.iamgio.animated.binding.Animated?>
+  <?import eu.iamgio.animated.binding.AnimationSettings?>
+  <?import eu.iamgio.animated.binding.presets.AnimatedOpacity?>
+  
   <Animated>
         <child>
             <MyNode/>
@@ -277,6 +281,8 @@ Version 1.0.0 brought FXML compatibility:
 - **AnimatedContainer**  
   In-FXML animation customization coming soon
   ```xml
+  <?import eu.iamgio.animated.transition.container.AnimatedHBox?>
+
   <AnimatedHBox>
       <MyNode1/>      
       <MyNode2/>
@@ -287,6 +293,8 @@ Version 1.0.0 brought FXML compatibility:
 - **AnimatedSwitcher**  
   In-FXML animation customization coming soon
   ```xml
+  <?import eu.iamgio.animated.transition.AnimatedSwitcher?>
+  
   <AnimatedSwitcher>
       <!-- Optional -->
       <child>
@@ -298,6 +306,8 @@ Version 1.0.0 brought FXML compatibility:
 - **AnimatedSwitcher**  
   In-FXML animation customization coming soon
   ```xml
+  <?import eu.iamgio.animated.transition.AnimatedLabel?>
+  
   <AnimatedLabel text="Initial text" />
   ```
 
