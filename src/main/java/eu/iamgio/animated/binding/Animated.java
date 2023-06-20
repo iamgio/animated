@@ -76,10 +76,9 @@ public class Animated extends SingleChildParent implements CustomizableAnimation
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
-    public <A extends Animated> A withSettings(AnimationSettings settings) {
-        this.properties.forEach(property -> property.withSettings(settings));
-        return (A) this;
+    @Override
+    public void setSettings(AnimationSettings settings) {
+        this.properties.forEach(property -> property.setSettings(settings));
     }
 
     /**

@@ -10,12 +10,22 @@ import java.util.function.Function;
 public interface CustomizableAnimation<T> {
 
     /**
-     * Applies custom animation settings
+     * Applies custom animation settings.
+     * @param settings animation settings to set
+     */
+    void setSettings(AnimationSettings settings);
+
+    /**
+     * Applies custom animation settings.
      * @param settings animation settings to set
      * @param <A> {@link T} or subclass
      * @return this for concatenation
      */
-    <A extends T> A withSettings(AnimationSettings settings);
+    @SuppressWarnings("unchecked")
+    default <A extends T> A withSettings(AnimationSettings settings) {
+        setSettings(settings);
+        return (A) this;
+    }
 
     /**
      * Applies custom animation settings

@@ -5,10 +5,7 @@ import eu.iamgio.animated.binding.AnimationSettings;
 import eu.iamgio.animated.binding.CustomizableAnimation;
 import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import eu.iamgio.animated.transition.Pausable;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.*;
 import javafx.scene.Node;
 
 import java.util.function.Function;
@@ -28,7 +25,7 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
     private final BooleanProperty paused = new SimpleBooleanProperty(false);
 
     // Animation settings
-    private AnimationSettings settings;
+    private final ObjectProperty<AnimationSettings> settings;
 
     /**
      * Instantiates an implicitly animated property
@@ -37,7 +34,7 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
      */
     public AnimationProperty(PropertyWrapper<T> property, AnimationSettings settings) {
         this.property = property;
-        this.settings = settings;
+        this.settings = new SimpleObjectProperty<>(settings);
     }
 
     /**
@@ -51,18 +48,23 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
     /**
      * @return the current animation settings
      */
-    public AnimationSettings getSettings() {
+    public ObjectProperty<AnimationSettings> settingsProperty() {
         return this.settings;
+    }
+
+    /**
+     * @return the current animation settings
+     */
+    public AnimationSettings getSettings() {
+        return this.settings.get();
     }
 
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     @Override
-    public <A extends AnimationProperty<T>> A withSettings(AnimationSettings settings) {
-        this.settings = settings;
-        return (A) this;
+    public void setSettings(AnimationSettings settings) {
+        this.settings.set(settings);
     }
 
     /**

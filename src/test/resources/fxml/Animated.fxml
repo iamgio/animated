@@ -1,4 +1,5 @@
 <?import eu.iamgio.animated.binding.Animated?>
+<?import eu.iamgio.animated.binding.AnimationSettings?>
 <?import eu.iamgio.animated.binding.presets.AnimatedBlur?>
 <?import eu.iamgio.animated.binding.presets.AnimatedColor?>
 <?import javafx.scene.control.Button?>
@@ -11,8 +12,16 @@
             <Rectangle id="rectangle" width="200" height="200"/>
         </child>
         <targetProperties>
-            <AnimatedColor/>
-            <AnimatedBlur/>
+            <AnimatedColor>
+                <settings>
+                    <AnimationSettings duration="1500ms" curve="EASE_IN_OUT"/>
+                </settings>
+            </AnimatedColor>
+            <AnimatedBlur>
+                <settings>
+                    <AnimationSettings duration="900ms" curve="EASE_IN_OUT_BACK"/>
+                </settings>
+            </AnimatedBlur>
         </targetProperties>
     </Animated>
 </AnchorPane>
