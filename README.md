@@ -253,6 +253,59 @@ scene.getStylesheets().setAll("/dark.css"); // Plays the transition
 
 <br/>
 
+## FXML
+Version 1.0.0 brought FXML compatibility:
+
+- **Animated**
+  ```xml
+  <Animated>
+        <child>
+            <MyNode/>
+        </child>
+        <targetProperties>
+            <AnimatedOpacity>
+                <settings>
+                    <AnimationSettings duration="1500ms" curve="EASE_IN_OUT"/>
+                </settings>
+            </AnimatedOpacity>
+            <!-- Multiple properties are supported -->
+        </targetProperties>
+    </Animated>
+  ```
+
+- **AnimatedContainer**  
+  In-FXML animation customization coming soon
+  ```xml
+  <AnimatedHBox>
+      <MyNode1/>      
+      <MyNode2/>
+      <!-- ... -->      
+  </AnimatedHBox>
+  ```
+
+- **AnimatedSwitcher**  
+  In-FXML animation customization coming soon
+  ```xml
+  <AnimatedSwitcher>
+      <!-- Optional -->
+      <child>
+          <InitialChild/>
+      </child>
+  </AnimatedSwitcher>
+  ```
+  
+- **AnimatedSwitcher**  
+  In-FXML animation customization coming soon
+  ```xml
+  <AnimatedLabel text="Initial text" />
+  ```
+
+<br/>
+
+---
+
+<br/>
+
 ## Kotlin extensions
 
 [Extension functions](src/main/java/eu/iamgio/animated/AnimatedExtensions.kt) make the library less verbose with Kotlin.  
