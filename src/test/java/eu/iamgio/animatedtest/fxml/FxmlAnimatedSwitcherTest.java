@@ -1,9 +1,7 @@
 package eu.iamgio.animatedtest.fxml;
 
-import animatefx.animation.SlideOutUp;
 import eu.iamgio.animated.transition.AnimatedLabel;
 import eu.iamgio.animated.transition.AnimatedSwitcher;
-import eu.iamgio.animated.transition.Animation;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,7 +26,6 @@ public class FxmlAnimatedSwitcherTest extends Application {
 
         Button switchButton = (Button) Objects.requireNonNull(root.lookup("#button"));
         AnimatedSwitcher switcher = (AnimatedSwitcher) Objects.requireNonNull(root.lookup("#animated-switcher"));
-        switcher.setOut(new Animation(new SlideOutUp()));
 
         AnimatedLabel label = (AnimatedLabel) Objects.requireNonNull(root.lookup("#animated-label"));
 

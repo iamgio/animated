@@ -1,3 +1,4 @@
+<?import eu.iamgio.animated.transition.Animation?>
 <?import eu.iamgio.animated.transition.container.AnimatedHBox?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -5,6 +6,9 @@
 <AnchorPane prefWidth="650" prefHeight="500">
     <Button text="Remove last" id="button" layoutY="100" />
     <AnimatedHBox id="animated-container">
+        <out>
+            <Animation type="SlideOutUp"/>
+        </out>
         <Rectangle width="50" height="50" fill="indianred" />
         <Rectangle width="50" height="50" fill="aqua" />
         <Rectangle width="50" height="50" fill="darkgreen" />

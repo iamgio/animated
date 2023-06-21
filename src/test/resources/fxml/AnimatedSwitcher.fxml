@@ -1,14 +1,23 @@
-<?import eu.iamgio.animated.transition.AnimatedLabel?>
-<?import eu.iamgio.animated.transition.AnimatedSwitcher?>
+<?import eu.iamgio.animated.transition.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <AnchorPane prefWidth="650" prefHeight="500">
     <Button text="Switch" id="button" layoutY="100" />
     <AnimatedSwitcher id="animated-switcher">
+        <in>
+            <Animation type="ZoomIn" speed="0.5"/>
+        </in>
+        <out>
+            <Animation type="FadeOutDown"/>
+        </out>
         <child>
             <Rectangle width="50" height="50" fill="indianred" />
         </child>
     </AnimatedSwitcher>
-    <AnimatedLabel id="animated-label" text="Animated" layoutY="150" />
+    <AnimatedLabel id="animated-label" text="Animated" layoutY="150">
+        <in>
+            <Animation type="ZoomInRight"/>
+        </in>
+    </AnimatedLabel>
 </AnchorPane>

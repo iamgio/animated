@@ -159,8 +159,44 @@ public class AnimatedLabel extends Parent implements Pausable, EntranceAndExitAn
      * {@inheritDoc}
      */
     @Override
+    public Animation getIn() {
+        // This overriden method is required for FXML compatibility.
+        return EntranceAndExitAnimationCompatible.super.getIn();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setIn(Animation in) {
+        // This overriden method is required for FXML compatibility.
+        EntranceAndExitAnimationCompatible.super.setIn(in);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public ObjectProperty<Animation> animationOutProperty() {
         return this.out;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Animation getOut() {
+        // This overriden method is required for FXML compatibility.
+        return EntranceAndExitAnimationCompatible.super.getOut();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setOut(Animation out) {
+        // This overriden method is required for FXML compatibility.
+        EntranceAndExitAnimationCompatible.super.setOut(out);
     }
 
     /**

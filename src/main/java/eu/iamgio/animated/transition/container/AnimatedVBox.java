@@ -62,8 +62,44 @@ public class AnimatedVBox extends VBox implements AnimatedContainer {
      * {@inheritDoc}
      */
     @Override
+    public Animation getIn() {
+        // This overriden method is required for FXML compatibility.
+        return AnimatedContainer.super.getIn();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setIn(Animation in) {
+        // This overriden method is required for FXML compatibility.
+        AnimatedContainer.super.setIn(in);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public ObjectProperty<Animation> animationOutProperty() {
         return this.out;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Animation getOut() {
+        // This overriden method is required for FXML compatibility.
+        return AnimatedContainer.super.getOut();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setOut(Animation out) {
+        // This overriden method is required for FXML compatibility.
+        AnimatedContainer.super.setOut(out);
     }
 
     /**

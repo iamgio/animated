@@ -1,7 +1,5 @@
 package eu.iamgio.animatedtest.fxml;
 
-import animatefx.animation.SlideOutUp;
-import eu.iamgio.animated.transition.Animation;
 import eu.iamgio.animated.transition.container.AnimatedContainer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +22,6 @@ public class FxmlAnimatedContainerTest extends Application {
 
         Button removeButton = (Button) Objects.requireNonNull(root.lookup("#button"));
         AnimatedContainer container = (AnimatedContainer) Objects.requireNonNull(root.lookup("#animated-container"));
-        container.setOut(new Animation(new SlideOutUp()));
 
         removeButton.setOnAction(e -> container.getChildren().remove(container.getChildren().size() - 1));
     }
