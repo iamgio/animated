@@ -53,7 +53,7 @@ Forget about timelines, explicit animations and other stuff that pollutes your c
 **[Code](src/test/java/eu/iamgio/animatedtest/AnimatedTest.java)**
 
 ```java
-Animated<Double> animated = new Animated<>(child, PropertyWrapper.of(child.opacityProperty()));
+Animated animated = new Animated(child, AnimationProperty.of(child.opacityProperty()));
 root.getChildren().add(animated);
 
 // Later...
@@ -61,74 +61,77 @@ child.setOpacity(0.5); // Plays the transition
 ```  
 
 This approach instantiates an `Animated` node that contains one child and is bound to a property.  
-Now that we have set an animated bound, we'll see that `child.setOpacity(someValue)` creates a transition between the initial and final value.
+Now that we have set an animated bound, we can see that `child.setOpacity(someValue)` creates a transition between the initial and final value.
 
-> `PropertyWrapper.of` automatically finds out the best kind of wrapper for a given property.  
-> Currently supported wrappers are `DoublePropertyWrapper` and `ObjectPropertyWrapper<T>`.
+A single `Animated` object can take multiple properties at once,
+and they can also be added later by accessing `Animated#getTargetProperties`. 
 
-There are some pre-made animated nodes that take the child as an argument as well (list will expand):
+### Presets
+Pre-made animation properties represent a concise and efficient
+way to create animated bindings, rather than manually referencing to the
+raw JavaFX property as we previously did.
+
 - `AnimatedBlur`
-- `AnimatedDropShadow`
-- `AnimatedColor` (shapes only)
-- `AnimatedOpacity`
-- `AnimatedPosition`
-- `AnimatedRotation`
-- `AnimatedSize`
-- `AnimatedScale`
+- `AnimatedColor`
+- `AnimatedDropShadow.Color`
+- `AnimatedDropShadow.Radius`
 - `AnimatedLayout`
+- `AnimatedOpacity`
+- `AnimatedPrefSize`
+- `AnimatedRotation`
+- `AnimatedScale`
+- `AnimatedTranslatePosition`
 
-### Multiple animations at once
-
-In case you need to animate more than one property of a single node, `AnimatedMulti` comes to the rescue. At this time it only takes properties as arguments, so it won't be possible to use pre-made nodes (list above).
+When these properties are instantiated via their 0-arguments constructor,
+the target node references to the `Animated`'s child. 
 
 ```java
-AnimatedMulti animated = new AnimatedMulti(child,
-    PropertyWrapper.of(child.opacityProperty()),
-    PropertyWrapper.of(child.prefWidthProperty()),
-    PropertyWrapper.of(child.prefHeightProperty())
+// Before
+new Animated(child,
+        AnimationProperty.of(child.prefWidthProperty()),
+        AnimationProperty.of(child.prefHeightProperty())
 );
-root.getChildren().add(animated);
 
-// Later...
-child.setOpacity(0.5);   // Plays the transition
-child.setPrefWidth(100); // Plays the transition
-child.setPrefHeight(50); // Plays the transition
-```  
+// After: better!
+new Animated(child, new AnimatedPrefSize());
+```
 
 ### Independent animations
 
-`Animated` and `AnimatedMulti` are nodes that have to be added to the scene in order to work.  
+`Animated` is node that has to be added to the scene in order to work.  
 Here is a different approach that is independent from the scene:
 
 ```java
-PropertyWrapper.of(node.opacityProperty()).registerAnimation();
+AnimationProperty.of(node.opacityProperty()).register();
 
 // Later...
 node.setOpacity(0.5); // Plays the transition
 ```
 
+> Animations are not only visual:
+> you can also animate other changes such as audio volume!
+
 ### Custom animations
 
 The default animation is linear and lasts 1 second.
 It can be customized by calling `withSettings(AnimationSettings settings)` or `custom(Function<AnimationSettings, AnimationSettings> settings)`,
-both methods available on animated nodes, property wrappers and animation properties.
+both methods available on animated nodes and animation properties.
 
 Examples:
 ```java
-AnimatedOpacity animated = new AnimatedOpacity(child)
+Animated animated = new Animated(child, AnimationProperty.of(child.opacityProperty()));
     .custom(settings -> settings.withDuration(Duration.seconds(.5)).withCurve(Curve.EASE_IN_OUT));
 ```  
 
 ```java
-AnimatedMulti animated = new AnimatedMulti(child,
-    PropertyWrapper.of(child.opacityProperty())
+Animated animated = new Animated(child,
+    new AnimatedOpacity()
         .custom(settings -> settings.withDuration(Duration.seconds(.8))),
-    PropertyWrapper.of(child.rotateProperty())
-        .custom(settings -> settings.withDuration(Duration.seconds(.5)),
-).custom(settings -> settings.withCurve(Curve.EASE_OUT)); // 'custom' applies only these settings to the properties.
-                                                          // 'withSettings' overrides all instead.
-root.getChildren().add(animated);
+    new AnimatedRotation()
+        .custom(settings -> settings.withDuration(Duration.seconds(.5))),
+).custom(settings -> settings.withCurve(Curve.EASE_OUT));
 ```
+
 <br/>
 
 ---
