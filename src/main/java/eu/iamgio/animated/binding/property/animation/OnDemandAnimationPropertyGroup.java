@@ -27,7 +27,7 @@ public class OnDemandAnimationPropertyGroup<N extends Node, T> extends OnDemandA
 
     /**
      * {@inheritDoc}
-     * @implNote all the sub-properties are applied to the target animated node
+     * All the sub-properties are applied to the target animated node.
      */
     @Override
     public void attachTo(Animated animated) {

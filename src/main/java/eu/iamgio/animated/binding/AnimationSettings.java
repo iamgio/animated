@@ -18,9 +18,9 @@ public class AnimationSettings {
     }
 
     /**
+     * Note: using the fluent setter {@link #withDuration(Duration)} is suggested.
+     *       This method is kept only for FXML compatibility.
      * @param duration duration of the animation to set
-     * @apiNote using the fluent setter {@link #withDuration(Duration)} is suggested.
-     *          This method is kept only for FXML compatibility.
      */
     public void setDuration(Duration duration) {
         this.duration = duration;
@@ -43,9 +43,9 @@ public class AnimationSettings {
     }
 
     /**
+     * Note: using the fluent setter {@link #withCurve(Curve)} is suggested.
+     *       This method is kept only for FXML compatibility.
      * @param curve curve of the animation to set
-     * @apiNote using the fluent setter {@link #withCurve(Curve)} is suggested.
-     *          This method is kept only for FXML compatibility. 
      *
      */
     public void setCurve(Curve curve) {

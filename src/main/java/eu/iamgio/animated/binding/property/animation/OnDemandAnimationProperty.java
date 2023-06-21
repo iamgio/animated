@@ -60,8 +60,8 @@ public class OnDemandAnimationProperty<N extends Node, T> extends AnimationPrope
 
     /**
      * {@inheritDoc}
-     * @implNote a hook is set up so that the child of the animated node generates
-     *           and registers a new {@link SimpleAnimationProperty} when it changes.
+     * A hook is set up so that the child of the animated node generates
+     * and registers a new {@link SimpleAnimationProperty} when it changes.
      */
     @SuppressWarnings("unchecked")
     @Override
