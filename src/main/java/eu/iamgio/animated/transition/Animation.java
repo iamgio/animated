@@ -2,6 +2,7 @@ package eu.iamgio.animated.transition;
 
 import animatefx.animation.AnimationFX;
 import javafx.application.Platform;
+import javafx.beans.NamedArg;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.util.Duration;
@@ -10,7 +11,6 @@ import java.util.Objects;
 
 /**
  * Wrapper for {@link AnimationFX} with several properties.
- * @author Giorgio Garofalo
  */
 public class Animation {
 
@@ -20,8 +20,30 @@ public class Animation {
     private Duration delay;
     private int cycleCount = 1;
 
+    /**
+     * Instantiates a new {@link Animation} that wraps the given {@link AnimationFX}.
+     * @param animationFX raw {@link AnimationFX} to wrap
+     */
     public Animation(AnimationFX animationFX) {
         this.animationFX = animationFX;
+    }
+
+    /**
+     * Instantiates a new {@link Animation} that wraps the given {@link AnimationFX}.
+     * @param type name (case-sensitive) of the raw {@link AnimationFX} to wrap
+     * @param speed speed multiplier of the animation
+     * @throws IllegalArgumentException if the type does not match any AnimateFX animation
+     * @deprecated this method uses unnecessary reflection, hence it should be avoided.
+     *             This was intended for FXML compatibility only
+     */
+    @Deprecated
+    public Animation(@NamedArg("type") String type, @NamedArg(value = "speed", defaultValue = "1.0") double speed) {
+        try {
+            this.animationFX = (AnimationFX) Class.forName("animatefx.animation." + type).newInstance();
+            this.speed = speed;
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     private void applyProperties() {
