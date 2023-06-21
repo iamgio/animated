@@ -37,7 +37,7 @@ dependencies {
 
 > **Note**: v1.0.0 brought several important changes, including a different project structure,
 > that may cause compilation errors when upgrading from 0.x versions.  
-> Please check its changelog (TODO URL) to see what changed and quickly learn how to fix those errors.
+> Please check the [migration guide](https://github.com/iamgio/animated/releases/tag/v1.0.0) to see what changed and quickly learn how to fix those errors.
 
 <br/>
 
