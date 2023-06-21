@@ -255,7 +255,7 @@ scene.getStylesheets().setAll("/dark.css"); // Plays the transition
 <br/>
 
 ## FXML
-Version 1.0.0 brought FXML compatibility:
+Extended FXML support is available with the new 1.0.0 version. 
 
 - **Animated**
   ```xml
@@ -268,6 +268,7 @@ Version 1.0.0 brought FXML compatibility:
             <MyNode/>
         </child>
         <targetProperties>
+            <!-- Properties to animate, related to the current child -->
             <AnimatedOpacity>
                 <settings>
                     <AnimationSettings duration="1500ms" curve="EASE_IN_OUT"/>
@@ -278,12 +279,21 @@ Version 1.0.0 brought FXML compatibility:
     </Animated>
   ```
 
-- **AnimatedContainer**  
-  In-FXML animation customization coming soon
+- **AnimatedContainer**
   ```xml
   <?import eu.iamgio.animated.transition.container.AnimatedHBox?>
+  <?import eu.iamgio.animated.transition.Animation?>
 
   <AnimatedHBox>
+      <!-- Optional: defaults to FadeIn -->
+      <in>
+          <Animation type="ZoomIn"/>
+      </in>
+      <!-- Optional: defaults to FadeOut -->
+      <out>
+          <Animation type="ZoomOut"/>
+      </out>
+      <!-- Optional initial children -->
       <MyNode1/>      
       <MyNode2/>
       <!-- ... -->      
@@ -291,24 +301,41 @@ Version 1.0.0 brought FXML compatibility:
   ```
 
 - **AnimatedSwitcher**  
-  In-FXML animation customization coming soon
   ```xml
   <?import eu.iamgio.animated.transition.AnimatedSwitcher?>
+  <?import eu.iamgio.animated.transition.Animation?>
   
   <AnimatedSwitcher>
-      <!-- Optional -->
+      <!-- Optional: defaults to FadeIn -->
+      <in>
+          <Animation type="SlideInUp" speed="0.5"/>
+      </in>
+      <!-- Optional: defaults to FadeOut -->
+      <out>
+          <Animation type="SlideOutUp"/>
+      </out>
+      <!-- Optional initial child -->
       <child>
           <InitialChild/>
       </child>
   </AnimatedSwitcher>
   ```
   
-- **AnimatedSwitcher**  
-  In-FXML animation customization coming soon
+- **AnimatedLabel**  
   ```xml
   <?import eu.iamgio.animated.transition.AnimatedLabel?>
+  <?import eu.iamgio.animated.transition.Animation?>
   
-  <AnimatedLabel text="Initial text" />
+  <AnimatedLabel text="Initial text">
+      <!-- Optional: defaults to FadeIn -->
+      <in>
+          <Animation type="BounceIn"/>
+      </in>
+      <!-- Optional: defaults to FadeOut -->
+      <in>
+          <Animation type="BounceOut"/>
+      </in>
+  </AnimatedLabel>
   ```
 
 <br/>
