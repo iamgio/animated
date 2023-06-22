@@ -67,7 +67,7 @@ A single `Animated` object can take multiple properties at once,
 and they can also be added later by accessing `Animated#getTargetProperties`. 
 
 ### Presets
-Pre-made animation properties represent a concise and efficient
+[Pre-made animation properties](src/main/java/eu/iamgio/animated/binding/presets) represent a concise and efficient
 way to create animated bindings, rather than manually referencing to the
 raw JavaFX property as we previously did.
 
@@ -82,7 +82,7 @@ raw JavaFX property as we previously did.
 - `AnimatedScale`
 - `AnimatedTranslatePosition`
 
-When these properties are instantiated via their 0-arguments constructor,
+When these properties are instantiated via their zero-arguments constructor,
 the target node references to the `Animated`'s child. 
 
 ```java
@@ -349,7 +349,7 @@ Extended FXML support is available with the new 1.0.0 version.
 
 ## Kotlin extensions
 
-[Extension functions](src/main/java/eu/iamgio/animated/AnimatedExtensions.kt) make the library less verbose with Kotlin.  
+[Extension functions](src/main/kotlin/eu/iamgio/animated/AnimatedExtensions.kt) make the library less verbose with Kotlin.  
 Example:
 ```kotlin
 val animated: Animated = Animated(child, child.someProperty().animated())
