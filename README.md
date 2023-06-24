@@ -98,7 +98,7 @@ new Animated(child, new AnimatedPrefSize());
 
 ### Independent animations
 
-`Animated` is node that has to be added to the scene in order to work.  
+`Animated` is a node that has to be added to the scene in order to work.  
 Here is a different approach that is independent from the scene:
 
 ```java
