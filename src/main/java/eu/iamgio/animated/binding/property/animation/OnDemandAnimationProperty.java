@@ -51,11 +51,12 @@ public class OnDemandAnimationProperty<N extends Node, T> extends AnimationPrope
     }
 
     /**
-     * @throws UnsupportedOperationException an on-demand property cannot be registered
+     * {@inheritDoc}
      */
     @Override
     public void register(Node target) {
-        throw new UnsupportedOperationException("An on-demand property cannot be registered.");
+        final AnimationProperty<?> requested = requestProperty();
+        requested.register(target != null ? target : targetNode.get());
     }
 
     /**
@@ -76,8 +77,7 @@ public class OnDemandAnimationProperty<N extends Node, T> extends AnimationPrope
         // the animation property is evaluated and registered.
 
         final InvalidationListener listener = o -> {
-            final AnimationProperty<?> requested = requestProperty();
-            requested.register(targetNode.get());
+            this.register(targetNode.get());
         };
 
         // Calling the listener if a child is already present.

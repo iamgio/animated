@@ -103,6 +103,8 @@ Here is a different approach that is independent from the scene:
 
 ```java
 AnimationProperty.of(node.opacityProperty()).register();
+// or
+new AnimatedOpacity(node).register();
 
 // Later...
 node.setOpacity(0.5); // Plays the transition

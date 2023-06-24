@@ -6,6 +6,7 @@ import javafx.scene.Node;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * A group of multiple {@link OnDemandAnimationProperty}.
@@ -25,17 +26,28 @@ public class OnDemandAnimationPropertyGroup<N extends Node, T> extends OnDemandA
         this.propertyRetrievers = propertyRetrievers;
     }
 
+    private Stream<OnDemandAnimationProperty<N, T>> retrieveOnDemandProperties() {
+        return this.propertyRetrievers.stream()
+                .map(OnDemandAnimationProperty::new)
+                .peek(property -> property.targetNodeProperty().bind(targetNodeProperty()))
+                .peek(super::copyAttributesTo);
+    }
+
+    /**
+     * {@inheritDoc}
+     * All the sub-properties are registered.
+     */
+    @Override
+    public void register(Node target) {
+        this.retrieveOnDemandProperties().forEach(property -> property.register(target));
+    }
+
     /**
      * {@inheritDoc}
      * All the sub-properties are applied to the target animated node.
      */
     @Override
     public void attachTo(Animated animated) {
-        for (Function<N, PropertyWrapper<T>> propertyRetriever : this.propertyRetrievers) {
-            final OnDemandAnimationProperty<N, T> property = new OnDemandAnimationProperty<>(propertyRetriever);
-            property.targetNodeProperty().bind(targetNodeProperty());
-            super.copyAttributesTo(property);
-            property.attachTo(animated);
-        }
+        this.retrieveOnDemandProperties().forEach(property -> property.attachTo(animated));
     }
 }
