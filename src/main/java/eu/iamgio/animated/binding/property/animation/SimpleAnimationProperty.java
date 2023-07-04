@@ -4,7 +4,10 @@ import eu.iamgio.animated.binding.Animated;
 import eu.iamgio.animated.binding.AnimationSettings;
 import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import javafx.animation.*;
+import javafx.beans.property.Property;
 import javafx.scene.Node;
+
+import java.util.function.Function;
 
 /**
  * The base implementation of {@link AnimationProperty} that plays a timeline-based animation
@@ -99,5 +102,14 @@ public class SimpleAnimationProperty<T> extends AnimationProperty<T> {
     @Override
     public void attachTo(Animated animated) {
         this.register(animated.getChild());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <V> AnimationProperty<T> addBinding(Property<V> targetProperty, Function<T, V> mapper) {
+        getProperty().bindMapped(targetProperty, mapper);
+        return this;
     }
 }

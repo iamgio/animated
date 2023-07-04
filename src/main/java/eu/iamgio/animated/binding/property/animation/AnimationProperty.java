@@ -94,6 +94,33 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
     public abstract void attachTo(Animated animated);
 
     /**
+     * Adds a binding to a target property: when the value of the wrapped property changes,
+     * the target property is updated too, based on a mapper function.
+     * The following example binds a label text to this property, converted to a string:
+     * <pre>
+     *     property.addBinding(label.textProperty(), String::valueOf);
+     * </pre>
+     *
+     * @param targetProperty property to bind
+     * @param mapper function that takes the value of the wrapped property as input,
+     *               and returns the value the target property should get
+     * @return this for concatenation
+     * @param <V> type of the target property
+     */
+    public abstract <V> AnimationProperty<T> addBinding(Property<V> targetProperty, Function<T, V> mapper);
+
+    /**
+     * Adds a binding to a target property: when the value of the wrapped property changes,
+     * the target property is updated too.
+     * @param targetProperty property to bind
+     * @return this for concatenation
+     */
+    public AnimationProperty<T> addBinding(Property<T> targetProperty) {
+        this.addBinding(targetProperty, Function.identity());
+        return this;
+    }
+
+    /**
      * @return target property
      */
     public PropertyWrapper<T> getProperty() {

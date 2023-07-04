@@ -3,7 +3,6 @@ package eu.iamgio.animatedtest;
 import eu.iamgio.animated.binding.Curve;
 import eu.iamgio.animated.binding.property.animation.AnimationProperty;
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Scene;
@@ -36,17 +35,15 @@ public class AnimatedCurrencyTest extends Application {
         label.relocate(100, 100);
         label.setStyle("-fx-font-size: 20");
 
+        // Currency formatter
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
+
         // Create the animated property that stores the amount
         DoubleProperty amountProp = new SimpleDoubleProperty(this.amount);
         AnimationProperty.of(amountProp)
                 .custom(settings -> settings.withCurve(Curve.EASE_IN_OUT_EXPO).withDuration(Duration.millis(1500)))
+                .addBinding(label.textProperty(), formatter::format)
                 .register(label);
-
-        // Currency formatter
-        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
-
-        // Bind the label's text to the formatted amount
-        label.textProperty().bind(Bindings.createObjectBinding(() -> formatter.format(amountProp.get()), amountProp));
 
         // Set up the button
         Button button = new Button("Add");
