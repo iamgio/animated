@@ -90,10 +90,10 @@ public class OnDemandAnimationProperty<N extends Node, T> extends AnimationPrope
 
     /**
      * {@inheritDoc}
-     * @throws UnsupportedOperationException on-demand properties cannot be bound
      */
     @Override
     public <V> AnimationProperty<T> addBinding(Property<V> targetProperty, Function<T, V> mapper) {
-        throw new UnsupportedOperationException("On-demand properties cannot be bound.");
+        requestProperty().addBinding(targetProperty, mapper);
+        return this;
     }
 }

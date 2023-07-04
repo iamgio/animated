@@ -2,6 +2,7 @@ package eu.iamgio.animated.binding.property.animation;
 
 import eu.iamgio.animated.binding.Animated;
 import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
+import javafx.beans.property.Property;
 import javafx.scene.Node;
 
 import java.util.List;
@@ -49,5 +50,13 @@ public class OnDemandAnimationPropertyGroup<N extends Node, T> extends OnDemandA
     @Override
     public void attachTo(Animated animated) {
         this.retrieveOnDemandProperties().forEach(property -> property.attachTo(animated));
+    }
+
+    /**
+     * @throws UnsupportedOperationException an on-demand property group cannot be bound
+     */
+    @Override
+    public <V> AnimationProperty<T> addBinding(Property<V> targetProperty, Function<T, V> mapper) {
+        throw new UnsupportedOperationException("An on-demand property group cannot be bound.");
     }
 }
