@@ -43,8 +43,14 @@ public class OnDemandAnimationProperty<N extends Node, T> extends AnimationPrope
 
     /**
      * @return a new {@link AnimationProperty} that wraps the output of the function applied to the current target node.
+     * @throws IllegalStateException if the target node is not set
      */
-    public AnimationProperty<T> requestProperty() {
+    private AnimationProperty<T> requestProperty() {
+        if (targetNode.get() == null) {
+            throw new IllegalStateException("The on-demand property was trying to access its status, " +
+                    "but its target node is not set.");
+        }
+
         final AnimationProperty<T> property = new SimpleAnimationProperty<>(propertyRetriever.apply(targetNode.get()));
         super.copyAttributesTo(property);
         return property;
