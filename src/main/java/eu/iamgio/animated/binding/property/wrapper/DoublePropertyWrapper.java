@@ -5,10 +5,10 @@ import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
 
 /**
- * Wraps a {@link Double} property.
+ * Wrapper of a {@link Double} property.
  * @author Giorgio Garofalo
  */
-public class DoublePropertyWrapper extends PropertyWrapper<Double> {
+public class DoublePropertyWrapper implements PropertyWrapper<Double> {
 
     private final DoubleProperty property;
 

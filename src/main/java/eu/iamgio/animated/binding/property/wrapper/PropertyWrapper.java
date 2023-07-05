@@ -9,33 +9,32 @@ import javafx.beans.value.ChangeListener;
 import java.util.function.Function;
 
 /**
- * Abstract class that allows wrapping object and primitive JavaFX properties without the explicit <pre>asObject()</pre> call ands allows animation customization.
- * @param <T> property type
- * @author Giorgio Garofalo
+ * Wrapper of object and primitive JavaFX properties.
+ * @param <T> wrapped property type
  */
-public abstract class PropertyWrapper<T> {
+public interface PropertyWrapper<T> {
 
     /**
      * @return the wrapped JavaFX property
      */
-    public abstract Property<T> getProperty();
+    Property<T> getProperty();
 
     /**
      * @return the wrapped value
      */
-    public abstract T getValue();
+    T getValue();
 
     /**
      * Changes the value of the wrapped property.
      * @param value new value to set
      */
-    public abstract void set(T value);
+    void set(T value);
 
     /**
      * Registers a listener.
      * @param listener listener to register
      */
-    public abstract void addListener(ChangeListener<? super T> listener);
+    void addListener(ChangeListener<? super T> listener);
 
     /**
      * Adds a binding to a target property: when the value of the wrapped property changes,
@@ -45,7 +44,7 @@ public abstract class PropertyWrapper<T> {
      *               and returns the value the target property should get
      * @param <V> type of the target property
      */
-    public <V> void bindMapped(Property<V> targetProperty, Function<T, V> mapper) {
+    default  <V> void bindMapped(Property<V> targetProperty, Function<T, V> mapper) {
         targetProperty.bind(Bindings.createObjectBinding(() -> mapper.apply(getValue()), getProperty()));
     }
 
@@ -56,7 +55,7 @@ public abstract class PropertyWrapper<T> {
      * @param <T> property type
      * @return an instance of the proper subclass of {@link PropertyWrapper} that wraps <tt>property</tt>.
      */
-    public static <T> PropertyWrapper<T> of(ObjectProperty<T> property) {
+    static <T> PropertyWrapper<T> of(ObjectProperty<T> property) {
         return new ObjectPropertyWrapper<>(property);
     }
 
@@ -66,7 +65,7 @@ public abstract class PropertyWrapper<T> {
      * @param property JavaFX property to wrap
      * @return an instance of the proper subclass of {@link PropertyWrapper} that wraps <tt>property</tt>.
      */
-    public static PropertyWrapper<Double> of(DoubleProperty property) {
+    static PropertyWrapper<Double> of(DoubleProperty property) {
         return new DoublePropertyWrapper(property);
     }
 }

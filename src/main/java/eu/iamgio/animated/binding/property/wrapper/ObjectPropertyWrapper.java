@@ -5,10 +5,10 @@ import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
 
 /**
- * Wraps a non-primitive property.
+ * Wrapper of a non-primitive property.
  * @author Giorgio Garofalo
  */
-public class ObjectPropertyWrapper<T> extends PropertyWrapper<T> {
+public class ObjectPropertyWrapper<T> implements PropertyWrapper<T> {
 
     private final ObjectProperty<T> property;
 
