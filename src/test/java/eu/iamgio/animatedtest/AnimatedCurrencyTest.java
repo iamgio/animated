@@ -1,13 +1,10 @@
 package eu.iamgio.animatedtest;
 
 import eu.iamgio.animated.binding.Curve;
-import eu.iamgio.animated.binding.property.animation.AnimationProperty;
+import eu.iamgio.animated.binding.misc.AnimatedValueLabel;
 import javafx.application.Application;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -22,7 +19,7 @@ public class AnimatedCurrencyTest extends Application {
     private static final int AMOUNT_TO_ADD = 500;
 
     // Amount of money
-    private int amount;
+    private double amount;
 
     @Override
     public void start(Stage primaryStage) {
@@ -30,20 +27,15 @@ public class AnimatedCurrencyTest extends Application {
         Pane root = new Pane();
         Scene scene = new Scene(root, 650, 500);
 
-        // Set up label
-        Label label = new Label();
-        label.relocate(100, 100);
-        label.setStyle("-fx-font-size: 20");
-
         // Currency formatter
         NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
 
-        // Create the animated property that stores the amount
-        DoubleProperty amountProp = new SimpleDoubleProperty(this.amount);
-        AnimationProperty.of(amountProp)
-                .custom(settings -> settings.withCurve(Curve.EASE_IN_OUT_EXPO).withDuration(Duration.millis(1500)))
-                .addBinding(label.textProperty(), formatter::format)
-                .register(label);
+        // Set up label
+        AnimatedValueLabel<Double> label = new AnimatedValueLabel<>(this.amount, formatter::format)
+                .custom(settings -> settings.withCurve(Curve.EASE_IN_OUT_EXPO).withDuration(Duration.millis(1500)));
+
+        label.relocate(100, 100);
+        label.setStyle("-fx-font-size: 20");
 
         // Set up the button
         Button button = new Button("Add");
@@ -51,7 +43,7 @@ public class AnimatedCurrencyTest extends Application {
 
         button.setOnAction(e -> {
             this.amount += AMOUNT_TO_ADD;
-            amountProp.set(this.amount);
+            label.setValue(this.amount);
         });
 
         root.getChildren().addAll(label, button);
