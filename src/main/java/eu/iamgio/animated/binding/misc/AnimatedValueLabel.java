@@ -40,6 +40,7 @@ public class AnimatedValueLabel<T> extends Label implements CustomizableAnimatio
                 )
         );
 
+        animationProperty.pausedProperty().bind(this.paused);
         animationProperty.register(this);
     }
 
