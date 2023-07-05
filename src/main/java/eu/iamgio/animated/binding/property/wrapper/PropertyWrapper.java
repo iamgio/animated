@@ -44,7 +44,7 @@ public interface PropertyWrapper<T> {
      *               and returns the value the target property should get
      * @param <V> type of the target property
      */
-    default  <V> void bindMapped(Property<V> targetProperty, Function<T, V> mapper) {
+    default <V> void bindMapped(Property<V> targetProperty, Function<T, V> mapper) {
         targetProperty.bind(Bindings.createObjectBinding(() -> mapper.apply(getValue()), getProperty()));
     }
 
