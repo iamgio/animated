@@ -31,9 +31,10 @@ public class AnimatedCurrencyTest extends Application {
         NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
 
         // Set up label
-        AnimatedValueLabel<Double> label = new AnimatedValueLabel<>(this.amount, formatter::format)
+        AnimatedValueLabel<Double> label = new AnimatedValueLabel<>(this.amount)
                 .custom(settings -> settings.withCurve(Curve.EASE_IN_OUT_EXPO).withDuration(Duration.millis(1500)));
 
+        label.setTextMapper(formatter::format);
         label.relocate(100, 100);
         label.setStyle("-fx-font-size: 20");
 

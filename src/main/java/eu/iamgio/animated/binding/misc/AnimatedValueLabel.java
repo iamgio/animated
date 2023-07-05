@@ -4,6 +4,7 @@ import eu.iamgio.animated.binding.AnimationSettings;
 import eu.iamgio.animated.binding.CustomizableAnimation;
 import eu.iamgio.animated.binding.property.animation.AnimationProperty;
 import eu.iamgio.animated.transition.Pausable;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.scene.control.Label;
 
@@ -19,31 +20,31 @@ public class AnimatedValueLabel<T> extends Label implements CustomizableAnimatio
 
     private final ObjectProperty<T> value;
     private final AnimationProperty<T> animationProperty;
+    private final Property<Function<T, String>> textMapper;
     private final BooleanProperty paused = new SimpleBooleanProperty(false);
 
     /**
      * Instantiates an {@link AnimatedValueLabel}.
      * @param value initial wrapped value
-     * @param toString string representation mapping of the current value
      */
-    public AnimatedValueLabel(T value, Function<T, String> toString) {
+    public AnimatedValueLabel(T value) {
         this.value = new SimpleObjectProperty<>(value);
+        this.textMapper = new SimpleObjectProperty<>(Objects::toString);
         this.animationProperty = AnimationProperty.of(this.value);
 
-        animationProperty.addBinding(this.textProperty(), toString);
+        // Whenever the wrapped value or the text mapper change, the displayed text is updated.
+        this.textProperty().bind(
+                Bindings.createStringBinding(
+                        () -> this.textMapper.getValue().apply(this.value.get()),
+                        this.value, this.textMapper
+                )
+        );
+
         animationProperty.register(this);
     }
 
     /**
-     * Instantiates an {@link AnimatedValueLabel} whose string mapping happens via {@link Objects#toString(Object)}.
-     * @param value initial wrapped value
-     */
-    public AnimatedValueLabel(T value) {
-        this(value, Objects::toString);
-    }
-
-    /**
-     * Instantiates an empty {@link AnimatedValueLabel} whose string mapping happens via {@link Objects#toString(Object)}.
+     * Instantiates an empty {@link AnimatedValueLabel}.
      */
     public AnimatedValueLabel() {
         this(null);
@@ -69,6 +70,29 @@ public class AnimatedValueLabel<T> extends Label implements CustomizableAnimatio
      */
     public void setValue(T value) {
         this.value.set(value);
+    }
+
+    /**
+     * @return the function that maps the current wrapped value to the displayed text
+     */
+    public Property<Function<T, String>> textMapperProperty() {
+        return this.textMapper;
+    }
+
+    /**
+     * @return the function that maps the current wrapped value to the displayed text.
+     *         It defaults to {@link Objects#toString(Object)}
+     */
+    public Function<T, String> getTextMapper() {
+        return this.textMapper.getValue();
+    }
+
+    /**
+     * Sets the function that maps the current wrapped value to the displayed text.
+     * @param textMapper new text mapper
+     */
+    public void setTextMapper(Function<T, String> textMapper) {
+        this.textMapper.setValue(textMapper);
     }
 
     /**
