@@ -70,6 +70,7 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
     /**
      * {@inheritDoc}
      */
+    @Override
     public <A extends AnimationProperty<T>> A custom(Function<AnimationSettings, AnimationSettings> settings) {
         return withSettings(settings.apply(getSettings()));
     }
