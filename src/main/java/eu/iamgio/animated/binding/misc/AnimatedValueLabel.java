@@ -107,11 +107,10 @@ public class AnimatedValueLabel<T> extends Label implements CustomizableAnimatio
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     @Override
-    public <A extends AnimatedValueLabel<T>> A custom(Function<AnimationSettings, AnimationSettings> settings) {
+    public AnimatedValueLabel<T> custom(Function<AnimationSettings, AnimationSettings> settings) {
         this.animationProperty.custom(settings);
-        return (A) this;
+        return this;
     }
 
     /**

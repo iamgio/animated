@@ -18,20 +18,18 @@ public interface CustomizableAnimation<T> {
     /**
      * Applies custom animation settings.
      * @param settings animation settings to set
-     * @param <A> {@link T} or subclass
      * @return this for concatenation
      */
     @SuppressWarnings("unchecked")
-    default <A extends T> A withSettings(AnimationSettings settings) {
+    default T withSettings(AnimationSettings settings) {
         setSettings(settings);
-        return (A) this;
+        return (T) this;
     }
 
     /**
      * Applies custom animation settings
      * @param settings settings to update. Example: <pre>custom(settings{@literal ->} settings.withDuration(...))</pre>
-     * @param <A> {@link T} or subclass
      * @return this for concatenation
      */
-    <A extends T> A custom(Function<AnimationSettings, AnimationSettings> settings);
+    T custom(Function<AnimationSettings, AnimationSettings> settings);
 }

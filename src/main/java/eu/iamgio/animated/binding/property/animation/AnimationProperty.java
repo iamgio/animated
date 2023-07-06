@@ -71,7 +71,7 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
      * {@inheritDoc}
      */
     @Override
-    public <A extends AnimationProperty<T>> A custom(Function<AnimationSettings, AnimationSettings> settings) {
+    public AnimationProperty<T> custom(Function<AnimationSettings, AnimationSettings> settings) {
         return withSettings(settings.apply(getSettings()));
     }
 
@@ -117,8 +117,7 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
      * @return this for concatenation
      */
     public AnimationProperty<T> addBinding(Property<T> targetProperty) {
-        this.addBinding(targetProperty, Function.identity());
-        return this;
+        return this.addBinding(targetProperty, Function.identity());
     }
 
     /**
