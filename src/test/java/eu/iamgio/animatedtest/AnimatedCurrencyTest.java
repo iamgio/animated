@@ -18,9 +18,6 @@ public class AnimatedCurrencyTest extends Application {
 
     private static final int AMOUNT_TO_ADD = 500;
 
-    // Amount of money
-    private double amount;
-
     @Override
     public void start(Stage primaryStage) {
         // Set up scene
@@ -31,7 +28,7 @@ public class AnimatedCurrencyTest extends Application {
         NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
 
         // Set up label
-        AnimatedValueLabel<Double> label = new AnimatedValueLabel<>(this.amount)
+        AnimatedValueLabel<Double> label = new AnimatedValueLabel<>(0.0)
                 .custom(settings -> settings.withCurve(Curve.EASE_IN_OUT_EXPO).withDuration(Duration.millis(1500)));
 
         label.setTextMapper(formatter::format);
@@ -42,10 +39,7 @@ public class AnimatedCurrencyTest extends Application {
         Button button = new Button("Add");
         button.relocate(100, 160);
 
-        button.setOnAction(e -> {
-            this.amount += AMOUNT_TO_ADD;
-            label.setValue(this.amount);
-        });
+        button.setOnAction(e -> label.setValue(label.getValue() + AMOUNT_TO_ADD));
 
         root.getChildren().addAll(label, button);
 
