@@ -97,6 +97,13 @@ public class AnimatedValueLabel<T> extends Label implements CustomizableAnimatio
     }
 
     /**
+     * @return the current animation settings
+     */
+    public AnimationSettings getSettings() {
+        return this.animationProperty.getSettings();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
