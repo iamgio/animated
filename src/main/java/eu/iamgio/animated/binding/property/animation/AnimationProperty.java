@@ -146,7 +146,7 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
 
     /**
      * Creates an {@link AnimationProperty} that wraps the given {@link ObjectProperty}.
-     * @see eu.iamgio.animated.binding.property
+     * @see eu.iamgio.animated.binding.property.wrapper.ObjectPropertyWrapper
      * @param property JavaFX property to wrap
      * @param <T> property type
      * @return instance of a new animation property that wraps <tt>property</tt>.
@@ -157,11 +157,21 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
 
     /**
      * Creates an {@link AnimationProperty} that wraps the given {@link DoubleProperty}.
-     * @see eu.iamgio.animated.binding.property
+     * @see eu.iamgio.animated.binding.property.wrapper.DoublePropertyWrapper
      * @param property JavaFX property to wrap
      * @return instance of a new animation property that wraps <tt>property</tt>.
      */
     public static AnimationProperty<Double> of(DoubleProperty property) {
+        return new SimpleAnimationProperty<>(PropertyWrapper.of(property));
+    }
+
+    /**
+     * Creates an {@link AnimationProperty} that wraps the given {@link IntegerProperty}.
+     * @see eu.iamgio.animated.binding.property.wrapper.IntegerPropertyWrapper
+     * @param property JavaFX property to wrap
+     * @return instance of a new animation property that wraps <tt>property</tt>.
+     */
+    public static AnimationProperty<Integer> of(IntegerProperty property) {
         return new SimpleAnimationProperty<>(PropertyWrapper.of(property));
     }
 }

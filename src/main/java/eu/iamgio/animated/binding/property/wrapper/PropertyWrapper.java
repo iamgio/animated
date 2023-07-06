@@ -2,6 +2,7 @@ package eu.iamgio.animated.binding.property.wrapper;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
@@ -67,5 +68,15 @@ public interface PropertyWrapper<T> {
      */
     static PropertyWrapper<Double> of(DoubleProperty property) {
         return new DoublePropertyWrapper(property);
+    }
+
+    /**
+     * Creates an {@link IntegerPropertyWrapper} for the given {@link IntegerProperty}.
+     * @see eu.iamgio.animated.binding.property
+     * @param property JavaFX property to wrap
+     * @return an instance of the proper subclass of {@link PropertyWrapper} that wraps <tt>property</tt>.
+     */
+    static PropertyWrapper<Integer> of(IntegerProperty property) {
+        return new IntegerPropertyWrapper(property);
     }
 }
