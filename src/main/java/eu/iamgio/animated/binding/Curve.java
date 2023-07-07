@@ -66,6 +66,19 @@ public enum Curve {
         }
     }),
 
+    /**
+     * @see <a href="https://easings.net/#easeOutElastic">on easings.net</a>
+     */
+    EASE_OUT_ELASTIC(t -> {
+        double c = (2 * Math.PI) / 3;
+
+        return t == 0
+                ? 0
+                : t == 1
+                ? 1
+                : pow(2, -10 * t) * sin((t * 10 - 0.75) * c) + 1;
+    }),
+
 
     //
     // EASE IN CURVES
@@ -101,6 +114,19 @@ public enum Curve {
      * @see <a href="https://easings.net/#easeInBounce">on easings.net</a>
      */
     EASE_IN_BOUNCE(t -> 1 - EASE_OUT_BOUNCE.curve.apply(1 - t)),
+
+    /**
+     * @see <a href="https://easings.net/#easeInElastic">on easings.net</a>
+     */
+    EASE_IN_ELASTIC(t -> {
+        double c = (2 * PI) / 3;
+
+        return t == 0
+                ? 0
+                : t == 1
+                ? 1
+                : -pow(2, 10 * t - 10) * sin((t * 10 - 10.75) * c);
+    }),
 
 
     //
@@ -139,7 +165,23 @@ public enum Curve {
      */
     EASE_IN_OUT_BOUNCE(t -> t < 0.5
             ? (1 - EASE_OUT_BOUNCE.curve.apply(1 - 2 * t)) / 2
-            : (1 + EASE_IN_BOUNCE.curve.apply(2 * t - 1)) / 2);
+            : (1 + EASE_IN_BOUNCE.curve.apply(2 * t - 1)) / 2),
+
+    /**
+     * @see <a href="https://easings.net/#easeInOutElastic">on easings.net</a>
+     */
+    EASE_IN_OUT_ELASTIC(t -> {
+        double c = (2 * PI) / 4.5;
+        double sin = sin((20 * t - 11.125) * c);
+
+        return t == 0
+                ? 0
+                : t == 1
+                ? 1
+                : t < 0.5
+                ? -(pow(2, 20 * t - 10) * sin) / 2
+                : (pow(2, -20 * t + 10) * sin) / 2 + 1;
+    });
 
 
     //
