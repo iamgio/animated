@@ -25,8 +25,11 @@ public class FxmlAnimatedValueLabelTest extends Application {
 
         AnimatedIntValueLabel label = (AnimatedIntValueLabel) Objects.requireNonNull(root.lookup("#label"));
 
-        Random random = new Random();
+        // The supplied random value changes the text opacity.
+        label.animationValueProperty().addListener(o -> label.setOpacity(label.getAnimationValue() / 100.0));
 
+        // Random value generation.
+        Random random = new Random();
         updateButton.setOnAction(e -> label.setValue(random.nextInt(100)));
     }
 }

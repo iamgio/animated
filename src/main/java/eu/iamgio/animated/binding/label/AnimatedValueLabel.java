@@ -60,7 +60,7 @@ public class AnimatedValueLabel<T> extends Label implements CustomizableAnimatio
 
     /**
      * @return the wrapped value. Note that it only depends on the user-supplied value via {@link #setValue(Object)},
-     *         and not on the current animation frame, which is given by {@link #getCurrentAnimationValue()}
+     *         and not on the current animation frame, which is given by {@link #getAnimationValue()}
      */
     public T getValue() {
         return this.value.getValue();
@@ -75,10 +75,18 @@ public class AnimatedValueLabel<T> extends Label implements CustomizableAnimatio
     }
 
     /**
+     * @return the current value of the wrapped property. While {@link #valueProperty()} only wraps the last user-supplied value,
+     *         this method takes into account the latest value produced by the animation, if it is playing.
+     */
+    public ReadOnlyProperty<T> animationValueProperty() {
+        return this.animationProperty.getProperty().getProperty();
+    }
+
+    /**
      * @return the current value of the wrapped property. While {@link #getValue()} only returns the last user-supplied value,
      *         this method takes into account the latest value produced by the animation, if it is playing.
      */
-    public T getCurrentAnimationValue() {
+    public T getAnimationValue() {
         return this.animationProperty.getProperty().getValue();
     }
 
