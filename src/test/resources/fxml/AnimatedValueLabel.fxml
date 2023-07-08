@@ -1,5 +1,5 @@
 <?import eu.iamgio.animated.binding.AnimationSettings?>
-<?import eu.iamgio.animated.binding.misc.AnimatedIntValueLabel?>
+<?import eu.iamgio.animated.binding.label.AnimatedIntValueLabel?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane prefWidth="650" prefHeight="500">

@@ -1,7 +1,7 @@
 package eu.iamgio.animatedtest;
 
 import eu.iamgio.animated.binding.Curve;
-import eu.iamgio.animated.binding.misc.AnimatedValueLabel;
+import eu.iamgio.animated.binding.label.AnimatedValueLabel;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
