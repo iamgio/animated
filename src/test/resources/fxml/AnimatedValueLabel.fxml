@@ -1,12 +1,12 @@
 <?import eu.iamgio.animated.binding.AnimationSettings?>
-<?import eu.iamgio.animated.binding.misc.AnimatedValueLabel?>
+<?import eu.iamgio.animated.binding.misc.AnimatedIntValueLabel?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane prefWidth="650" prefHeight="500">
     <Button id="button" text="Update" layoutX="300"/>
-    <AnimatedValueLabel id="label" value="0">
+    <AnimatedIntValueLabel id="label" value="0">
         <settings>
             <AnimationSettings duration="1500ms" curve="EASE_IN_OUT"/>
         </settings>
-    </AnimatedValueLabel>
+    </AnimatedIntValueLabel>
 </AnchorPane>

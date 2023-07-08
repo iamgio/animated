@@ -1,6 +1,6 @@
 package eu.iamgio.animatedtest.fxml;
 
-import eu.iamgio.animated.binding.misc.AnimatedValueLabel;
+import eu.iamgio.animated.binding.misc.AnimatedIntValueLabel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,13 +23,10 @@ public class FxmlAnimatedValueLabelTest extends Application {
 
         Button updateButton = (Button) Objects.requireNonNull(root.lookup("#button"));
 
-        @SuppressWarnings("unchecked") // Not a good-looking cast...
-        AnimatedValueLabel<Integer> label = (AnimatedValueLabel<Integer>) Objects.requireNonNull(root.lookup("#label"));
+        AnimatedIntValueLabel label = (AnimatedIntValueLabel) Objects.requireNonNull(root.lookup("#label"));
 
         Random random = new Random();
 
-        updateButton.setOnAction(e -> {
-            label.setValue(random.nextInt(100));
-        });
+        updateButton.setOnAction(e -> label.setValue(random.nextInt(100)));
     }
 }

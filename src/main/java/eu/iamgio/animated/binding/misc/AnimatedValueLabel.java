@@ -4,6 +4,7 @@ import eu.iamgio.animated.binding.AnimationSettings;
 import eu.iamgio.animated.binding.CustomizableAnimation;
 import eu.iamgio.animated.binding.property.animation.AnimationProperty;
 import eu.iamgio.animated.transition.Pausable;
+import javafx.beans.NamedArg;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.scene.control.Label;
@@ -18,7 +19,7 @@ import java.util.function.Function;
  */
 public class AnimatedValueLabel<T> extends Label implements CustomizableAnimation<AnimatedValueLabel<T>>, Pausable {
 
-    private final ObjectProperty<T> value;
+    private final Property<T> value;
     private final AnimationProperty<T> animationProperty;
     private final Property<Function<T, String>> textMapper;
     private final BooleanProperty paused = new SimpleBooleanProperty(false);
@@ -27,7 +28,7 @@ public class AnimatedValueLabel<T> extends Label implements CustomizableAnimatio
      * Instantiates an {@link AnimatedValueLabel}.
      * @param value initial wrapped value
      */
-    public AnimatedValueLabel(T value) {
+    public AnimatedValueLabel(@NamedArg("value") T value) {
         this.value = new SimpleObjectProperty<>(value);
         this.textMapper = new SimpleObjectProperty<>(Objects::toString);
 
@@ -51,13 +52,6 @@ public class AnimatedValueLabel<T> extends Label implements CustomizableAnimatio
     }
 
     /**
-     * Instantiates an empty {@link AnimatedValueLabel}.
-     */
-    public AnimatedValueLabel() {
-        this(null);
-    }
-
-    /**
      * @return the wrapped value
      */
     public Property<T> valueProperty() {
@@ -69,7 +63,7 @@ public class AnimatedValueLabel<T> extends Label implements CustomizableAnimatio
      *         and not on the current animation frame, which is given by {@link #getCurrentAnimationValue()}
      */
     public T getValue() {
-        return this.value.get();
+        return this.value.getValue();
     }
 
     /**
@@ -77,7 +71,7 @@ public class AnimatedValueLabel<T> extends Label implements CustomizableAnimatio
      * @param value new wrapped value
      */
     public void setValue(T value) {
-        this.value.set(value);
+        this.value.setValue(value);
     }
 
     /**
