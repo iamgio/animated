@@ -3,7 +3,7 @@ package eu.iamgio.animated.binding.label;
 import eu.iamgio.animated.binding.AnimationSettings;
 import eu.iamgio.animated.binding.CustomizableAnimation;
 import eu.iamgio.animated.binding.property.animation.AnimationProperty;
-import eu.iamgio.animated.transition.Pausable;
+import eu.iamgio.animated.common.Pausable;
 import javafx.beans.NamedArg;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;

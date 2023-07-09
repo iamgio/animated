@@ -2,6 +2,7 @@ package eu.iamgio.animated.transition;
 
 import animatefx.animation.AnimationFX;
 import animatefx.animation.FadeOut;
+import eu.iamgio.animated.common.Pausable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;

@@ -1,6 +1,7 @@
 package eu.iamgio.animated.transition;
 
 import animatefx.animation.AnimationFX;
+import eu.iamgio.animated.common.Pausable;
 import javafx.beans.property.*;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;

@@ -4,7 +4,7 @@ import eu.iamgio.animated.binding.Animated;
 import eu.iamgio.animated.binding.AnimationSettings;
 import eu.iamgio.animated.binding.CustomizableAnimation;
 import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
-import eu.iamgio.animated.transition.Pausable;
+import eu.iamgio.animated.common.Pausable;
 import javafx.beans.property.*;
 import javafx.scene.Node;
 

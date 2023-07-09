@@ -1,8 +1,8 @@
 package eu.iamgio.animated.transition.container;
 
 import eu.iamgio.animated.binding.Curve;
+import eu.iamgio.animated.common.Pausable;
 import eu.iamgio.animated.transition.EntranceAndExitAnimationCompatible;
-import eu.iamgio.animated.transition.Pausable;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
