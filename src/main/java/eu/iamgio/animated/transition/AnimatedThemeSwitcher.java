@@ -31,6 +31,9 @@ public class AnimatedThemeSwitcher implements Pausable, ExitAnimationCompatible 
     private final ObjectProperty<Animation> out;
     private final BooleanProperty pausedProperty = new SimpleBooleanProperty(false);
 
+    // Whether this switcher has been initialized via init()
+    private boolean initialized;
+
     // Whether the changes to the stylesheets should be handled
     private boolean handleChanges = true;
 
@@ -69,6 +72,7 @@ public class AnimatedThemeSwitcher implements Pausable, ExitAnimationCompatible 
      *
      * @throws IllegalStateException if the root of the scene is not suitable for the transition
      *                               (i.e. containers like <tt>VBox</tt> and <tt>HBox</tt> are not supported)
+     *                               or if this switcher has already been initialized before.
      */
     public void init() throws IllegalStateException {
         final Parent root = scene.getRoot();
@@ -83,6 +87,11 @@ public class AnimatedThemeSwitcher implements Pausable, ExitAnimationCompatible 
             throw new IllegalStateException("The root node cannot be a VBox or HBox.");
         }
 
+        if (this.initialized) {
+            throw new IllegalStateException("This AnimatedThemeSwitcher has already been initialized.");
+        }
+
+        this.initialized = true;
         this.register();
     }
 
