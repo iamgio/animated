@@ -20,7 +20,7 @@ Maven:
 <dependency>
     <groupId>eu.iamgio</groupId>
     <artifactId>animated</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -32,7 +32,7 @@ allprojects {
     }
 }
 dependencies {
-    implementation 'eu.iamgio:animated:1.0.1'
+    implementation 'eu.iamgio:animated:1.1.0'
 }
 ```
 
@@ -287,7 +287,6 @@ label.setValue(10); // Plays the transition
 <br/>
 
 ## FXML
-Extended FXML support is available with the new 1.0.0 version. 
 
 - **Animated**
   ```xml
@@ -377,7 +376,8 @@ Extended FXML support is available with the new 1.0.0 version.
   <?import eu.iamgio.animated.binding.AnimationSettings?>
   <?import eu.iamgio.animated.binding.label.AnimatedIntValueLabel?>
   
-  <AnimatedIntValueLabel id="label" value="0">
+  <AnimatedIntValueLabel value="0">
+      <!-- Optional customization -->
       <settings>
           <AnimationSettings duration="1500ms" curve="EASE_IN_OUT"/>
       </settings>
