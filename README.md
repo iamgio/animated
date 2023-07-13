@@ -8,9 +8,10 @@
 3. [Animated containers](#animated-containers)
 4. [Animated switchers](#animated-switchers)
 5. [Animated theme switch](#animated-theme-switch)
-6. [Other examples](#other-examples)
-7. [FXML](#fxml)
-8. [Kotlin extensions](#kotlin-extensions)
+6. [Animated values](#animated-values)
+7. [Other examples](#other-examples)
+8. [FXML](#fxml)
+9. [Kotlin extensions](#kotlin-extensions)
 
 ## Getting started
 
@@ -239,6 +240,32 @@ scene.getStylesheets().setAll("/dark.css"); // Plays the transition
 
 <br/>
 
+## Animated values
+
+The animated binding API provides a way to animate the content of a `Label`
+every time its associated value changes.  
+
+
+![Currency](https://i.imgur.com/9TZmEzl.gif)  
+**[Code](src/test/java/eu/iamgio/animatedtest/AnimatedCurrencyTest.java)**
+
+```java
+AnimatedValueLabel<Integer> label = new AnimatedValueLabel<>(0)
+                .custom(settings -> settings.withCurve(Curve.EASE_IN_OUT));
+
+// We can also customize the displayed text
+label.setTextMapper(value -> "The value is " + value);
+
+// Later...
+label.setValue(10); // Plays the transition
+```
+
+<br/>
+
+---
+
+<br/>
+
 ## Other examples
 
 ![Button](https://i.imgur.com/mVGkKcx.gif)  
@@ -341,6 +368,20 @@ Extended FXML support is available with the new 1.0.0 version.
           <Animation type="BounceOut"/>
       </in>
   </AnimatedLabel>
+  ```  
+
+- **AnimatedValueLabel**  
+  FXML has issues with generic types, so you will need to instantiate an
+  `AnimatedIntValueLabel` or `AnimatedDoubleValueLabel`.  
+  ```xml
+  <?import eu.iamgio.animated.binding.AnimationSettings?>
+  <?import eu.iamgio.animated.binding.label.AnimatedIntValueLabel?>
+  
+  <AnimatedIntValueLabel id="label" value="0">
+      <settings>
+          <AnimationSettings duration="1500ms" curve="EASE_IN_OUT"/>
+      </settings>
+  </AnimatedIntValueLabel>
   ```
 
 <br/>
