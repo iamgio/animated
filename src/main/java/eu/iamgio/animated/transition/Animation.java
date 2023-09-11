@@ -1,6 +1,7 @@
 package eu.iamgio.animated.transition;
 
 import animatefx.animation.AnimationFX;
+import eu.iamgio.animated.transition.animations.NullAnimation;
 import javafx.application.Platform;
 import javafx.beans.NamedArg;
 import javafx.collections.ObservableList;
@@ -17,15 +18,15 @@ public class Animation {
     private final AnimationFX animationFX;
 
     private double speed = 1;
-    private Duration delay;
+    private Duration delay = Duration.ZERO;
     private int cycleCount = 1;
 
     /**
      * Instantiates a new {@link Animation} that wraps the given {@link AnimationFX}.
-     * @param animationFX raw {@link AnimationFX} to wrap
+     * @param animationFX non-null raw {@link AnimationFX} to wrap
      */
     public Animation(AnimationFX animationFX) {
-        this.animationFX = animationFX;
+        this.animationFX = Objects.requireNonNull(animationFX);
     }
 
     /**
@@ -48,7 +49,7 @@ public class Animation {
 
     private void applyProperties() {
         animationFX.setSpeed(speed);
-        if(delay != null) animationFX.setDelay(delay);
+        animationFX.setDelay(delay);
         animationFX.setCycleCount(cycleCount);
     }
 
@@ -58,12 +59,15 @@ public class Animation {
      * @param children observable list to add the node to (if not <tt>null</tt>)
      */
     public void playIn(Node target, ObservableList<Node> children) {
-        if(animationFX != null) {
+        if (animationFX != null) {
             animationFX.setNode(target);
             applyProperties();
             animationFX.play();
         }
-        if(children != null) Platform.runLater(() -> children.add(target));
+
+        if (children != null) {
+            Platform.runLater(() -> children.add(target));
+        }
     }
 
     /**
@@ -72,21 +76,19 @@ public class Animation {
      * @param children observable list to remove the node from (if not <tt>null</tt>)
      */
     public void playOut(Node target, ObservableList<Node> children) {
-        if(animationFX != null) {
-            animationFX.setNode(target);
-            applyProperties();
-            if(children != null) animationFX.setOnFinished(e -> children.remove(target));
-            animationFX.play();
-        } else if(children != null) {
-            children.remove(target);
+        animationFX.setNode(target);
+        applyProperties();
+        if (children != null) {
+            animationFX.setOnFinished(e -> children.remove(target));
         }
+        animationFX.play();
     }
 
     /**
      * @return status of the animation
      */
     public javafx.animation.Animation.Status getStatus() {
-        if(animationFX != null && animationFX.getTimeline() != null) {
+        if (animationFX != null && animationFX.getTimeline() != null) {
             return animationFX.getTimeline().getStatus();
         }
         return javafx.animation.Animation.Status.STOPPED;
@@ -100,7 +102,7 @@ public class Animation {
     }
 
     /**
-     * @return AnimateFX animation
+     * @return non-null AnimateFX animation
      */
     public AnimationFX getAnimationFX() {
         return animationFX;
@@ -155,10 +157,12 @@ public class Animation {
     }
 
     /**
-     * @return a valid non-null playable {@link Animation} that does not perform any actual animation.
+     * @return a valid non-null playable {@link Animation} that does not perform any actual animation
+     *         and is also affected by {@link #getDelay()}.
+     * @see NullAnimation
      */
     public static Animation none() {
-        return new Animation(null);
+        return new Animation(new NullAnimation());
     }
 
     /**
