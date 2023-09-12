@@ -2,7 +2,6 @@ package eu.iamgio.animated.transition;
 
 import animatefx.animation.AnimationFX;
 import eu.iamgio.animated.transition.animations.NullAnimation;
-import javafx.application.Platform;
 import javafx.beans.NamedArg;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -66,7 +65,7 @@ public class Animation {
         }
 
         if (children != null) {
-            Platform.runLater(() -> children.add(target));
+            children.add(target);
         }
     }
 
