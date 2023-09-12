@@ -58,14 +58,14 @@ public class Animation {
      * @param children observable list to add the node to (if not <tt>null</tt>)
      */
     public void playIn(Node target, ObservableList<Node> children) {
+        if (children != null) {
+            children.add(target);
+        }
+
         if (animationFX != null) {
             animationFX.setNode(target);
             applyProperties();
             animationFX.play();
-        }
-
-        if (children != null) {
-            children.add(target);
         }
     }
 
