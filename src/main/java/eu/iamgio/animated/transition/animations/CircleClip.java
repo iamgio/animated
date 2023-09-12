@@ -5,6 +5,7 @@ import eu.iamgio.animated.binding.Curve;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.scene.Scene;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
@@ -12,6 +13,11 @@ import javafx.util.Duration;
  *
  */
 public class CircleClip extends AnimationFX {
+
+    // The width/height of the scene is multiplied by this value
+    // to obtain the final radius of the circle that allows it
+    // to cover the scene completely.
+    private static final double FINAL_RADIUS_MULTIPLIER = 1.5;
 
     private final Curve curve;
     private final Duration duration;
@@ -27,10 +33,7 @@ public class CircleClip extends AnimationFX {
 
     @Override
     protected AnimationFX resetNode() {
-        if (this.getNode().getClip() instanceof Circle) {
-            final Circle clip = (Circle) this.getNode().getClip();
-            clip.setRadius(0);
-        }
+        // Never reset.
         return this;
     }
 
@@ -39,6 +42,16 @@ public class CircleClip extends AnimationFX {
         final Circle clip = new Circle();
         this.getNode().setClip(clip);
 
+        final Scene scene = this.getNode().getScene();
+
+        if (scene == null) {
+            throw new IllegalStateException("Target node is not in scene.");
+        }
+
+        // The final radius of the circle must cover the whole scene.
+
+        final double finalRadius = Math.max(scene.getWidth(), scene.getHeight()) * FINAL_RADIUS_MULTIPLIER;
+
         this.setTimeline(new Timeline(
                 new KeyFrame(
                         Duration.ZERO,
@@ -46,7 +59,7 @@ public class CircleClip extends AnimationFX {
                 ),
                 new KeyFrame(
                         this.duration,
-                        new KeyValue(clip.radiusProperty(), 1000, this.curve.toInterpolator())
+                        new KeyValue(clip.radiusProperty(), finalRadius, this.curve.toInterpolator())
                 )
         ));
     }
