@@ -1,8 +1,6 @@
 package eu.iamgio.animated.transition.animations.clip;
 
-import animatefx.animation.AnimationFX;
 import eu.iamgio.animated.common.Curve;
-import eu.iamgio.animated.util.PosUtils;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -12,24 +10,17 @@ import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 /**
- * Animation that involves a circular clip with a variable radius.
+ * Animation that features a circular clip with a variable radius.
  *
  * @see CircleClipIn
  * @see CircleClipOut
  */
-abstract class CircleClip extends AnimationFX {
+abstract class CircleClip extends ClipAnimation<Circle> {
 
     // The width/height of the scene is multiplied by this value
     // to obtain the maximum radius of the circle that allows it
     // to cover the scene completely.
     private static final double MAX_RADIUS_MULTIPLIER = 1.5;
-
-    protected static final Curve DEFAULT_CURVE = Curve.EASE_IN;
-    protected static final Duration DEFAULT_DURATION = Duration.seconds(1);
-
-    private final Curve curve;
-    private final Duration duration;
-    private final Pos alignment;
 
     /**
      * @param curve animation curve
@@ -37,9 +28,7 @@ abstract class CircleClip extends AnimationFX {
      * @param alignment position of the circle, relative to the scene
      */
     CircleClip(Curve curve, Duration duration, Pos alignment) {
-        this.curve = curve;
-        this.duration = duration;
-        this.alignment = alignment;
+        super(curve, duration, alignment);
     }
 
     /**
@@ -61,39 +50,21 @@ abstract class CircleClip extends AnimationFX {
     protected abstract double getFinalRadius();
 
     @Override
-    protected AnimationFX resetNode() {
-        // Never reset.
-        return this;
+    protected Circle createClip() {
+        return new Circle(this.getInitialRadius());
     }
 
     @Override
-    protected void initTimeline() {
-        final Scene scene = this.getNode().getScene();
-
-        if (scene == null) {
-            throw new IllegalStateException("Target node is not in scene.");
-        }
-
-        final double initialRadius = getInitialRadius();
-        final double finalRadius = getFinalRadius();
-
-        final Circle clip = new Circle(initialRadius);
-        this.getNode().setClip(clip);
-
-        // The position of the circle depends on the given alignment
-        PosUtils.bindAlignmentToScene(clip.centerXProperty(), clip.centerYProperty(), alignment, scene);
-
-        // The final radius of the circle must cover the whole scene.
-
-        this.setTimeline(new Timeline(
+    protected Timeline createTimeline(Circle clip) {
+        return new Timeline(
                 new KeyFrame(
                         Duration.ZERO,
-                        new KeyValue(clip.radiusProperty(), initialRadius)
+                        new KeyValue(clip.radiusProperty(), getInitialRadius())
                 ),
                 new KeyFrame(
-                        this.duration,
-                        new KeyValue(clip.radiusProperty(), finalRadius, this.curve.toInterpolator())
+                        super.getDuration(),
+                        new KeyValue(clip.radiusProperty(), getFinalRadius(), super.getCurve().toInterpolator())
                 )
-        ));
+        );
     }
 }
