@@ -29,7 +29,12 @@ public class AnimatedRootSwitchTest extends Application {
 
     public void start(Stage primaryStage) {
         // Setup scene
-        AnimatedSwitcher switcher = new AnimatedSwitcher(new Animation(new CircleClipIn()), Animation.none().setDelay(Duration.millis(1000)));
+        AnimatedSwitcher switcher = new AnimatedSwitcher(
+                // Entrance animation
+                new Animation(new CircleClipIn(Pos.BOTTOM_CENTER)),
+                // Exit animation (none, but it waits one second before removing the node from the scene)
+                Animation.none().setDelay(Duration.seconds(1))
+        );
         Scene scene = new Scene(switcher, 650, 500);
 
         // Setup timeline

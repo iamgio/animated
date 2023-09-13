@@ -2,9 +2,11 @@ package eu.iamgio.animated.transition.animations.clip;
 
 import animatefx.animation.AnimationFX;
 import eu.iamgio.animated.binding.Curve;
+import eu.iamgio.animated.util.PosUtils;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
@@ -27,14 +29,17 @@ abstract class CircleClip extends AnimationFX {
 
     private final Curve curve;
     private final Duration duration;
+    private final Pos alignment;
 
     /**
      * @param curve animation curve
      * @param duration animation duration
+     * @param alignment position of the circle, relative to the scene
      */
-    CircleClip(Curve curve, Duration duration) {
+    CircleClip(Curve curve, Duration duration, Pos alignment) {
         this.curve = curve;
         this.duration = duration;
+        this.alignment = alignment;
     }
 
     /**
@@ -74,6 +79,9 @@ abstract class CircleClip extends AnimationFX {
 
         final Circle clip = new Circle(initialRadius);
         this.getNode().setClip(clip);
+
+        // The position of the circle depends on the given alignment
+        PosUtils.bindAlignmentToScene(clip.centerXProperty(), clip.centerYProperty(), alignment, scene);
 
         // The final radius of the circle must cover the whole scene.
 
