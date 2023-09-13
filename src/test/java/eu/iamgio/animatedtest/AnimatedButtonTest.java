@@ -1,8 +1,8 @@
 package eu.iamgio.animatedtest;
 
 import eu.iamgio.animated.binding.Animated;
-import eu.iamgio.animated.binding.Curve;
 import eu.iamgio.animated.binding.property.animation.AnimationProperty;
+import eu.iamgio.animated.common.Curve;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;

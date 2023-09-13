@@ -1,7 +1,7 @@
 package eu.iamgio.animated.transition.animations.clip;
 
 import animatefx.animation.AnimationFX;
-import eu.iamgio.animated.binding.Curve;
+import eu.iamgio.animated.common.Curve;
 import eu.iamgio.animated.util.PosUtils;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;

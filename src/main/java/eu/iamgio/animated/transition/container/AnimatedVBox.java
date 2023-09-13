@@ -1,7 +1,7 @@
 package eu.iamgio.animated.transition.container;
 
 import animatefx.animation.AnimationFX;
-import eu.iamgio.animated.binding.Curve;
+import eu.iamgio.animated.common.Curve;
 import eu.iamgio.animated.transition.Animation;
 import eu.iamgio.animated.transition.AnimationPair;
 import javafx.beans.property.BooleanProperty;

@@ -1,5 +1,6 @@
-package eu.iamgio.animated.binding;
+package eu.iamgio.animated.common;
 
+import eu.iamgio.animated.binding.AnimationSettings;
 import javafx.animation.Interpolator;
 
 import java.util.function.Function;

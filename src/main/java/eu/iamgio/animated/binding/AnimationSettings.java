@@ -1,5 +1,6 @@
 package eu.iamgio.animated.binding;
 
+import eu.iamgio.animated.common.Curve;
 import javafx.util.Duration;
 
 /**

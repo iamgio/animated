@@ -1,6 +1,6 @@
 package eu.iamgio.animated.transition.container;
 
-import eu.iamgio.animated.binding.Curve;
+import eu.iamgio.animated.common.Curve;
 import eu.iamgio.animated.transition.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;

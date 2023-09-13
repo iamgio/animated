@@ -1,6 +1,6 @@
 package eu.iamgio.animated.transition.container;
 
-import eu.iamgio.animated.binding.Curve;
+import eu.iamgio.animated.common.Curve;
 import eu.iamgio.animated.common.Pausable;
 import eu.iamgio.animated.transition.EntranceAndExitAnimationCompatible;
 import javafx.beans.property.ObjectProperty;

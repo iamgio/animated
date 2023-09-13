@@ -1,6 +1,6 @@
 package eu.iamgio.animated.transition.animations.clip;
 
-import eu.iamgio.animated.binding.Curve;
+import eu.iamgio.animated.common.Curve;
 import javafx.geometry.Pos;
 import javafx.util.Duration;
 
