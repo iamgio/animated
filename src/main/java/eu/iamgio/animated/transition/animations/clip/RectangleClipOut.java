@@ -5,7 +5,7 @@ import javafx.geometry.Pos;
 import javafx.util.Duration;
 
 /**
- * Entrance animation that features a rectangular clip of increasing size of the target node.
+ * Exit animation that features a rectangular clip of increasing size of the target node.
  */
 public class RectangleClipOut extends RectangleClip {
 
@@ -35,21 +35,21 @@ public class RectangleClipOut extends RectangleClip {
 
     @Override
     protected double getInitialWidth() {
-        return 0;
-    }
-
-    @Override
-    protected double getInitialHeight() {
-        return 0;
-    }
-
-    @Override
-    protected double getFinalWidth() {
         return getNode().getScene().getWidth();
     }
 
     @Override
-    protected double getFinalHeight() {
+    protected double getInitialHeight() {
         return getNode().getScene().getHeight();
+    }
+
+    @Override
+    protected double getFinalWidth() {
+        return 0;
+    }
+
+    @Override
+    protected double getFinalHeight() {
+        return 0;
     }
 }
