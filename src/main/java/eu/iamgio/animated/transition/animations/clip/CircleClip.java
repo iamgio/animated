@@ -40,12 +40,12 @@ abstract class CircleClip extends ClipAnimation<Circle> {
     }
 
     /**
-     * @return radius of the circle at the beginning of the animation, with the target node as an argument
+     * @return radius of the circle at the beginning of the animation
      */
     protected abstract double getInitialRadius();
 
     /**
-     * @return radius of the circle at the end of the animation, with the target node as an argument
+     * @return radius of the circle at the end of the animation
      */
     protected abstract double getFinalRadius();
 

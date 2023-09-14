@@ -5,7 +5,7 @@ import javafx.geometry.Pos;
 import javafx.util.Duration;
 
 /**
- * Animation that features a circular clip of increasing radius of the target node.
+ * Entrance animation that features a circular clip of increasing radius of the target node.
  */
 public class CircleClipIn extends CircleClip {
 
@@ -31,7 +31,7 @@ public class CircleClipIn extends CircleClip {
      * Instantiates a circular clip entrance animation from the center of the scene.
      */
     public CircleClipIn() {
-        this(Pos.CENTER);
+        this(DEFAULT_ALIGNMENT);
     }
 
     @Override

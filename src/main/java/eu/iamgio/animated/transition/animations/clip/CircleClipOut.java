@@ -5,7 +5,7 @@ import javafx.geometry.Pos;
 import javafx.util.Duration;
 
 /**
- * Animation that features a circular clip of decreasing radius of the target node.
+ * Entrance animation that features a circular clip of decreasing radius of the target node.
  */
 public class CircleClipOut extends CircleClip {
 
@@ -31,7 +31,7 @@ public class CircleClipOut extends CircleClip {
      * Instantiates a circular clip exit animation from the center of the scene.
      */
     public CircleClipOut() {
-        this(Pos.CENTER);
+        this(DEFAULT_ALIGNMENT);
     }
 
     @Override
