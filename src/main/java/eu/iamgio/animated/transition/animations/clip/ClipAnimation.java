@@ -62,11 +62,17 @@ public abstract class ClipAnimation<S extends Shape> extends AnimationFX {
 
         final S clip = this.createClip();
 
-        // The position of the clip depends on the given alignment
+        // The position of the clip depends on the given alignment.
         PosUtils.bindAlignmentToScene(clip.layoutXProperty(), clip.layoutYProperty(), alignment, scene);
 
         super.getNode().setClip(clip);
-        super.setTimeline(this.createTimeline(clip));
+
+        final Timeline timeline = this.createTimeline(clip);
+
+        // The clip is removed at the end of the animation.
+        timeline.setOnFinished(e -> super.getNode().setClip(null));
+
+        super.setTimeline(timeline);
     }
 
     protected Curve getCurve() {
