@@ -1,6 +1,8 @@
 package eu.iamgio.animated.transition.animations.clip;
 
 import eu.iamgio.animated.common.Curve;
+import eu.iamgio.animated.util.PosUtils;
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -47,11 +49,22 @@ abstract class RectangleClip extends ClipAnimation<Rectangle> {
 
     @Override
     protected Rectangle createClip() {
-        return new Rectangle(this.getInitialWidth(), this.getInitialHeight());
+        Rectangle rectangle = new Rectangle(this.getInitialWidth(), this.getInitialHeight());
+
+        // Sets the origin point of the rectangle.
+        PosUtils.bindCornerAlignment(
+                rectangle.translateXProperty(), rectangle.translateYProperty(),
+                rectangle.widthProperty(), rectangle.heightProperty(),
+                super.getAlignment()
+        );
+
+        return rectangle;
     }
 
     @Override
     protected Timeline createTimeline(Rectangle clip) {
+        final Interpolator interpolator = super.getCurve().toInterpolator();
+
         return new Timeline(
                 new KeyFrame(
                         Duration.ZERO,
@@ -60,8 +73,8 @@ abstract class RectangleClip extends ClipAnimation<Rectangle> {
                 ),
                 new KeyFrame(
                         super.getDuration(),
-                        new KeyValue(clip.widthProperty(), this.getFinalWidth(), super.getCurve().toInterpolator()),
-                        new KeyValue(clip.heightProperty(), this.getFinalHeight(), super.getCurve().toInterpolator())
+                        new KeyValue(clip.widthProperty(), this.getFinalWidth(), interpolator),
+                        new KeyValue(clip.heightProperty(), this.getFinalHeight(), interpolator)
                 )
         );
     }

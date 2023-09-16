@@ -2,6 +2,7 @@ package eu.iamgio.animated.util;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -76,6 +77,38 @@ public final class PosUtils {
                     () -> getY(alignment, scene),
                     scene.heightProperty()
             ));
+        }
+    }
+
+    /**
+     * Binds X and Y properties to a position that anchors the selected corner to the given alignment.
+     * For example, a rectangle with a <tt>TOP_RIGHT</tt> alignment sets its top right corner as
+     * its origin point.
+     * @param xProperty X coordinate property to bind
+     * @param yProperty Y coordinate property to bind
+     * @param widthProperty width property of the node
+     * @param heightProperty height property of the node
+     * @param alignment position to bind to, relative to the scene
+     */
+    public static void bindCornerAlignment(DoubleProperty xProperty, DoubleProperty yProperty,
+                                           ReadOnlyDoubleProperty widthProperty, ReadOnlyDoubleProperty heightProperty,
+                                           Pos alignment) {
+        switch (alignment.getHpos()) {
+            case CENTER:
+                xProperty.bind(widthProperty.divide(-2));
+                break;
+            case RIGHT:
+                xProperty.bind(widthProperty.negate());
+                break;
+        }
+
+        switch (alignment.getVpos()) {
+            case CENTER:
+                yProperty.bind(heightProperty.divide(-2));
+                break;
+            case BOTTOM:
+                yProperty.bind(heightProperty.negate());
+                break;
         }
     }
 }
