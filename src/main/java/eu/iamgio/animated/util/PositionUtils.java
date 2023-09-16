@@ -11,9 +11,9 @@ import javafx.scene.Scene;
 /**
  * Position and alignment utilities.
  */
-public final class PosUtils {
+public final class PositionUtils {
 
-    private PosUtils() {
+    private PositionUtils() {
     }
 
     /**

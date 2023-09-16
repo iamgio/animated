@@ -1,7 +1,7 @@
 package eu.iamgio.animated.transition.animations.clip;
 
 import eu.iamgio.animated.common.Curve;
-import eu.iamgio.animated.util.PosUtils;
+import eu.iamgio.animated.util.PositionUtils;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -52,7 +52,7 @@ abstract class RectangleClip extends ClipAnimation<Rectangle> {
         Rectangle rectangle = new Rectangle(this.getInitialWidth(), this.getInitialHeight());
 
         // Sets the origin point of the rectangle.
-        PosUtils.bindCornerAlignment(
+        PositionUtils.bindCornerAlignment(
                 rectangle.translateXProperty(), rectangle.translateYProperty(),
                 rectangle.widthProperty(), rectangle.heightProperty(),
                 super.getAlignment()

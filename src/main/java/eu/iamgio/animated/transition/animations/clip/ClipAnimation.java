@@ -2,7 +2,7 @@ package eu.iamgio.animated.transition.animations.clip;
 
 import animatefx.animation.AnimationFX;
 import eu.iamgio.animated.common.Curve;
-import eu.iamgio.animated.util.PosUtils;
+import eu.iamgio.animated.util.PositionUtils;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -63,7 +63,7 @@ public abstract class ClipAnimation<S extends Shape> extends AnimationFX {
         final S clip = this.createClip();
 
         // The position of the clip depends on the given alignment.
-        PosUtils.bindAlignmentToScene(clip.layoutXProperty(), clip.layoutYProperty(), alignment, scene);
+        PositionUtils.bindAlignmentToScene(clip.layoutXProperty(), clip.layoutYProperty(), alignment, scene);
 
         super.getNode().setClip(clip);
 
