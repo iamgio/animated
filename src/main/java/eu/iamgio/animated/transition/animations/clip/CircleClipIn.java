@@ -24,7 +24,7 @@ public class CircleClipIn extends CircleClip {
      * @param alignment position of the circle, relative to the scene
      */
     public CircleClipIn(Pos alignment) {
-        super(DEFAULT_CURVE, DEFAULT_DURATION, alignment);
+        super(DEFAULT_ENTRANCE_CURVE, DEFAULT_DURATION, alignment);
     }
 
     /**

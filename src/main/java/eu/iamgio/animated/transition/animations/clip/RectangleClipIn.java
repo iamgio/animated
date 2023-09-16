@@ -23,7 +23,7 @@ public class RectangleClipIn extends RectangleClip {
      * @param alignment position of the rectangle, relative to the scene
      */
     public RectangleClipIn(Pos alignment) {
-        this(DEFAULT_CURVE, DEFAULT_DURATION, alignment);
+        this(DEFAULT_ENTRANCE_CURVE, DEFAULT_DURATION, alignment);
     }
 
     /**

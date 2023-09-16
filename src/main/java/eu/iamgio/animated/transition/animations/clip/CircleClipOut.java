@@ -24,7 +24,7 @@ public class CircleClipOut extends CircleClip {
      * @param alignment position of the circle, relative to the scene
      */
     public CircleClipOut(Pos alignment) {
-        this(DEFAULT_CURVE, DEFAULT_DURATION, alignment);
+        this(DEFAULT_EXIT_CURVE, DEFAULT_DURATION, alignment);
     }
 
     /**

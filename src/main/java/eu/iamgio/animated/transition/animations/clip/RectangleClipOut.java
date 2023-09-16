@@ -23,7 +23,7 @@ public class RectangleClipOut extends RectangleClip {
      * @param alignment position of the rectangle, relative to the scene
      */
     public RectangleClipOut(Pos alignment) {
-        this(DEFAULT_CURVE, DEFAULT_DURATION, alignment);
+        this(DEFAULT_EXIT_CURVE, DEFAULT_DURATION, alignment);
     }
 
     /**

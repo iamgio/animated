@@ -16,7 +16,8 @@ import javafx.util.Duration;
  */
 public abstract class ClipAnimation<S extends Shape> extends AnimationFX {
 
-    protected static final Curve DEFAULT_CURVE = Curve.EASE_IN;
+    protected static final Curve DEFAULT_ENTRANCE_CURVE = Curve.EASE_IN;
+    protected static final Curve DEFAULT_EXIT_CURVE = Curve.EASE_OUT;
     protected static final Duration DEFAULT_DURATION = Duration.seconds(1);
     protected static final Pos DEFAULT_ALIGNMENT = Pos.CENTER;
 
