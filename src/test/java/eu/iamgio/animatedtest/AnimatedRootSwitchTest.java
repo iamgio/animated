@@ -1,8 +1,7 @@
 package eu.iamgio.animatedtest;
 
 import eu.iamgio.animated.transition.AnimatedSwitcher;
-import eu.iamgio.animated.transition.Animation;
-import eu.iamgio.animated.transition.animations.clip.CircleClipIn;
+import eu.iamgio.animated.transition.AnimationPair;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -29,12 +28,7 @@ public class AnimatedRootSwitchTest extends Application {
 
     public void start(Stage primaryStage) {
         // Setup scene
-        AnimatedSwitcher switcher = new AnimatedSwitcher(
-                // Entrance animation
-                new Animation(new CircleClipIn(Pos.BOTTOM_CENTER)),
-                // Exit animation (none, but it waits one second before removing the node from the scene)
-                Animation.none().setDelay(Duration.seconds(1))
-        );
+        AnimatedSwitcher switcher = new AnimatedSwitcher(AnimationPair.fadeDown());
         Scene scene = new Scene(switcher, 650, 500);
 
         // Setup timeline

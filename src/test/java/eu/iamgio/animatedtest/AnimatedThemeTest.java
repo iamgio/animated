@@ -1,7 +1,7 @@
 package eu.iamgio.animatedtest;
 
-import animatefx.animation.FadeOut;
 import eu.iamgio.animated.transition.AnimatedThemeSwitcher;
+import eu.iamgio.animated.transition.animations.clip.CircleClipOut;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -48,7 +48,7 @@ public class AnimatedThemeTest extends Application {
 
         // Setup theme
         scene.getStylesheets().add("/themes/light.css");
-        AnimatedThemeSwitcher themeSwitcher = new AnimatedThemeSwitcher(scene, new FadeOut());
+        AnimatedThemeSwitcher themeSwitcher = new AnimatedThemeSwitcher(scene, new CircleClipOut());
         themeSwitcher.init();
 
         // Setup timeline
