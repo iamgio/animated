@@ -3,6 +3,8 @@ package eu.iamgio.animated.util;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.geometry.Bounds;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -65,23 +67,22 @@ public final class PositionUtils {
      * Binds X and Y coordinate properties to a position that guarantees the given alignment within the given area.
      * @param xProperty X coordinate property to bind
      * @param yProperty Y coordinate property to bind
-     * @param areaWidthProperty width property of the area
-     * @param areaHeightProperty height property of the area
+     * @param areaProperty available area property
      * @param alignment position to bind to, relative to the scene
      */
     public static void bindAlignmentToArea(DoubleProperty xProperty, DoubleProperty yProperty,
-                                           ReadOnlyDoubleProperty areaWidthProperty, ReadOnlyDoubleProperty areaHeightProperty,
+                                           ReadOnlyObjectProperty<Bounds> areaProperty,
                                            Pos alignment) {
         if (requiresXBinding(alignment)) {
             xProperty.bind(Bindings.createObjectBinding(
-                    () -> getX(alignment, areaWidthProperty.doubleValue()),
-                    areaWidthProperty
+                    () -> getX(alignment, areaProperty.get().getWidth()),
+                    areaProperty
             ));
         }
         if (requiresYBinding(alignment)) {
             yProperty.bind(Bindings.createObjectBinding(
-                    () -> getY(alignment, areaHeightProperty.doubleValue()),
-                    areaHeightProperty
+                    () -> getY(alignment, areaProperty.get().getHeight()),
+                    areaProperty
             ));
         }
     }

@@ -41,6 +41,6 @@ public class CircleClipIn extends CircleClip {
 
     @Override
     protected double getFinalRadius() {
-        return calcMaxRadius(getNode().getScene());
+        return super.calcMaxRadius();
     }
 }

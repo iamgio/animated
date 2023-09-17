@@ -45,11 +45,11 @@ public class RectangleClipIn extends RectangleClip {
 
     @Override
     protected double getFinalWidth() {
-        return getNode().getScene().getWidth();
+        return super.getArea().getWidth();
     }
 
     @Override
     protected double getFinalHeight() {
-        return getNode().getScene().getHeight();
+        return super.getArea().getHeight();
     }
 }

@@ -4,8 +4,8 @@ import eu.iamgio.animated.common.Curve;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
@@ -32,14 +32,6 @@ abstract class CircleClip extends ClipAnimation<Circle> {
     }
 
     /**
-     * @param scene scene to cover
-     * @return the optimal radius that allows the circle, in any position within the scene, to cover it completely
-     */
-    protected static double calcMaxRadius(Scene scene) {
-        return Math.max(scene.getWidth(), scene.getHeight()) * MAX_RADIUS_MULTIPLIER;
-    }
-
-    /**
      * @return radius of the circle at the beginning of the animation
      */
     protected abstract double getInitialRadius();
@@ -48,6 +40,14 @@ abstract class CircleClip extends ClipAnimation<Circle> {
      * @return radius of the circle at the end of the animation
      */
     protected abstract double getFinalRadius();
+
+    /**
+     * @return the optimal radius that allows the circle, in any position within the available area, to cover it completely
+     */
+    protected double calcMaxRadius() {
+        final Bounds area = this.getArea();
+        return Math.max(area.getWidth(), area.getHeight()) * MAX_RADIUS_MULTIPLIER;
+    }
 
     @Override
     protected Circle createClip() {

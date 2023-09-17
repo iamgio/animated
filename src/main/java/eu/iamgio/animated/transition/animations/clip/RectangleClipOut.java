@@ -35,12 +35,12 @@ public class RectangleClipOut extends RectangleClip {
 
     @Override
     protected double getInitialWidth() {
-        return getNode().getScene().getWidth();
+        return super.getArea().getWidth();
     }
 
     @Override
     protected double getInitialHeight() {
-        return getNode().getScene().getHeight();
+        return super.getArea().getHeight();
     }
 
     @Override

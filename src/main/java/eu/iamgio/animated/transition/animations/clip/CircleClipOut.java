@@ -36,7 +36,7 @@ public class CircleClipOut extends CircleClip {
 
     @Override
     protected double getInitialRadius() {
-        return calcMaxRadius(getNode().getScene());
+        return super.calcMaxRadius();
     }
 
     @Override

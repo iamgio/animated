@@ -4,8 +4,9 @@ import animatefx.animation.AnimationFX;
 import eu.iamgio.animated.common.Curve;
 import eu.iamgio.animated.util.PositionUtils;
 import javafx.animation.Timeline;
+import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
@@ -47,6 +48,16 @@ public abstract class ClipAnimation<S extends Shape> extends AnimationFX {
      */
     protected abstract Timeline createTimeline(S clip);
 
+    /**
+     * @return the available area to clip
+     */
+    protected Bounds getArea() {
+        final Bounds layoutBounds = getNode().getLayoutBounds();
+        return layoutBounds.getWidth() <= 0 && layoutBounds.getHeight() <= 0
+                ? getNode().getScene().getRoot().getLayoutBounds()
+                : layoutBounds;
+    }
+
     @Override
     protected AnimationFX resetNode() {
         // This animation is never reset.
@@ -55,22 +66,17 @@ public abstract class ClipAnimation<S extends Shape> extends AnimationFX {
 
     @Override
     protected final void initTimeline() {
-        final Scene scene = super.getNode().getScene();
-
-        if (scene == null) {
-            throw new IllegalStateException("Target node is not in scene.");
-        }
+        final Node node = super.getNode();
 
         final S clip = this.createClip();
 
         // The position of the clip depends on the given alignment.
         PositionUtils.bindAlignmentToArea(
                 clip.layoutXProperty(), clip.layoutYProperty(),
-                scene.widthProperty(), scene.heightProperty(),
-                this.alignment
+                node.layoutBoundsProperty(), this.alignment
         );
 
-        super.getNode().setClip(clip);
+        node.setClip(clip);
 
         final Timeline timeline = this.createTimeline(clip);
 
