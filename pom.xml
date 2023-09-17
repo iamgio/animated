@@ -6,7 +6,7 @@
 
     <groupId>eu.iamgio</groupId>
     <artifactId>animated</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 
     <name>animated</name>
     <description>Modern animation library for JavaFX.</description>
