@@ -2,6 +2,7 @@ package eu.iamgio.animated.transition.animations.clip;
 
 import animatefx.animation.AnimationFX;
 import eu.iamgio.animated.common.Curve;
+import eu.iamgio.animated.transition.animations.RequiresScene;
 import eu.iamgio.animated.util.PositionUtils;
 import javafx.animation.Timeline;
 import javafx.geometry.Bounds;
@@ -15,7 +16,7 @@ import javafx.util.Duration;
  *
  * @param <S> shape type
  */
-public abstract class ClipAnimation<S extends Shape> extends AnimationFX {
+public abstract class ClipAnimation<S extends Shape> extends AnimationFX implements RequiresScene {
 
     protected static final Curve DEFAULT_ENTRANCE_CURVE = Curve.EASE_IN;
     protected static final Curve DEFAULT_EXIT_CURVE = Curve.EASE_OUT;

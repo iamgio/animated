@@ -2,7 +2,9 @@ package eu.iamgio.animated.transition;
 
 import animatefx.animation.AnimationFX;
 import eu.iamgio.animated.transition.animations.NullAnimation;
+import eu.iamgio.animated.transition.animations.RequiresScene;
 import eu.iamgio.animated.util.ReflectionUtils;
+import javafx.application.Platform;
 import javafx.beans.NamedArg;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -73,7 +75,13 @@ public class Animation {
      */
     public void playIn(Node target, ObservableList<Node> children) {
         if (children != null) {
-            children.add(target);
+            // If the animation has this tag,
+            // the node must be added to the scene before playing the animation.
+            if (animationFX instanceof RequiresScene) {
+                children.add(target);
+            } else {
+                Platform.runLater(() -> children.add(target));
+            }
         }
 
         animationFX.setNode(target);
