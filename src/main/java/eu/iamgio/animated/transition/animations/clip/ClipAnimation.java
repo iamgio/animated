@@ -81,7 +81,7 @@ public abstract class ClipAnimation<S extends Shape> extends AnimationFX {
         final Timeline timeline = this.createTimeline(clip);
 
         // The clip is removed at the end of the animation.
-        timeline.setOnFinished(e -> super.getNode().setClip(null));
+        timeline.setOnFinished(e -> node.setClip(null));
 
         super.setTimeline(timeline);
     }
