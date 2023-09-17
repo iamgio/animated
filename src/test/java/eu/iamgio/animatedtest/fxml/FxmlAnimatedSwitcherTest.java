@@ -2,6 +2,7 @@ package eu.iamgio.animatedtest.fxml;
 
 import eu.iamgio.animated.transition.AnimatedLabel;
 import eu.iamgio.animated.transition.AnimatedSwitcher;
+import eu.iamgio.animatedtest.TestUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,7 +31,9 @@ public class FxmlAnimatedSwitcherTest extends Application {
         AnimatedLabel label = (AnimatedLabel) Objects.requireNonNull(root.lookup("#animated-label"));
 
         switchButton.setOnAction(e -> {
-            switcher.setChild(new Rectangle(50, 50));
+            final Rectangle rectangle = new Rectangle(50, 50);
+            rectangle.setFill(TestUtil.randomColor());
+            switcher.setChild(rectangle);
             label.setText(String.valueOf(++times));
         });
     }

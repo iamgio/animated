@@ -38,14 +38,23 @@ public class Animation {
      *             This was intended for FXML compatibility only
      */
     @Deprecated
-    public Animation(@NamedArg("type") String type, @NamedArg(value = "speed", defaultValue = "1.0") double speed) {
+    public Animation(@NamedArg("type") String type,
+                     @NamedArg(value = "speed", defaultValue = "1.0") double speed,
+                     @NamedArg(value = "delay", defaultValue = "0ms") Duration delay) {
+        this.speed = speed;
+        this.delay = delay;
+
+        if (type.equalsIgnoreCase("none")) {
+            this.animationFX = Animation.none().getAnimationFX();
+            return;
+        }
+
         try {
             this.animationFX = (AnimationFX) ReflectionUtils.findClassInPackages(
                     type,
                     "animatefx.animation",
                     "eu.iamgio.animated.transition.animations"
             ).newInstance();
-            this.speed = speed;
         } catch (ReflectiveOperationException e) {
             throw new IllegalArgumentException(e);
         }
@@ -67,11 +76,9 @@ public class Animation {
             children.add(target);
         }
 
-        if (animationFX != null) {
-            animationFX.setNode(target);
-            applyProperties();
-            animationFX.play();
-        }
+        animationFX.setNode(target);
+        applyProperties();
+        animationFX.play();
     }
 
     /**

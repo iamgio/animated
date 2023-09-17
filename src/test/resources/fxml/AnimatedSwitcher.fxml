@@ -6,10 +6,10 @@
     <Button text="Switch" id="button" layoutY="100" />
     <AnimatedSwitcher id="animated-switcher">
         <in>
-            <Animation type="ZoomIn" speed="0.5"/>
+            <Animation type="clip.CircleClipIn" speed="0.5"/>
         </in>
         <out>
-            <Animation type="FadeOutDown"/>
+            <Animation type="None" delay="2.5s"/>
         </out>
         <child>
             <Rectangle width="50" height="50" fill="indianred" />
