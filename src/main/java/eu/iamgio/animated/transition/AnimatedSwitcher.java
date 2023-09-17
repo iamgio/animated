@@ -83,11 +83,11 @@ public class AnimatedSwitcher extends Parent implements Pausable, EntranceAndExi
      * Sets the initial child without playing the animation.
      * @param child initial child
      * @return this for concatenation
-     * @throws IllegalAccessError if child is already set
+     * @throws IllegalStateException if child is already set
      */
-    public AnimatedSwitcher of(Node child) throws IllegalAccessError {
+    public AnimatedSwitcher of(Node child) {
         if (getChild() != null) {
-            throw new IllegalAccessError("Cannot use AnimatedSwitcher#of: child is already set. Use setChild instead.");
+            throw new IllegalStateException("Cannot use AnimatedSwitcher#of: child is already set. Use setChild instead.");
         }
         if (child != null) {
             getChildren().add(child);
@@ -119,7 +119,9 @@ public class AnimatedSwitcher extends Parent implements Pausable, EntranceAndExi
      * @param child child to set
      */
     public void setChild(Node child) {
-        if(!isHandlerRegistered) registerHandler();
+        if (!isHandlerRegistered) {
+            registerHandler();
+        }
         this.child.set(child);
     }
 
