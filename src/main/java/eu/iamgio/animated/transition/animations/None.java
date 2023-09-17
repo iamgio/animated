@@ -8,7 +8,7 @@ import javafx.util.Duration;
 /**
  * An 1-frame-long animation that does not perform any motion or transition.
  */
-public class NullAnimation extends AnimationFX {
+public class None extends AnimationFX {
 
     @Override
     protected AnimationFX resetNode() {

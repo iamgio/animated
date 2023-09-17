@@ -1,7 +1,7 @@
 package eu.iamgio.animated.transition;
 
 import animatefx.animation.AnimationFX;
-import eu.iamgio.animated.transition.animations.NullAnimation;
+import eu.iamgio.animated.transition.animations.None;
 import eu.iamgio.animated.transition.animations.RequiresScene;
 import eu.iamgio.animated.util.ReflectionUtils;
 import javafx.application.Platform;
@@ -45,11 +45,6 @@ public class Animation {
                      @NamedArg(value = "delay", defaultValue = "0ms") Duration delay) {
         this.speed = speed;
         this.delay = delay;
-
-        if (type.equalsIgnoreCase("none")) {
-            this.animationFX = Animation.none().getAnimationFX();
-            return;
-        }
 
         try {
             this.animationFX = (AnimationFX) ReflectionUtils.findClassInPackages(
@@ -179,10 +174,10 @@ public class Animation {
     /**
      * @return a valid non-null playable {@link Animation} that does not perform any actual animation
      *         and is also affected by {@link #getDelay()}.
-     * @see NullAnimation
+     * @see None
      */
     public static Animation none() {
-        return new Animation(new NullAnimation());
+        return new Animation(new None());
     }
 
     /**
