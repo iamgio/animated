@@ -6,7 +6,7 @@
     <Button text="Switch" id="button" layoutY="100" />
     <AnimatedSwitcher id="animated-switcher">
         <in>
-            <Animation type="clip.CircleClipIn" speed="0.5"/>
+            <Animation type="CircleClipIn" speed="0.5"/>
         </in>
         <out>
             <Animation type="None" delay="2.5s"/>

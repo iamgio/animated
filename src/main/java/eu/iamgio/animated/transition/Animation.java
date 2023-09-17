@@ -55,7 +55,8 @@ public class Animation {
             this.animationFX = (AnimationFX) ReflectionUtils.findClassInPackages(
                     type,
                     "animatefx.animation",
-                    "eu.iamgio.animated.transition.animations"
+                    "eu.iamgio.animated.transition.animations",
+                    "eu.iamgio.animated.transition.animations.clip"
             ).newInstance();
         } catch (ReflectiveOperationException e) {
             throw new IllegalArgumentException(e);
