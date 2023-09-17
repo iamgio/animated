@@ -20,7 +20,7 @@ Maven:
 <dependency>
     <groupId>eu.iamgio</groupId>
     <artifactId>animated</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 
@@ -32,7 +32,7 @@ allprojects {
     }
 }
 dependencies {
-    implementation 'eu.iamgio:animated:1.1.0'
+    implementation 'eu.iamgio:animated:1.2.0'
 }
 ```
 
@@ -339,11 +339,11 @@ label.setValue(10); // Plays the transition
   <AnimatedSwitcher>
       <!-- Optional: defaults to FadeIn -->
       <in>
-          <Animation type="SlideInUp" speed="0.5"/>
+          <Animation type="RectangleClipIn"/>
       </in>
       <!-- Optional: defaults to FadeOut -->
       <out>
-          <Animation type="SlideOutUp"/>
+          <Animation type="SlideOutUp" speed="0.5"/>
       </out>
       <!-- Optional initial child -->
       <child>
@@ -360,7 +360,7 @@ label.setValue(10); // Plays the transition
   <AnimatedLabel text="Initial text">
       <!-- Optional: defaults to FadeIn -->
       <in>
-          <Animation type="BounceIn"/>
+          <Animation type="BounceIn" delay="300ms"/>
       </in>
       <!-- Optional: defaults to FadeOut -->
       <in>
@@ -383,6 +383,14 @@ label.setValue(10); // Plays the transition
       </settings>
   </AnimatedIntValueLabel>
   ```
+
+<br>
+
+> When instantiating an `<Animation type="..."/>`,
+> the class name (case sensitive) is searched in the following packages:
+> - [`animatefx.animation`](https://github.com/Typhon0/AnimateFX/tree/master/animatefx/src/main/java/animatefx/animation)
+> - [`eu.iamgio.animated.transition.animations`](src/main/java/eu/iamgio/animated/transition/animations) and sub-packages
+
 
 <br/>
 
