@@ -64,7 +64,11 @@ public abstract class ClipAnimation<S extends Shape> extends AnimationFX {
         final S clip = this.createClip();
 
         // The position of the clip depends on the given alignment.
-        PositionUtils.bindAlignmentToScene(clip.layoutXProperty(), clip.layoutYProperty(), alignment, scene);
+        PositionUtils.bindAlignmentToArea(
+                clip.layoutXProperty(), clip.layoutYProperty(),
+                scene.widthProperty(), scene.heightProperty(),
+                this.alignment
+        );
 
         super.getNode().setClip(clip);
 

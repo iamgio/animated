@@ -6,7 +6,6 @@ import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Scene;
 
 /**
  * Position and alignment utilities.
@@ -17,28 +16,32 @@ public final class PositionUtils {
     }
 
     /**
-     * @return the X coordinate at the given position within a scene
+     * @param alignment position to calculate the X coordinate for
+     * @param areaWidth width of the available area
+     * @return the X coordinate at the given position within an area
      */
-    public static double getX(Pos alignment, Scene scene) {
+    public static double getX(Pos alignment, double areaWidth) {
         switch (alignment.getHpos()) {
             case CENTER:
-                return scene.getWidth() / 2;
+                return areaWidth / 2;
             case RIGHT:
-                return scene.getWidth();
+                return areaWidth;
             default:
                 return 0;
         }
     }
 
     /**
+     * @param alignment position to calculate the Y coordinate for
+     * @param areaHeight height of the available area
      * @return the Y coordinate at the given position within a scene
      */
-    public static double getY(Pos alignment, Scene scene) {
+    public static double getY(Pos alignment, double areaHeight) {
         switch (alignment.getVpos()) {
             case CENTER:
-                return scene.getHeight() / 2;
+                return areaHeight / 2;
             case BOTTOM:
-                return scene.getHeight();
+                return areaHeight;
             default:
                 return 0;
         }
@@ -59,23 +62,26 @@ public final class PositionUtils {
     }
 
     /**
-     * Binds X and Y coordinate properties to a position that guarantees the given alignment within the given scene.
+     * Binds X and Y coordinate properties to a position that guarantees the given alignment within the given area.
      * @param xProperty X coordinate property to bind
      * @param yProperty Y coordinate property to bind
+     * @param areaWidthProperty width property of the area
+     * @param areaHeightProperty height property of the area
      * @param alignment position to bind to, relative to the scene
-     * @param scene scene to calculate the coordinates for
      */
-    public static void bindAlignmentToScene(DoubleProperty xProperty, DoubleProperty yProperty, Pos alignment, Scene scene) {
+    public static void bindAlignmentToArea(DoubleProperty xProperty, DoubleProperty yProperty,
+                                           ReadOnlyDoubleProperty areaWidthProperty, ReadOnlyDoubleProperty areaHeightProperty,
+                                           Pos alignment) {
         if (requiresXBinding(alignment)) {
             xProperty.bind(Bindings.createObjectBinding(
-                    () -> getX(alignment, scene),
-                    scene.widthProperty()
+                    () -> getX(alignment, areaWidthProperty.doubleValue()),
+                    areaWidthProperty
             ));
         }
         if (requiresYBinding(alignment)) {
             yProperty.bind(Bindings.createObjectBinding(
-                    () -> getY(alignment, scene),
-                    scene.heightProperty()
+                    () -> getY(alignment, areaHeightProperty.doubleValue()),
+                    areaHeightProperty
             ));
         }
     }
