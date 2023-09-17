@@ -9,13 +9,16 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.transform.Scale;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,6 +28,10 @@ import java.util.List;
  * @author Giorgio Garofalo
  */
 public class AnimatedThemeSwitcher implements Pausable, ExitAnimationCompatible {
+
+    // Defines how bigger the snapshot should be, relatively to scene size.
+    // This avoids blurry images on high DPI screens.
+    private static final double SNAPSHOT_SCALE = 2;
 
     private final Scene scene;
 
@@ -130,12 +137,21 @@ public class AnimatedThemeSwitcher implements Pausable, ExitAnimationCompatible 
      * Takes a snapshot/screenshot of the scene, puts it on top and plays the exit animation on it.
      */
     private void overlapSnapshot() {
-        // Takes a screenshot
-        Image snapshot = scene.snapshot(null);
-        Pane root = (Pane) scene.getRoot();
+        // Prepares the screenshot of the scene.
+        // The scale avoids blurry images on high DPI screens.
+        final SnapshotParameters params = new SnapshotParameters();
+        params.setTransform(new Scale(SNAPSHOT_SCALE, SNAPSHOT_SCALE));
 
-        // Adds the image on top of the root
-        ImageView imageView = new ImageView(snapshot);
+        // Takes a screenshot.
+        final Pane root = (Pane) scene.getRoot();
+        final Image snapshot = root.snapshot(params, null);
+
+        // Adds the image on top of the root.
+        final ImageView imageView = new ImageView(snapshot);
+        final Bounds bounds = root.getLayoutBounds();
+        imageView.setFitWidth(bounds.getWidth());
+        imageView.setFitHeight(bounds.getHeight());
+
         root.getChildren().add(imageView);
 
         // Plays the exit animation and removes the image after the transition ends.
