@@ -217,12 +217,12 @@ label.setText("New text"); // Plays the transition
 It is possible to create a transition whenever the stylesheets of the scene change via `AnimatedThemeSwitcher`, based on AnimateFX.
 
 
-![Theme](https://i.imgur.com/0PnOYbc.gif)  
+![Theme](https://i.imgur.com/Wwma43y.gif)  
 **[Code](src/test/java/eu/iamgio/animatedtest/AnimatedThemeTest.java)**
 
 ```java
 scene.getStylesheets().setAll("/light.css"); // Initial theme
-AnimatedThemeSwitcher themeSwitcher = new AnimatedThemeSwitcher(scene, new FadeOut());
+AnimatedThemeSwitcher themeSwitcher = new AnimatedThemeSwitcher(scene, new CircleClipOut());
 themeSwitcher.init(); // Required!
 
 // Later...
