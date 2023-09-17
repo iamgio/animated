@@ -2,6 +2,7 @@ package eu.iamgio.animated.transition;
 
 import animatefx.animation.AnimationFX;
 import eu.iamgio.animated.transition.animations.NullAnimation;
+import eu.iamgio.animated.util.ReflectionUtils;
 import javafx.beans.NamedArg;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -39,7 +40,11 @@ public class Animation {
     @Deprecated
     public Animation(@NamedArg("type") String type, @NamedArg(value = "speed", defaultValue = "1.0") double speed) {
         try {
-            this.animationFX = (AnimationFX) Class.forName("animatefx.animation." + type).newInstance();
+            this.animationFX = (AnimationFX) ReflectionUtils.findClassInPackages(
+                    type,
+                    "animatefx.animation",
+                    "eu.iamgio.animated.transition.animations"
+            ).newInstance();
             this.speed = speed;
         } catch (ReflectiveOperationException e) {
             throw new IllegalArgumentException(e);
