@@ -374,7 +374,7 @@ label.setValue(10); // Plays the transition
   `AnimatedIntValueLabel` or `AnimatedDoubleValueLabel`.  
   ```xml
   <?import eu.iamgio.animated.binding.AnimationSettings?>
-  <?import eu.iamgio.animated.binding.label.AnimatedIntValueLabel?>
+  <?import eu.iamgio.animated.binding.value.AnimatedIntValueLabel?>
   
   <AnimatedIntValueLabel value="0">
       <!-- Optional customization -->

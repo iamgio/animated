@@ -1,4 +1,4 @@
-package eu.iamgio.animated.binding.label;
+package eu.iamgio.animated.binding.value;
 
 import eu.iamgio.animated.binding.AnimationSettings;
 import eu.iamgio.animated.binding.CustomizableAnimation;

@@ -1,6 +1,6 @@
 package eu.iamgio.animatedtest;
 
-import eu.iamgio.animated.binding.label.AnimatedValueLabel;
+import eu.iamgio.animated.binding.value.AnimatedValueLabel;
 import eu.iamgio.animated.common.Curve;
 import javafx.application.Application;
 import javafx.scene.Scene;

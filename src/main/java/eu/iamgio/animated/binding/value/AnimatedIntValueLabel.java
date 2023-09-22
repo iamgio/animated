@@ -1,4 +1,4 @@
-package eu.iamgio.animated.binding.label;
+package eu.iamgio.animated.binding.value;
 
 import javafx.beans.NamedArg;
 

@@ -1,6 +1,6 @@
 package eu.iamgio.animatedtest.fxml;
 
-import eu.iamgio.animated.binding.label.AnimatedIntValueLabel;
+import eu.iamgio.animated.binding.value.AnimatedIntValueLabel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
