@@ -11,11 +11,14 @@ import javafx.stage.Stage;
 import java.util.Objects;
 import java.util.Random;
 
+import static eu.iamgio.animatedtest.TestUtil.SCENE_HEIGHT;
+import static eu.iamgio.animatedtest.TestUtil.SCENE_WIDTH;
+
 public class FxmlAnimatedValueLabelTest extends Application {
 
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/AnimatedValueLabel.fxml")));
-        Scene scene = new Scene(root, 650, 500);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
         primaryStage.setTitle("FXML");
         primaryStage.setScene(scene);

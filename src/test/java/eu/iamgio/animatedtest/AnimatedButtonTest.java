@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import static eu.iamgio.animatedtest.TestUtil.center;
+import static eu.iamgio.animatedtest.TestUtil.*;
 
 // This demo animates a button's background color and border radius on pressed and hover events.
 
@@ -30,7 +30,7 @@ public class AnimatedButtonTest extends Application {
     public void start(Stage primaryStage) {
         // Setup scene
         Pane root = new Pane();
-        Scene scene = new Scene(root, 650, 500);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         scene.getStylesheets().add("/themes/button.css");
 
         // Create button

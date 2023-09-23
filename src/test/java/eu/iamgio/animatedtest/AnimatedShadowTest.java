@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import static eu.iamgio.animatedtest.TestUtil.center;
+import static eu.iamgio.animatedtest.TestUtil.*;
 
 // This demo animates a button's shadow radius and color on pressed and hover events.
 // An animated text (via AnimatedSwitcher) flags the button's status as well.
@@ -30,7 +30,7 @@ public class AnimatedShadowTest extends Application {
     public void start(Stage primaryStage) {
         // Setup scene
         Pane root = new Pane();
-        Scene scene = new Scene(root, 650, 500);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
         // Create button
         Button button = new Button("Animated shadow");

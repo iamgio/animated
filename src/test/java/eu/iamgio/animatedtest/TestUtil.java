@@ -12,6 +12,9 @@ import java.util.Random;
  */
 public class TestUtil {
 
+    public static final double SCENE_WIDTH = 650;
+    public static final double SCENE_HEIGHT = 500;
+
     /**
      * Centers a node (rectangles wrapped in Panes)
      * @param parent parent of the rectangle

@@ -11,6 +11,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import static eu.iamgio.animatedtest.TestUtil.SCENE_HEIGHT;
+import static eu.iamgio.animatedtest.TestUtil.SCENE_WIDTH;
+
 // This demo anchors a label to each corner and animates their position changes.
 
 public class AnimatedLayoutTest extends Application {
@@ -18,7 +21,7 @@ public class AnimatedLayoutTest extends Application {
     public void start(Stage primaryStage) {
         // Setup scene
         Pane root = new Pane();
-        Scene scene = new Scene(root, 650, 500);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         scene.getStylesheets().add("/themes/dark.css");
         root.getStyleClass().add("layout-test");
 

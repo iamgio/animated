@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import static eu.iamgio.animatedtest.TestUtil.center;
+import static eu.iamgio.animatedtest.TestUtil.*;
 
 // This demo animates a theme switch.
 
@@ -26,7 +26,7 @@ public class AnimatedThemeTest extends Application {
         // Setup scene
         Pane root = new Pane();
         root.getStyleClass().add("root");
-        Scene scene = new Scene(root, 650, 500);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         scene.getStylesheets().add("/themes/global.css");
 
         VBox box = new VBox();

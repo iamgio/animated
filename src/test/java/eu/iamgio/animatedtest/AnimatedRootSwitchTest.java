@@ -17,8 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import static eu.iamgio.animatedtest.TestUtil.complementaryColor;
-import static eu.iamgio.animatedtest.TestUtil.randomColor;
+import static eu.iamgio.animatedtest.TestUtil.*;
 
 // This demo animates a root switch within the same scene.
 
@@ -29,7 +28,7 @@ public class AnimatedRootSwitchTest extends Application {
     public void start(Stage primaryStage) {
         // Setup scene
         AnimatedSwitcher switcher = new AnimatedSwitcher(AnimationPair.fadeDown());
-        Scene scene = new Scene(switcher, 650, 500);
+        Scene scene = new Scene(switcher, SCENE_WIDTH, SCENE_HEIGHT);
 
         // Setup timeline
         Timeline timeline = new Timeline();

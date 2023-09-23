@@ -10,8 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import static eu.iamgio.animatedtest.TestUtil.center;
-import static eu.iamgio.animatedtest.TestUtil.randomRectangle;
+import static eu.iamgio.animatedtest.TestUtil.*;
 
 // This demo dynamically generates random rectangles and plays a transition upon attaching it to the screen.
 // A zoom-in is played on the 'new' rectangle, while the 'old' one disappears with a zoom-out animation.
@@ -21,7 +20,7 @@ public class AnimatedSwitcherTest extends Application {
     public void start(Stage primaryStage) {
         // Setup scene
         Pane root = new Pane();
-        Scene scene = new Scene(root, 650, 500);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
         // Setup switcher and attach it to the root
         AnimatedSwitcher switcher = new AnimatedSwitcher(AnimationPair.zoom().setSpeed(2, .8));

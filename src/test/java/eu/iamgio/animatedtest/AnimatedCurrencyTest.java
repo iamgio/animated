@@ -12,6 +12,9 @@ import javafx.util.Duration;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import static eu.iamgio.animatedtest.TestUtil.SCENE_HEIGHT;
+import static eu.iamgio.animatedtest.TestUtil.SCENE_WIDTH;
+
 // This demo animates the content (money) of a label.
 
 public class AnimatedCurrencyTest extends Application {
@@ -22,7 +25,7 @@ public class AnimatedCurrencyTest extends Application {
     public void start(Stage primaryStage) {
         // Set up scene
         Pane root = new Pane();
-        Scene scene = new Scene(root, 650, 500);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
         // Currency formatter
         NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);

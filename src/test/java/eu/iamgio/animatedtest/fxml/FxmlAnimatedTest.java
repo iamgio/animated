@@ -12,13 +12,13 @@ import javafx.stage.Stage;
 import java.util.Objects;
 import java.util.Random;
 
-import static eu.iamgio.animatedtest.TestUtil.randomColor;
+import static eu.iamgio.animatedtest.TestUtil.*;
 
 public class FxmlAnimatedTest extends Application {
 
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Animated.fxml")));
-        Scene scene = new Scene(root, 650, 500);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
         primaryStage.setTitle("FXML");
         primaryStage.setScene(scene);

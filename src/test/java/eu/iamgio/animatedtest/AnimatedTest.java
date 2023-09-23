@@ -15,8 +15,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import static eu.iamgio.animatedtest.TestUtil.center;
-import static eu.iamgio.animatedtest.TestUtil.randomRectangle;
+import static eu.iamgio.animatedtest.TestUtil.*;
 
 // This demo dynamically changes several rectangle's properties.
 // The Animated class lets the change play a transition.
@@ -26,7 +25,7 @@ public class AnimatedTest extends Application {
     public void start(Stage primaryStage) {
         // Setup scene
         Pane root = new Pane();
-        Scene scene = new Scene(root, 650, 500);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
         Rectangle rectangle = randomRectangle();
         Pane pane = new Pane(rectangle);
