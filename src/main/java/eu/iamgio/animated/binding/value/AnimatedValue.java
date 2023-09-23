@@ -7,7 +7,7 @@ import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
 
 /**
- * A value that wraps a value, and exposes a parallel value that is updated with an animated transition
+ * An object that wraps a value, and exposes a parallel value that is updated with an animated transition
  * whenever the wrapped value is updated via {@link #setValue(Object)}.
  * {@link #animationValueProperty()} can be bound to any other external property to provide
  * an animated effect without affecting the wrapped value.
