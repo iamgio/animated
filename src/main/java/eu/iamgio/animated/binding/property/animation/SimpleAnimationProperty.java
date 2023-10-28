@@ -60,10 +60,14 @@ public class SimpleAnimationProperty<T> extends AnimationProperty<T> {
     /**
      * Plays the animation
      * @param value new property value
+     * @param interrupted whether the animation was interrupted before it could finish as expected
      */
-    private void handleChanges(T value) {
+    private void handleChanges(T value, boolean interrupted) {
         // Temporarily stop the timeline in case it is currently running
-        timeline.stop();
+        if (interrupted) {
+            timeline.stop();
+            this.fireEvent(onAnimationEndedProperty(), new AnimationEvent(true));
+        }
 
         final AnimationSettings settings = getSettings();
         Interpolator interpolator = settings.getCurve().toInterpolator();
@@ -76,7 +80,11 @@ public class SimpleAnimationProperty<T> extends AnimationProperty<T> {
         // Play the animation
         timeline.play();
 
-        this.fireEvent(onAnimationStartedProperty(), new AnimationEvent(false)); // TODO interrupted status
+        this.fireEvent(onAnimationStartedProperty(), new AnimationEvent(interrupted));
+    }
+
+    private boolean isRunning() {
+        return timeline.getStatus() == Animation.Status.RUNNING;
     }
 
     /**
@@ -94,10 +102,12 @@ public class SimpleAnimationProperty<T> extends AnimationProperty<T> {
             if (isPaused() || (target != null && target.getScene() == null)) {
                 return;
             }
-            if (timeline.getStatus() != Animation.Status.RUNNING || !isAnimationFrame(oldValue, newValue)) {
+
+            boolean running = isRunning();
+            if (!running || !isAnimationFrame(oldValue, newValue)) {
                 if (handleChanges ^= true) {
                     getProperty().set(oldValue);
-                    handleChanges(newValue);
+                    handleChanges(newValue, running);
                 }
             }
         }));
