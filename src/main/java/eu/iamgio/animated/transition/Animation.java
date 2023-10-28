@@ -38,6 +38,7 @@ public class Animation {
      * Instantiates a new {@link Animation} that wraps the given {@link AnimationFX}.
      * @param type name (case-sensitive) of the raw {@link AnimationFX} to wrap
      * @param speed speed multiplier of the animation
+     * @param delay delay duration before the animation is played
      * @throws IllegalArgumentException if the type does not match any AnimateFX animation
      * @deprecated this method uses unnecessary reflection, hence it should be avoided.
      *             This was intended for FXML compatibility only
@@ -194,6 +195,7 @@ public class Animation {
     /**
      * Fluent setter for {@link #setOnFinished(EventHandler)}.
      * @param handler action to run when the animation finishes
+     * @return this for concatenation
      */
     public Animation onFinished(EventHandler<ActionEvent> handler) {
         this.setOnFinished(handler);

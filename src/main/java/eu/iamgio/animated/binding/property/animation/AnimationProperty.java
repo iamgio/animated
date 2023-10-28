@@ -137,6 +137,7 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
     /**
      * Fluent setter for {@link ListenableAnimation#setOnAnimationStarted(EventHandler)}
      * @param handler the action to run when an animation begins
+     * @return this for concatenation
      */
     public AnimationProperty<T> onAnimationStarted(EventHandler<AnimationEvent> handler) {
         setOnAnimationStarted(handler);
@@ -146,6 +147,7 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
     /**
      * Fluent setter for {@link ListenableAnimation#setOnAnimationEnded(EventHandler)}
      * @param handler the action to run when an animation finishes
+     * @return this for concatenation
      */
     public AnimationProperty<T> onAnimationEnded(EventHandler<AnimationEvent> handler) {
         setOnAnimationEnded(handler);
