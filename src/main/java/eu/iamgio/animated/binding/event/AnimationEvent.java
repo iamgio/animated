@@ -29,7 +29,7 @@ public final class AnimationEvent extends Event {
      *     </li>
      *     <li>
      *         If this event represents the start of an animation, the interrupted status
-     *         means the animation started right after an interrutped end animation.
+     *         means the animation started right after an interrupted end animation.
      *     </li>
      * </ul>
      */
