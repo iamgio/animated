@@ -3,9 +3,12 @@ package eu.iamgio.animated.binding.property.animation;
 import eu.iamgio.animated.binding.Animated;
 import eu.iamgio.animated.binding.AnimationSettings;
 import eu.iamgio.animated.binding.CustomizableAnimation;
+import eu.iamgio.animated.binding.event.AnimationEvent;
+import eu.iamgio.animated.binding.event.ListenableAnimation;
 import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import eu.iamgio.animated.common.Pausable;
 import javafx.beans.property.*;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 
 import java.util.function.Function;
@@ -16,7 +19,7 @@ import java.util.function.Function;
  * @param <T> type of the wrapped value
  * @author Giorgio Garofalo
  */
-public abstract class AnimationProperty<T> implements CustomizableAnimation<AnimationProperty<T>>, Pausable {
+public abstract class AnimationProperty<T> implements CustomizableAnimation<AnimationProperty<T>>, ListenableAnimation, Pausable {
 
     // The target property
     private final PropertyWrapper<T> property;
@@ -128,6 +131,24 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
     }
 
     /**
+     * Fluent setter for {@link ListenableAnimation#setOnAnimationStarted(EventHandler)}
+     * @param handler the action to run when an animation begins
+     */
+    public AnimationProperty<T> onAnimationStarted(EventHandler<AnimationEvent> handler) {
+        setOnAnimationStarted(handler);
+        return this;
+    }
+
+    /**
+     * Fluent setter for {@link ListenableAnimation#setOnAnimationEnded(EventHandler)}
+     * @param handler the action to run when an animation finishes
+     */
+    public AnimationProperty<T> onAnimationEnded(EventHandler<AnimationEvent> handler) {
+        setOnAnimationEnded(handler);
+        return this;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -141,6 +162,10 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
      */
     void copyAttributesTo(AnimationProperty<?> to) {
         to.pausedProperty().bindBidirectional(pausedProperty());
+
+        to.onAnimationStartedProperty().bindBidirectional(onAnimationStartedProperty());
+        to.onAnimationEndedProperty().bindBidirectional(onAnimationEndedProperty());
+
         to.withSettings(this.getSettings());
     }
 
