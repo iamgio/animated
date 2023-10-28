@@ -2,7 +2,11 @@ package eu.iamgio.animated.binding.misc;
 
 import eu.iamgio.animated.binding.AnimationSettings;
 import eu.iamgio.animated.binding.CustomizableAnimation;
+import eu.iamgio.animated.binding.event.AnimationEvent;
+import eu.iamgio.animated.binding.event.ListenableAnimation;
 import eu.iamgio.animated.binding.property.animation.AnimationProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.event.EventHandler;
 import javafx.scene.control.Slider;
 
 import java.util.function.Function;
@@ -13,7 +17,7 @@ import java.util.function.Function;
  *
  * @see Slider
  */
-public final class AnimatedSlider extends Slider implements CustomizableAnimation<AnimatedSlider> {
+public final class AnimatedSlider extends Slider implements CustomizableAnimation<AnimatedSlider>, ListenableAnimation {
 
     private final AnimationProperty<Double> property = AnimationProperty.of(valueProperty());
 
@@ -59,5 +63,21 @@ public final class AnimatedSlider extends Slider implements CustomizableAnimatio
     public AnimatedSlider custom(Function<AnimationSettings, AnimationSettings> settings) {
         property.custom(settings);
         return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ObjectProperty<EventHandler<AnimationEvent>> onAnimationStartedProperty() {
+        return this.property.onAnimationStartedProperty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ObjectProperty<EventHandler<AnimationEvent>> onAnimationEndedProperty() {
+        return this.property.onAnimationEndedProperty();
     }
 }

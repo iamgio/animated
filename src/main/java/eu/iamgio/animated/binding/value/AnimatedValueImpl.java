@@ -1,8 +1,10 @@
 package eu.iamgio.animated.binding.value;
 
 import eu.iamgio.animated.binding.AnimationSettings;
+import eu.iamgio.animated.binding.event.AnimationEvent;
 import eu.iamgio.animated.binding.property.animation.AnimationProperty;
 import javafx.beans.property.*;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 
 import java.util.function.Function;
@@ -108,5 +110,21 @@ class AnimatedValueImpl<T> implements AnimatedValue<T> {
     @Override
     public BooleanProperty pausedProperty() {
         return this.paused;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ObjectProperty<EventHandler<AnimationEvent>> onAnimationStartedProperty() {
+        return this.animationProperty.onAnimationStartedProperty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ObjectProperty<EventHandler<AnimationEvent>> onAnimationEndedProperty() {
+        return this.animationProperty.onAnimationEndedProperty();
     }
 }

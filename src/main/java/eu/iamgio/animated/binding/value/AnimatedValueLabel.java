@@ -1,12 +1,11 @@
 package eu.iamgio.animated.binding.value;
 
 import eu.iamgio.animated.binding.AnimationSettings;
+import eu.iamgio.animated.binding.event.AnimationEvent;
 import javafx.beans.NamedArg;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.Property;
-import javafx.beans.property.ReadOnlyProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 
 import java.util.Objects;
@@ -109,6 +108,22 @@ public class AnimatedValueLabel<T> extends Label implements AnimatedValue<T> {
     @Override
     public BooleanProperty pausedProperty() {
         return this.value.pausedProperty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ObjectProperty<EventHandler<AnimationEvent>> onAnimationStartedProperty() {
+        return this.value.onAnimationStartedProperty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ObjectProperty<EventHandler<AnimationEvent>> onAnimationEndedProperty() {
+        return this.value.onAnimationEndedProperty();
     }
 
     /**

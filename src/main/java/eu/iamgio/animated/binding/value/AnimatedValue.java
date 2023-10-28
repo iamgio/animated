@@ -2,6 +2,7 @@ package eu.iamgio.animated.binding.value;
 
 import eu.iamgio.animated.binding.AnimationSettings;
 import eu.iamgio.animated.binding.CustomizableAnimation;
+import eu.iamgio.animated.binding.event.ListenableAnimation;
 import eu.iamgio.animated.common.Pausable;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
@@ -12,7 +13,7 @@ import javafx.beans.property.ReadOnlyProperty;
  * {@link #animationValueProperty()} can be bound to any other external property to provide
  * an animated effect without affecting the wrapped value.
  */
-public interface AnimatedValue<T> extends CustomizableAnimation<AnimatedValue<T>>, Pausable {
+public interface AnimatedValue<T> extends CustomizableAnimation<AnimatedValue<T>>, ListenableAnimation, Pausable {
 
     /**
      * @return the wrapped value
