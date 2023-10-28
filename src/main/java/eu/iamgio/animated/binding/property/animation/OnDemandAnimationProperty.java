@@ -1,13 +1,11 @@
 package eu.iamgio.animated.binding.property.animation;
 
 import eu.iamgio.animated.binding.Animated;
-import eu.iamgio.animated.binding.event.AnimationEvent;
 import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 
 import java.util.function.Function;
@@ -24,9 +22,6 @@ public class OnDemandAnimationProperty<N extends Node, T> extends AnimationPrope
 
     private final Function<N, PropertyWrapper<T>> propertyRetriever;
     private final ObjectProperty<N> targetNode;
-
-    private final ObjectProperty<EventHandler<AnimationEvent>> onAnimationStarted = new SimpleObjectProperty<>();
-    private final ObjectProperty<EventHandler<AnimationEvent>> onAnimationEnded = new SimpleObjectProperty<>();
 
     /**
      * Instantiates a new on-demand animation property.
@@ -104,21 +99,5 @@ public class OnDemandAnimationProperty<N extends Node, T> extends AnimationPrope
     public <V> AnimationProperty<T> addBinding(Property<V> targetProperty, Function<T, V> mapper) {
         requestProperty().addBinding(targetProperty, mapper);
         return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ObjectProperty<EventHandler<AnimationEvent>> onAnimationStartedProperty() {
-        return this.onAnimationStarted;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ObjectProperty<EventHandler<AnimationEvent>> onAnimationEndedProperty() {
-        return this.onAnimationEnded;
     }
 }

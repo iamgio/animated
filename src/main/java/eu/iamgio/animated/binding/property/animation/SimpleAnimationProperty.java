@@ -7,7 +7,6 @@ import eu.iamgio.animated.binding.property.wrapper.PropertyWrapper;
 import javafx.animation.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 
@@ -20,10 +19,6 @@ import java.util.function.Function;
  * @author Giorgio Garofalo
  */
 public class SimpleAnimationProperty<T> extends AnimationProperty<T> {
-
-    // Event handlers
-    private final ObjectProperty<EventHandler<AnimationEvent>> onAnimationStarted = new SimpleObjectProperty<>();
-    private final ObjectProperty<EventHandler<AnimationEvent>> onAnimationEnded = new SimpleObjectProperty<>();
 
     // Animation timeline
     private final Timeline timeline;
@@ -51,7 +46,7 @@ public class SimpleAnimationProperty<T> extends AnimationProperty<T> {
             lastValue = property.getValue();
         });
 
-        timeline.setOnFinished(e -> fireEvent(onAnimationEnded, new AnimationEvent(false)));
+        timeline.setOnFinished(e -> fireEvent(onAnimationEndedProperty(), new AnimationEvent(false)));
     }
 
     /**
@@ -123,16 +118,6 @@ public class SimpleAnimationProperty<T> extends AnimationProperty<T> {
     public <V> AnimationProperty<T> addBinding(Property<V> targetProperty, Function<T, V> mapper) {
         getProperty().bindMapped(targetProperty, mapper);
         return this;
-    }
-
-    @Override
-    public ObjectProperty<EventHandler<AnimationEvent>> onAnimationStartedProperty() {
-        return this.onAnimationStarted;
-    }
-
-    @Override
-    public ObjectProperty<EventHandler<AnimationEvent>> onAnimationEndedProperty() {
-        return this.onAnimationEnded;
     }
 
     private void fireEvent(ObjectProperty<EventHandler<AnimationEvent>> handlerProperty, AnimationEvent event) {

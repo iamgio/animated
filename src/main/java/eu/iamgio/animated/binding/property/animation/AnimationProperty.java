@@ -30,6 +30,10 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
     // Animation settings
     private final ObjectProperty<AnimationSettings> settings;
 
+    // Event handlers
+    private final ObjectProperty<EventHandler<AnimationEvent>> onAnimationStarted = new SimpleObjectProperty<>();
+    private final ObjectProperty<EventHandler<AnimationEvent>> onAnimationEnded = new SimpleObjectProperty<>();
+
     /**
      * Instantiates an implicitly animated property
      * @param property target property
@@ -154,6 +158,22 @@ public abstract class AnimationProperty<T> implements CustomizableAnimation<Anim
     @Override
     public BooleanProperty pausedProperty() {
         return this.paused;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ObjectProperty<EventHandler<AnimationEvent>> onAnimationStartedProperty() {
+        return this.onAnimationStarted;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ObjectProperty<EventHandler<AnimationEvent>> onAnimationEndedProperty() {
+        return this.onAnimationEnded;
     }
 
     /**

@@ -39,7 +39,9 @@ public class AnimatedTest extends Application {
         // Set up the node and attach it to the root
         Animated animated = new Animated(pane,
                 new AnimatedOpacity()
-                        .custom(settings -> settings.withDuration(Duration.seconds(.4))),
+                        .custom(settings -> settings.withDuration(Duration.seconds(.4)))
+                        .onAnimationStarted(e -> System.out.println("Started"))
+                        .onAnimationEnded(e -> System.out.println("Ended")),
                 new AnimatedPrefSize()
                         .custom(settings -> settings.withDuration(Duration.seconds(.3)))
         ).custom(settings -> settings.withCurve(Curve.EASE_IN_OUT));
