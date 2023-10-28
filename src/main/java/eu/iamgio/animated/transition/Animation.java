@@ -7,6 +7,8 @@ import eu.iamgio.animated.util.ReflectionUtils;
 import javafx.application.Platform;
 import javafx.beans.NamedArg;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
@@ -22,6 +24,7 @@ public class Animation {
     private double speed = 1;
     private Duration delay = Duration.ZERO;
     private int cycleCount = 1;
+    private EventHandler<ActionEvent> onFinished;
 
     /**
      * Instantiates a new {@link Animation} that wraps the given {@link AnimationFX}.
@@ -62,6 +65,9 @@ public class Animation {
         animationFX.setSpeed(speed);
         animationFX.setDelay(delay);
         animationFX.setCycleCount(cycleCount);
+        if (onFinished != null) {
+            animationFX.setOnFinished(onFinished);
+        }
     }
 
     /**
@@ -93,9 +99,16 @@ public class Animation {
     public void playOut(Node target, ObservableList<Node> children) {
         animationFX.setNode(target);
         applyProperties();
+
         if (children != null) {
-            animationFX.setOnFinished(e -> children.remove(target));
+            animationFX.setOnFinished(e -> {
+                if (this.onFinished != null) {
+                    this.onFinished.handle(e);
+                }
+                children.remove(target);
+            });
         }
+
         animationFX.play();
     }
 
@@ -168,6 +181,22 @@ public class Animation {
      */
     public Animation setCycleCount(int cycleCount) {
         this.cycleCount = cycleCount;
+        return this;
+    }
+
+    /**
+     * @param handler action to run when the animation finishes
+     */
+    public void setOnFinished(EventHandler<ActionEvent> handler) {
+        this.onFinished = handler;
+    }
+
+    /**
+     * Fluent setter for {@link #setOnFinished(EventHandler)}.
+     * @param handler action to run when the animation finishes
+     */
+    public Animation onFinished(EventHandler<ActionEvent> handler) {
+        this.setOnFinished(handler);
         return this;
     }
 
